@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using HouseStuff.Domain.Residences;
 using HouseStuff.Domain.Pots;
 using HouseStuff.Domain.Tasks;
+using HouseStuff.Domain.Assignments;
 
 namespace HouseStuff.Infrastructure.Identity;
 
@@ -12,6 +13,7 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
     public DbSet<Residence> Residences => Set<Residence>();
     public DbSet<Pot> Pots => Set<Pot>();
     public DbSet<HouseholdTask> HouseholdTasks => Set<HouseholdTask>();
+    public DbSet<TaskAssignment> TaskAssignments => Set<TaskAssignment>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -61,6 +63,21 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
                 .HasForeignKey(task => new { task.PotId, task.ResidenceId })
                 .HasPrincipalKey(pot => new { pot.Id, pot.ResidenceId })
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<TaskAssignment>(entity =>
+        {
+            entity.ToTable("TaskAssignments");
+            entity.HasKey(assignment => assignment.Id);
+            entity.Property(assignment => assignment.AssignedToUserId).HasMaxLength(450).IsRequired();
+            entity.HasIndex(assignment => assignment.AssignedToUserId)
+                .IsUnique()
+                .HasFilter("\"CompletedAt\" IS NULL");
+            entity.HasIndex(assignment => assignment.HouseholdTaskId)
+                .IsUnique()
+                .HasFilter("\"CompletedAt\" IS NULL");
+            entity.HasOne<HouseholdTask>().WithMany().HasForeignKey(assignment => assignment.HouseholdTaskId).OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne<HouseStuffUser>().WithMany().HasForeignKey(assignment => assignment.AssignedToUserId).OnDelete(DeleteBehavior.Restrict);
         });
     }
 }
