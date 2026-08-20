@@ -38,7 +38,7 @@ Tarefas únicas, reutilizáveis e recorrentes podem ser cadastradas
 
 Usuário escolhe um pote, aceita a tarefa sorteada ou pede outra
 
-- [ ] `HOUSE-050` — Sorteio, aceite e troca de tarefa — Usuário escolhe um pote, vê uma tarefa elegível, aceita ou pede outra.
+- [x] `HOUSE-050` — Sorteio, aceite e troca de tarefa — Usuário escolhe um pote, vê uma tarefa elegível, aceita ou pede outra.
 
 ## M6 — Rotina
 

@@ -1,6 +1,6 @@
 # HOUSE-050 — Sorteio, aceite e troca de tarefa
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: funcional.
 
@@ -16,7 +16,7 @@ O morador escolhe um pote da própria casa, recebe uma tarefa elegível, pode pe
 - [x] `HOUSE-050-02` — casos de uso e endpoints de sorteio e aceite;
 - [x] `HOUSE-050-03` — experiência responsiva de escolha e proposta;
 - [x] `HOUSE-050-04` — atribuição ativa integrada à área da casa;
-- [>] `HOUSE-050-05` — testes, isolamento e documentação.
+- [x] `HOUSE-050-05` — testes, isolamento e documentação.
 
 ## Decisões do recorte
 
@@ -33,12 +33,22 @@ O morador escolhe um pote da própria casa, recebe uma tarefa elegível, pode pe
 
 ## Critérios de aceite
 
-- [ ] migration cria atribuições com vínculos consistentes a usuário, tarefa e residência;
-- [ ] sorteio considera somente tarefas elegíveis do pote e da casa autenticada;
-- [ ] pedir outra não cria atribuição e evita repetir tarefa durante a rodada;
-- [ ] aceite cria atribuição ativa somente após nova validação;
-- [ ] usuário com atribuição ativa não sorteia nem aceita outra;
-- [ ] tarefa ativa já atribuída não pode ser atribuída a outra pessoa;
-- [ ] interface cobre loading, vazio, proposta, troca, aceite e atribuição ativa;
-- [ ] fluxo é responsivo e utilizável por toque;
-- [ ] builds e testes passam nos dois repositórios.
+- [x] migration cria atribuições com vínculos consistentes a usuário e tarefa, enquanto a residência é validada pela sessão e pelo vínculo da tarefa;
+- [x] sorteio considera somente tarefas elegíveis do pote e da casa autenticada;
+- [x] pedir outra não cria atribuição e evita repetir tarefa durante a rodada;
+- [x] aceite cria atribuição ativa somente após nova validação;
+- [x] usuário com atribuição ativa não sorteia nem aceita outra;
+- [x] tarefa ativa já atribuída não pode ser atribuída a outra pessoa;
+- [x] interface cobre loading, vazio, proposta, troca, aceite e atribuição ativa;
+- [x] fluxo é responsivo e utilizável por toque;
+- [x] builds e testes passam nos dois repositórios.
+
+## Validação funcional
+
+- login do morador Luis em viewport de 390 × 844;
+- escolha do pote Mensal e sorteio de `Limpar a geladeira`;
+- troca para `Organizar a despensa` sem atribuição antecipada;
+- aceite e permanência da atribuição após recarregar a aplicação;
+- tentativa de novo sorteio bloqueada para Luis;
+- sorteio do administrador retornou somente a tarefa mensal ainda disponível;
+- próxima entrega: `HOUSE-060`, ainda não autorizada.

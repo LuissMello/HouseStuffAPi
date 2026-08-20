@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-20",
   "status": "onTrack",
-  "currentStageId": "M5",
+  "currentStageId": "M6",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -108,14 +108,14 @@
       "repository": "both",
       "type": "feature",
       "title": "Sorteio, aceite e troca de tarefa",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Usuário escolhe um pote, vê uma tarefa elegível, aceita ou pede outra.",
       "subtasks": [
         { "id": "HOUSE-050-01", "title": "Regras de elegibilidade e persistência da atribuição", "status": "completed" },
         { "id": "HOUSE-050-02", "title": "Casos de uso e endpoints de sorteio e aceite", "status": "completed" },
         { "id": "HOUSE-050-03", "title": "Experiência responsiva de escolha e proposta", "status": "completed" },
         { "id": "HOUSE-050-04", "title": "Atribuição ativa integrada à área da casa", "status": "completed" },
-        { "id": "HOUSE-050-05", "title": "Testes, isolamento e documentação", "status": "inProgress" }
+        { "id": "HOUSE-050-05", "title": "Testes, isolamento e documentação", "status": "completed" }
       ]
     },
     { "id": "HOUSE-060", "stageId": "M6", "area": "Geral", "repository": "both", "type": "feature", "title": "Conclusão e recorrência", "status": "pending", "result": "Conclusão encerra tarefa única ou calcula a próxima disponibilidade.", "subtasks": [] },

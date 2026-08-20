@@ -37,7 +37,11 @@
 - o resultado sorteado é uma proposta, não uma atribuição aceita automaticamente;
 - o usuário pode aceitar a tarefa ou pedir outra;
 - somente o aceite cria a atribuição ativa;
-- as regras de nova tentativa, exclusão temporária e ausência de tarefas serão fechadas na tarefa `HOUSE-050`.
+- pedir outra exclui no dispositivo as tarefas já vistas durante a rodada atual;
+- ao esgotar uma rodada, o usuário pode reiniciá-la;
+- propostas não são reservadas e podem ficar indisponíveis antes do aceite;
+- o aceite revalida a tarefa e o vínculo com a residência autenticada;
+- cada usuário e cada tarefa podem participar de no máximo uma atribuição ativa.
 
 ## BR-004 — Conclusão e recorrência
 
@@ -49,7 +53,6 @@
 
 ## Pendências para as tarefas correspondentes
 
-- tratamento de uma tarefa recusada durante o mesmo sorteio;
 - política de tarefas reutilizáveis sem intervalo;
 - possibilidade e regras de mudança de residência;
 - timezone usado para exibição do calendário.

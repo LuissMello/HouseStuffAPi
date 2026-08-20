@@ -40,6 +40,8 @@ Em `HOUSE-030`, `Pots` adotou o mesmo limite: o contexto residencial é resolvid
 
 Em `HOUSE-040`, `HouseholdTasks` pertence ao pote por uma chave estrangeira composta `{PotId, ResidenceId}`. Além de o serviço derivar a casa da sessão, essa composição impede no banco que uma tarefa declare uma residência e aponte para o pote de outra. O tipo é persistido como texto e a recorrência em dias só existe para tarefas recorrentes.
 
+Em `HOUSE-050`, `TaskAssignments` registra a tarefa e o usuário que a aceitou. Índices únicos parciais garantem no PostgreSQL no máximo uma atribuição ativa por usuário e por tarefa. Sorteio, consulta atual e aceite derivam usuário e residência da sessão; o aceite repete a validação de elegibilidade porque a proposta não cria reserva.
+
 ## Acompanhamento
 
 `docs/tracking/project.json` é a única fonte editável. Ele gera `ROADMAP.md` e `STATUS.md`, é copiado para o frontend durante desenvolvimento/build e também é exposto por `GET /api/v1/project-tracking`.

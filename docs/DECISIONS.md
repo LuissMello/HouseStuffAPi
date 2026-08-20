@@ -54,3 +54,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: tarefas são únicas, reutilizáveis ou recorrentes; somente recorrentes recebem intervalo em dias. Cada tarefa guarda `ResidenceId` e `PotId`, protegidos por FK composta, e seu nome é único dentro do pote. Arquivamento substitui exclusão física no fluxo administrativo inicial.
+
+## DEC-012 — Sorteio como proposta e aceite revalidado
+
+- Status: aceita em 20/08/2026.
+- Decisão: o sorteio não reserva a tarefa. A troca exclui propostas vistas apenas durante a rodada do cliente, e o aceite revalida a elegibilidade antes de persistir. Índices únicos parciais limitam uma atribuição ativa por usuário e por tarefa.

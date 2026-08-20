@@ -51,6 +51,9 @@ Endpoints iniciais:
 - `GET|POST /api/v1/admin/tasks`;
 - `PUT /api/v1/admin/tasks/{id}`;
 - `PATCH /api/v1/admin/tasks/{id}/status`.
+- `POST /api/v1/draws`;
+- `GET /api/v1/assignments/current`;
+- `POST /api/v1/assignments/accept`.
 
 ## Validar
 
