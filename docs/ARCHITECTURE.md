@@ -38,6 +38,8 @@ Em `HOUSE-020`, `Residences` passou a ser o agregado de contexto residencial. O 
 
 Em `HOUSE-030`, `Pots` adotou o mesmo limite: o contexto residencial é resolvido pela sessão em `ICurrentResidenceContext`, e nenhum endpoint recebe `ResidenceId`. A unicidade do nome por residência e a chave estrangeira também são garantidas no PostgreSQL. O frontend é mobile-first, usa cartões e controles de ordem por botões, sem depender de arrastar em telas touch.
 
+Em `HOUSE-040`, `HouseholdTasks` pertence ao pote por uma chave estrangeira composta `{PotId, ResidenceId}`. Além de o serviço derivar a casa da sessão, essa composição impede no banco que uma tarefa declare uma residência e aponte para o pote de outra. O tipo é persistido como texto e a recorrência em dias só existe para tarefas recorrentes.
+
 ## Acompanhamento
 
 `docs/tracking/project.json` é a única fonte editável. Ele gera `ROADMAP.md` e `STATUS.md`, é copiado para o frontend durante desenvolvimento/build e também é exposto por `GET /api/v1/project-tracking`.

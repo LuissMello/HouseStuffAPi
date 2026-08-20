@@ -49,3 +49,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: potes possuem nome único por residência, descrição opcional, ordem e estado ativo/arquivado. Arquivamento preserva referências; moradores veem apenas ativos. A ordenação usa ações explícitas de subir/descer, adequadas ao uso majoritário em celular e acessíveis sem gesto de arrastar.
+
+## DEC-011 — Catálogo de tarefas e vínculo composto
+
+- Status: aceita em 20/08/2026.
+- Decisão: tarefas são únicas, reutilizáveis ou recorrentes; somente recorrentes recebem intervalo em dias. Cada tarefa guarda `ResidenceId` e `PotId`, protegidos por FK composta, e seu nome é único dentro do pote. Arquivamento substitui exclusão física no fluxo administrativo inicial.

@@ -22,9 +22,15 @@
 - o usuário escolhe explicitamente um pote, como `Mensal`;
 - o sorteio considera somente tarefas elegíveis daquele pote e da residência do usuário;
 - uma tarefa pode ser única, reutilizável ou recorrente;
+- toda tarefa pertence a exatamente um pote da mesma residência;
+- o nome da tarefa é único dentro do pote, ignorando maiúsculas e espaços externos;
+- o administrador pode mover a tarefa entre potes ativos da própria casa;
+- tarefas podem ser arquivadas e reativadas sem apagar seu registro;
 - tarefa única concluída nunca retorna ao pote;
 - tarefa reutilizável pode voltar a ficar disponível conforme sua política;
 - tarefa recorrente possui um intervalo configurado.
+- apenas tarefa recorrente possui intervalo, entre 1 e 3650 dias;
+- tarefas não possuem data-alvo no cadastro inicial.
 
 ## BR-003 — Sorteio e aceite
 

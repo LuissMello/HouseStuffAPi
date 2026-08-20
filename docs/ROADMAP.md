@@ -32,7 +32,7 @@ Potes podem ser criados e organizados
 
 Tarefas únicas, reutilizáveis e recorrentes podem ser cadastradas
 
-- [ ] `HOUSE-040` — Cadastro de tarefas — Tarefas únicas, reutilizáveis e recorrentes são mantidas pela interface.
+- [x] `HOUSE-040` — Cadastro de tarefas — Tarefas únicas, reutilizáveis e recorrentes são mantidas pela interface.
 
 ## M5 — Sorteio
 

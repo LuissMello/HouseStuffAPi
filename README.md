@@ -48,6 +48,9 @@ Endpoints iniciais:
 - `PUT /api/v1/admin/pots/{id}`;
 - `PATCH /api/v1/admin/pots/{id}/status`;
 - `POST /api/v1/admin/pots/{id}/move`.
+- `GET|POST /api/v1/admin/tasks`;
+- `PUT /api/v1/admin/tasks/{id}`;
+- `PATCH /api/v1/admin/tasks/{id}/status`.
 
 ## Validar
 
