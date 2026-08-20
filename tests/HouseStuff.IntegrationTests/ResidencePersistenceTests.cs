@@ -1,6 +1,7 @@
 using HouseStuff.Domain.Residences;
 using HouseStuff.Domain.Pots;
 using HouseStuff.Domain.Tasks;
+using HouseStuff.Domain.Assignments;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -99,6 +100,38 @@ public sealed class ResidencePersistenceTests
 
         database.HouseholdTasks.Add(HouseholdTask.Create(first.Id, secondPot.Id, "Tarefa cruzada", null, HouseholdTaskKind.OneTime, null, DateTimeOffset.UtcNow).Task!);
 
+        await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
+        database.ChangeTracker.Clear();
+        await database.Database.EnsureDeletedAsync();
+    }
+
+    [Fact]
+    public async Task ActiveAssignmentIsUniqueForUserAndTask()
+    {
+        await CreateTestDatabaseAsync();
+        var options = new DbContextOptionsBuilder<HouseStuffDbContext>().UseNpgsql(TestConnection).Options;
+        await using var database = new HouseStuffDbContext(options);
+        await database.Database.EnsureDeletedAsync();
+        await database.Database.EnsureCreatedAsync();
+
+        var residence = Residence.Create("Casa Um", "admin-1", DateTimeOffset.UtcNow).Residence!;
+        var pot = Pot.Create(residence.Id, "Diário", null, 0, DateTimeOffset.UtcNow).Pot!;
+        var firstTask = HouseholdTask.Create(residence.Id, pot.Id, "Tarefa um", null, HouseholdTaskKind.Reusable, null, DateTimeOffset.UtcNow).Task!;
+        var secondTask = HouseholdTask.Create(residence.Id, pot.Id, "Tarefa dois", null, HouseholdTaskKind.Reusable, null, DateTimeOffset.UtcNow).Task!;
+        database.Residences.Add(residence);
+        database.Pots.Add(pot);
+        database.HouseholdTasks.AddRange(firstTask, secondTask);
+        database.Users.AddRange(
+            new HouseStuffUser { Id = "user-1", Name = "Um", UserName = "um@house.local", ResidenceId = residence.Id },
+            new HouseStuffUser { Id = "user-2", Name = "Dois", UserName = "dois@house.local", ResidenceId = residence.Id });
+        database.TaskAssignments.Add(TaskAssignment.Create(firstTask.Id, "user-1", DateTimeOffset.UtcNow).Assignment!);
+        await database.SaveChangesAsync();
+
+        database.TaskAssignments.Add(TaskAssignment.Create(secondTask.Id, "user-1", DateTimeOffset.UtcNow).Assignment!);
+        await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
+        database.ChangeTracker.Clear();
+
+        database.TaskAssignments.Add(TaskAssignment.Create(firstTask.Id, "user-2", DateTimeOffset.UtcNow).Assignment!);
         await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
         database.ChangeTracker.Clear();
         await database.Database.EnsureDeletedAsync();

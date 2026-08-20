@@ -5,6 +5,8 @@ using HouseStuff.Application.Pots;
 using HouseStuff.Infrastructure.Pots;
 using HouseStuff.Application.Tasks;
 using HouseStuff.Infrastructure.Tasks;
+using HouseStuff.Application.Assignments;
+using HouseStuff.Infrastructure.Assignments;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -67,6 +69,8 @@ public static class IdentityServiceCollectionExtensions
         services.AddScoped<ICurrentResidenceContext, CurrentResidenceContext>();
         services.AddScoped<IPotService, PotService>();
         services.AddScoped<IHouseholdTaskService, HouseholdTaskService>();
+        services.AddScoped<ICurrentUserContext, CurrentUserContext>();
+        services.AddScoped<ITaskAssignmentService, TaskAssignmentService>();
         return services;
     }
 

@@ -13,8 +13,8 @@ O morador escolhe um pote da própria casa, recebe uma tarefa elegível, pode pe
 ## Subtarefas
 
 - [x] `HOUSE-050-01` — regras de elegibilidade e persistência da atribuição;
-- [>] `HOUSE-050-02` — casos de uso e endpoints de sorteio e aceite;
-- [ ] `HOUSE-050-03` — experiência responsiva de escolha e proposta;
+- [x] `HOUSE-050-02` — casos de uso e endpoints de sorteio e aceite;
+- [>] `HOUSE-050-03` — experiência responsiva de escolha e proposta;
 - [ ] `HOUSE-050-04` — atribuição ativa integrada à área da casa;
 - [ ] `HOUSE-050-05` — testes, isolamento e documentação.
 
