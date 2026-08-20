@@ -1,0 +1,60 @@
+# Roadmap
+
+> Arquivo gerado por `scripts/generate-project-docs.ps1`. Edite somente `docs/tracking/project.json`.
+
+Atualizado em: 2026-08-20.
+
+## M0 — Fundação
+
+Projetos executáveis, governança e acompanhamento em fonte única
+
+- [x] `HOUSE-001` — Fundação e documentação do HouseStuff — API .NET 10 e frontend executáveis, documentação canônica e tela de acompanhamento conectada à fonte única.
+
+## M1 — Acesso
+
+Administrador cria usuários e cada pessoa consegue entrar
+
+- [x] `HOUSE-010` — Autenticação e administração de usuários — Administrador cria um usuário e a pessoa entra pela tela real.
+
+## M2 — Residência
+
+Uma casa reúne vários usuários com isolamento seguro
+
+- [x] `HOUSE-020` — Residência e isolamento dos dados — Usuários veem apenas os dados da própria casa.
+
+## M3 — Potes
+
+Potes podem ser criados e organizados
+
+- [x] `HOUSE-030` — Cadastro e organização dos potes — Administrador mantém potes e usuários visualizam os potes disponíveis.
+
+## M4 — Tarefas
+
+Tarefas únicas, reutilizáveis e recorrentes podem ser cadastradas
+
+- [ ] `HOUSE-040` — Cadastro de tarefas — Tarefas únicas, reutilizáveis e recorrentes são mantidas pela interface.
+
+## M5 — Sorteio
+
+Usuário escolhe um pote, aceita a tarefa sorteada ou pede outra
+
+- [ ] `HOUSE-050` — Sorteio, aceite e troca de tarefa — Usuário escolhe um pote, vê uma tarefa elegível, aceita ou pede outra.
+
+## M6 — Rotina
+
+Conclusões e próximas disponibilidades são registradas
+
+- [ ] `HOUSE-060` — Conclusão e recorrência — Conclusão encerra tarefa única ou calcula a próxima disponibilidade.
+
+## M7 — Calendário
+
+Usuário acompanha disponibilidade e histórico da própria casa
+
+- [ ] `HOUSE-070` — Calendário e histórico — Usuário consulta calendário e histórico reais da própria casa.
+
+## M8 — Entrega
+
+Ambiente local reproduzível, responsivo e validado ponta a ponta
+
+- [ ] `HOUSE-080` — Qualidade e entrega local — Projeto completo inicia por roteiro único e possui validação ponta a ponta.
+
