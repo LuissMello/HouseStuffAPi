@@ -34,4 +34,33 @@ public sealed class TaskAssignmentTests
         Assert.False(result.Succeeded);
         Assert.Equal("user_required", result.Code);
     }
+
+    [Fact]
+    public void CompletesActiveAssignmentOnce()
+    {
+        var acceptedAt = DateTimeOffset.UtcNow;
+        var assignment = TaskAssignment.Create(Guid.NewGuid(), "user-1", acceptedAt).Assignment!;
+        var completedAt = acceptedAt.AddMinutes(10);
+
+        var result = assignment.Complete(completedAt);
+        var repeated = assignment.Complete(completedAt.AddMinutes(1));
+
+        Assert.True(result.Succeeded);
+        Assert.Equal(completedAt, assignment.CompletedAt);
+        Assert.False(repeated.Succeeded);
+        Assert.Equal("assignment_already_completed", repeated.Code);
+    }
+
+    [Fact]
+    public void RejectsCompletionBeforeAcceptance()
+    {
+        var acceptedAt = DateTimeOffset.UtcNow;
+        var assignment = TaskAssignment.Create(Guid.NewGuid(), "user-1", acceptedAt).Assignment!;
+
+        var result = assignment.Complete(acceptedAt.AddSeconds(-1));
+
+        Assert.False(result.Succeeded);
+        Assert.Equal("completion_before_acceptance", result.Code);
+        Assert.Null(assignment.CompletedAt);
+    }
 }

@@ -44,4 +44,38 @@ public sealed class HouseholdTaskTests
         task.SetActive(true, DateTimeOffset.UtcNow);
         Assert.True(task.IsActive);
     }
+
+    [Fact]
+    public void OneTimeTaskIsArchivedAfterCompletion()
+    {
+        var task = HouseholdTask.Create(Guid.NewGuid(), Guid.NewGuid(), "Organizar despensa", null, HouseholdTaskKind.OneTime, null, DateTimeOffset.UtcNow).Task!;
+
+        task.RegisterCompletion(DateTimeOffset.UtcNow);
+
+        Assert.False(task.IsActive);
+        Assert.Null(task.NextAvailableAt);
+    }
+
+    [Fact]
+    public void ReusableTaskIsImmediatelyAvailableAfterCompletion()
+    {
+        var task = HouseholdTask.Create(Guid.NewGuid(), Guid.NewGuid(), "Lavar louça", null, HouseholdTaskKind.Reusable, null, DateTimeOffset.UtcNow).Task!;
+
+        task.RegisterCompletion(DateTimeOffset.UtcNow);
+
+        Assert.True(task.IsActive);
+        Assert.Null(task.NextAvailableAt);
+    }
+
+    [Fact]
+    public void RecurringTaskCalculatesNextAvailability()
+    {
+        var completedAt = DateTimeOffset.UtcNow;
+        var task = HouseholdTask.Create(Guid.NewGuid(), Guid.NewGuid(), "Limpar geladeira", null, HouseholdTaskKind.Recurring, 30, completedAt).Task!;
+
+        task.RegisterCompletion(completedAt);
+
+        Assert.True(task.IsActive);
+        Assert.Equal(completedAt.AddDays(30), task.NextAvailableAt);
+    }
 }

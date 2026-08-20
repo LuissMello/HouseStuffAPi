@@ -30,6 +30,7 @@ public sealed class HouseholdTask
     public string? Description { get; private set; }
     public HouseholdTaskKind Kind { get; private set; }
     public int? RecurrenceDays { get; private set; }
+    public DateTimeOffset? NextAvailableAt { get; private set; }
     public bool IsActive { get; private set; }
     public DateTimeOffset CreatedAt { get; private set; }
     public DateTimeOffset UpdatedAt { get; private set; }
@@ -70,6 +71,20 @@ public sealed class HouseholdTask
     {
         IsActive = isActive;
         UpdatedAt = now;
+    }
+
+    public void RegisterCompletion(DateTimeOffset completedAt)
+    {
+        NextAvailableAt = Kind == HouseholdTaskKind.Recurring
+            ? completedAt.AddDays(RecurrenceDays!.Value)
+            : null;
+
+        if (Kind == HouseholdTaskKind.OneTime)
+        {
+            IsActive = false;
+        }
+
+        UpdatedAt = completedAt;
     }
 
     public static string NormalizeName(string name) => name.Trim().ToUpperInvariant();

@@ -32,10 +32,32 @@ public sealed class TaskAssignment
 
         return TaskAssignmentCreationResult.Success(new TaskAssignment(householdTaskId, assignedToUserId, acceptedAt));
     }
+
+    public TaskAssignmentCompletionResult Complete(DateTimeOffset completedAt)
+    {
+        if (CompletedAt is not null)
+        {
+            return TaskAssignmentCompletionResult.Failure("assignment_already_completed", "Esta tarefa já foi concluída.");
+        }
+
+        if (completedAt < AcceptedAt)
+        {
+            return TaskAssignmentCompletionResult.Failure("completion_before_acceptance", "A conclusão não pode ser anterior ao aceite.");
+        }
+
+        CompletedAt = completedAt;
+        return TaskAssignmentCompletionResult.Success(this);
+    }
 }
 
 public sealed record TaskAssignmentCreationResult(bool Succeeded, TaskAssignment? Assignment, string? Code, string? Message)
 {
     public static TaskAssignmentCreationResult Success(TaskAssignment assignment) => new(true, assignment, null, null);
     public static TaskAssignmentCreationResult Failure(string code, string message) => new(false, null, code, message);
+}
+
+public sealed record TaskAssignmentCompletionResult(bool Succeeded, TaskAssignment? Assignment, string? Code, string? Message)
+{
+    public static TaskAssignmentCompletionResult Success(TaskAssignment assignment) => new(true, assignment, null, null);
+    public static TaskAssignmentCompletionResult Failure(string code, string message) => new(false, null, code, message);
 }

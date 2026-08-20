@@ -58,7 +58,7 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
             entity.Property(task => task.Description).HasMaxLength(300);
             entity.Property(task => task.Kind).HasConversion<string>().HasMaxLength(20).IsRequired();
             entity.HasIndex(task => new { task.ResidenceId, task.PotId, task.NormalizedName }).IsUnique();
-            entity.HasIndex(task => new { task.ResidenceId, task.PotId, task.IsActive });
+            entity.HasIndex(task => new { task.ResidenceId, task.PotId, task.IsActive, task.NextAvailableAt });
             entity.HasOne<Pot>().WithMany()
                 .HasForeignKey(task => new { task.PotId, task.ResidenceId })
                 .HasPrincipalKey(pot => new { pot.Id, pot.ResidenceId })

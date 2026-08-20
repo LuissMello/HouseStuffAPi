@@ -13,8 +13,8 @@ O morador conclui sua tarefa ativa pela área da casa e pode sortear novamente c
 ## Subtarefas
 
 - [x] `HOUSE-060-01` — regras de conclusão e disponibilidade;
-- [>] `HOUSE-060-02` — domínio, persistência e migration;
-- [ ] `HOUSE-060-03` — caso de uso e endpoint isolado;
+- [x] `HOUSE-060-02` — domínio, persistência e migration;
+- [>] `HOUSE-060-03` — caso de uso e endpoint isolado;
 - [ ] `HOUSE-060-04` — experiência responsiva de conclusão;
 - [ ] `HOUSE-060-05` — integração, testes e documentação.
 

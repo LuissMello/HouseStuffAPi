@@ -137,6 +137,42 @@ public sealed class ResidencePersistenceTests
         await database.Database.EnsureDeletedAsync();
     }
 
+    [Fact]
+    public async Task CompletionPersistsAvailabilityAndReleasesActiveAssignmentIndexes()
+    {
+        await CreateTestDatabaseAsync();
+        var options = new DbContextOptionsBuilder<HouseStuffDbContext>().UseNpgsql(TestConnection).Options;
+        await using var database = new HouseStuffDbContext(options);
+        await database.Database.EnsureDeletedAsync();
+        await database.Database.EnsureCreatedAsync();
+
+        var completedAt = DateTimeOffset.UtcNow;
+        var residence = Residence.Create("Casa Um", "admin-1", completedAt).Residence!;
+        var pot = Pot.Create(residence.Id, "Mensal", null, 0, completedAt).Pot!;
+        var task = HouseholdTask.Create(residence.Id, pot.Id, "Limpar geladeira", null, HouseholdTaskKind.Recurring, 30, completedAt).Task!;
+        var assignment = TaskAssignment.Create(task.Id, "user-1", completedAt.AddMinutes(-10)).Assignment!;
+        database.Residences.Add(residence);
+        database.Pots.Add(pot);
+        database.HouseholdTasks.Add(task);
+        database.Users.AddRange(
+            new HouseStuffUser { Id = "user-1", Name = "Um", UserName = "um@house.local", ResidenceId = residence.Id },
+            new HouseStuffUser { Id = "user-2", Name = "Dois", UserName = "dois@house.local", ResidenceId = residence.Id });
+        database.TaskAssignments.Add(assignment);
+        await database.SaveChangesAsync();
+
+        assignment.Complete(completedAt);
+        task.RegisterCompletion(completedAt);
+        database.TaskAssignments.Add(TaskAssignment.Create(task.Id, "user-2", completedAt.AddMinutes(1)).Assignment!);
+        await database.SaveChangesAsync();
+        database.ChangeTracker.Clear();
+
+        var persistedTask = await database.HouseholdTasks.SingleAsync(item => item.Id == task.Id);
+        Assert.NotNull(persistedTask.NextAvailableAt);
+        Assert.InRange((persistedTask.NextAvailableAt.Value - completedAt.AddDays(30)).Duration(), TimeSpan.Zero, TimeSpan.FromMilliseconds(1));
+        Assert.Equal(2, await database.TaskAssignments.CountAsync(item => item.HouseholdTaskId == task.Id));
+        await database.Database.EnsureDeletedAsync();
+    }
+
     private static async Task CreateTestDatabaseAsync()
     {
         await using var connection = new NpgsqlConnection(AdminConnection);
