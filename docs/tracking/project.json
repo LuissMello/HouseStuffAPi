@@ -118,7 +118,23 @@
         { "id": "HOUSE-050-05", "title": "Testes, isolamento e documentação", "status": "completed" }
       ]
     },
-    { "id": "HOUSE-060", "stageId": "M6", "area": "Geral", "repository": "both", "type": "feature", "title": "Conclusão e recorrência", "status": "pending", "result": "Conclusão encerra tarefa única ou calcula a próxima disponibilidade.", "subtasks": [] },
+    {
+      "id": "HOUSE-060",
+      "stageId": "M6",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Conclusão e recorrência",
+      "status": "inProgress",
+      "result": "Conclusão encerra tarefa única ou calcula a próxima disponibilidade.",
+      "subtasks": [
+        { "id": "HOUSE-060-01", "title": "Regras de conclusão e disponibilidade", "status": "completed" },
+        { "id": "HOUSE-060-02", "title": "Domínio, persistência e migration", "status": "inProgress" },
+        { "id": "HOUSE-060-03", "title": "Caso de uso e endpoint isolado", "status": "pending" },
+        { "id": "HOUSE-060-04", "title": "Experiência responsiva de conclusão", "status": "pending" },
+        { "id": "HOUSE-060-05", "title": "Integração, testes e documentação", "status": "pending" }
+      ]
+    },
     { "id": "HOUSE-070", "stageId": "M7", "area": "Geral", "repository": "both", "type": "feature", "title": "Calendário e histórico", "status": "pending", "result": "Usuário consulta calendário e histórico reais da própria casa.", "subtasks": [] },
     { "id": "HOUSE-080", "stageId": "M8", "area": "Geral", "repository": "both", "type": "technical", "title": "Qualidade e entrega local", "status": "pending", "result": "Projeto completo inicia por roteiro único e possui validação ponta a ponta.", "subtasks": [] }
   ]
