@@ -96,9 +96,9 @@
       "subtasks": [
         { "id": "HOUSE-040-01", "title": "Domínio, tipos de tarefa e migration", "status": "completed" },
         { "id": "HOUSE-040-02", "title": "Casos de uso e endpoints isolados", "status": "completed" },
-        { "id": "HOUSE-040-03", "title": "Manutenção administrativa responsiva", "status": "inProgress" },
-        { "id": "HOUSE-040-04", "title": "Integração com os potes da casa", "status": "pending" },
-        { "id": "HOUSE-040-05", "title": "Testes, isolamento e documentação", "status": "pending" }
+        { "id": "HOUSE-040-03", "title": "Manutenção administrativa responsiva", "status": "completed" },
+        { "id": "HOUSE-040-04", "title": "Integração com os potes da casa", "status": "completed" },
+        { "id": "HOUSE-040-05", "title": "Testes, isolamento e documentação", "status": "inProgress" }
       ]
     },
     { "id": "HOUSE-050", "stageId": "M5", "area": "Geral", "repository": "both", "type": "feature", "title": "Sorteio, aceite e troca de tarefa", "status": "pending", "result": "Usuário escolhe um pote, vê uma tarefa elegível, aceita ou pede outra.", "subtasks": [] },

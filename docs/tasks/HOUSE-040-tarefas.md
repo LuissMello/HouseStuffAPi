@@ -14,9 +14,9 @@ O administrador cadastra, edita, arquiva e reativa tarefas da própria residênc
 
 - [x] `HOUSE-040-01` — domínio, tipos de tarefa e migration;
 - [x] `HOUSE-040-02` — casos de uso e endpoints isolados;
-- [>] `HOUSE-040-03` — manutenção administrativa responsiva;
-- [ ] `HOUSE-040-04` — integração com os potes da casa;
-- [ ] `HOUSE-040-05` — testes, isolamento e documentação.
+- [x] `HOUSE-040-03` — manutenção administrativa responsiva;
+- [x] `HOUSE-040-04` — integração com os potes da casa;
+- [>] `HOUSE-040-05` — testes, isolamento e documentação.
 
 ## Decisões do recorte
 
