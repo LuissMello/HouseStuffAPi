@@ -101,7 +101,23 @@
         { "id": "HOUSE-040-05", "title": "Testes, isolamento e documentação", "status": "completed" }
       ]
     },
-    { "id": "HOUSE-050", "stageId": "M5", "area": "Geral", "repository": "both", "type": "feature", "title": "Sorteio, aceite e troca de tarefa", "status": "pending", "result": "Usuário escolhe um pote, vê uma tarefa elegível, aceita ou pede outra.", "subtasks": [] },
+    {
+      "id": "HOUSE-050",
+      "stageId": "M5",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Sorteio, aceite e troca de tarefa",
+      "status": "inProgress",
+      "result": "Usuário escolhe um pote, vê uma tarefa elegível, aceita ou pede outra.",
+      "subtasks": [
+        { "id": "HOUSE-050-01", "title": "Regras de elegibilidade e persistência da atribuição", "status": "inProgress" },
+        { "id": "HOUSE-050-02", "title": "Casos de uso e endpoints de sorteio e aceite", "status": "pending" },
+        { "id": "HOUSE-050-03", "title": "Experiência responsiva de escolha e proposta", "status": "pending" },
+        { "id": "HOUSE-050-04", "title": "Atribuição ativa integrada à área da casa", "status": "pending" },
+        { "id": "HOUSE-050-05", "title": "Testes, isolamento e documentação", "status": "pending" }
+      ]
+    },
     { "id": "HOUSE-060", "stageId": "M6", "area": "Geral", "repository": "both", "type": "feature", "title": "Conclusão e recorrência", "status": "pending", "result": "Conclusão encerra tarefa única ou calcula a próxima disponibilidade.", "subtasks": [] },
     { "id": "HOUSE-070", "stageId": "M7", "area": "Geral", "repository": "both", "type": "feature", "title": "Calendário e histórico", "status": "pending", "result": "Usuário consulta calendário e histórico reais da própria casa.", "subtasks": [] },
     { "id": "HOUSE-080", "stageId": "M8", "area": "Geral", "repository": "both", "type": "technical", "title": "Qualidade e entrega local", "status": "pending", "result": "Projeto completo inicia por roteiro único e possui validação ponta a ponta.", "subtasks": [] }
