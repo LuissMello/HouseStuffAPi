@@ -1,5 +1,6 @@
 using HouseStuff.Domain.Residences;
 using HouseStuff.Domain.Pots;
+using HouseStuff.Domain.Tasks;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -77,6 +78,29 @@ public sealed class ResidencePersistenceTests
 
         database.Pots.Add(Pot.Create(first.Id, " mensal ", null, 1, DateTimeOffset.UtcNow).Pot!);
         await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
+        await database.Database.EnsureDeletedAsync();
+    }
+
+    [Fact]
+    public async Task HouseholdTaskCannotReferencePotFromAnotherResidence()
+    {
+        await CreateTestDatabaseAsync();
+        var options = new DbContextOptionsBuilder<HouseStuffDbContext>().UseNpgsql(TestConnection).Options;
+        await using var database = new HouseStuffDbContext(options);
+        await database.Database.EnsureDeletedAsync();
+        await database.Database.EnsureCreatedAsync();
+
+        var first = Residence.Create("Casa Um", "admin-1", DateTimeOffset.UtcNow).Residence!;
+        var second = Residence.Create("Casa Dois", "admin-2", DateTimeOffset.UtcNow).Residence!;
+        var secondPot = Pot.Create(second.Id, "Mensal", null, 0, DateTimeOffset.UtcNow).Pot!;
+        database.Residences.AddRange(first, second);
+        database.Pots.Add(secondPot);
+        await database.SaveChangesAsync();
+
+        database.HouseholdTasks.Add(HouseholdTask.Create(first.Id, secondPot.Id, "Tarefa cruzada", null, HouseholdTaskKind.OneTime, null, DateTimeOffset.UtcNow).Task!);
+
+        await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
+        database.ChangeTracker.Clear();
         await database.Database.EnsureDeletedAsync();
     }
 

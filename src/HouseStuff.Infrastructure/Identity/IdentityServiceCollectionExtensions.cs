@@ -3,6 +3,8 @@ using HouseStuff.Application.Residences;
 using HouseStuff.Infrastructure.Residences;
 using HouseStuff.Application.Pots;
 using HouseStuff.Infrastructure.Pots;
+using HouseStuff.Application.Tasks;
+using HouseStuff.Infrastructure.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -64,6 +66,7 @@ public static class IdentityServiceCollectionExtensions
         services.AddScoped<IResidenceService, ResidenceService>();
         services.AddScoped<ICurrentResidenceContext, CurrentResidenceContext>();
         services.AddScoped<IPotService, PotService>();
+        services.AddScoped<IHouseholdTaskService, HouseholdTaskService>();
         return services;
     }
 
