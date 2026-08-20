@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using HouseStuff.Application.Assignments;
 using HouseStuff.Domain.Assignments;
+using HouseStuff.Domain.Tasks;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,11 +42,13 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
         }
 
         var excluded = command.ExcludedTaskIds.Distinct().Take(100).ToArray();
+        var now = DateTimeOffset.UtcNow;
         var candidates = await (from task in database.HouseholdTasks
                                 join pot in database.Pots on task.PotId equals pot.Id
                                 where task.ResidenceId == session.ResidenceId
                                     && task.PotId == command.PotId
                                     && task.IsActive
+                                    && (task.NextAvailableAt == null || task.NextAvailableAt <= now)
                                     && pot.IsActive
                                     && !excluded.Contains(task.Id)
                                     && !database.TaskAssignments.Any(assignment => assignment.HouseholdTaskId == task.Id && assignment.CompletedAt == null)
@@ -80,11 +83,13 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
             return AssignmentResult.Failure<ActiveAssignmentView>("assignment_already_active", "Você já possui uma tarefa ativa.");
         }
 
+        var now = DateTimeOffset.UtcNow;
         var candidate = await (from task in database.HouseholdTasks
                                join pot in database.Pots on task.PotId equals pot.Id
                                where task.Id == taskId
                                    && task.ResidenceId == session.ResidenceId
                                    && task.IsActive
+                                   && (task.NextAvailableAt == null || task.NextAvailableAt <= now)
                                    && pot.IsActive
                                    && !database.TaskAssignments.Any(assignment => assignment.HouseholdTaskId == task.Id && assignment.CompletedAt == null)
                                select new { Task = task, PotName = pot.Name })
@@ -113,6 +118,46 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
         }
 
         return AssignmentResult.Success(ToView(creation.Assignment!, candidate.Task, candidate.PotName));
+    }
+
+    public async Task<AssignmentResult<CompletedAssignmentView>> CompleteCurrentAsync(CancellationToken cancellationToken)
+    {
+        var session = await currentUser.GetAsync(cancellationToken);
+        if (session is null)
+        {
+            return AssignmentResult.Failure<CompletedAssignmentView>("residence_required", "Você precisa estar vinculado a uma casa.");
+        }
+
+        var current = await (from assignment in database.TaskAssignments
+                             join task in database.HouseholdTasks on assignment.HouseholdTaskId equals task.Id
+                             where assignment.AssignedToUserId == session.UserId
+                                 && assignment.CompletedAt == null
+                                 && task.ResidenceId == session.ResidenceId
+                             select new { Assignment = assignment, Task = task })
+            .SingleOrDefaultAsync(cancellationToken);
+        if (current is null)
+        {
+            return AssignmentResult.Failure<CompletedAssignmentView>("active_assignment_not_found", "Você não possui uma tarefa ativa para concluir.");
+        }
+
+        var completedAt = DateTimeOffset.UtcNow;
+        var completion = current.Assignment.Complete(completedAt);
+        if (!completion.Succeeded)
+        {
+            return AssignmentResult.Failure<CompletedAssignmentView>(completion.Code!, completion.Message!);
+        }
+
+        current.Task.RegisterCompletion(completedAt);
+        await database.SaveChangesAsync(cancellationToken);
+
+        return AssignmentResult.Success(new CompletedAssignmentView(
+            current.Assignment.Id,
+            current.Task.Id,
+            current.Task.Name,
+            ToKind(current.Task.Kind),
+            completedAt,
+            current.Task.NextAvailableAt,
+            current.Task.Kind != HouseholdTaskKind.OneTime));
     }
 
     private IQueryable<ActiveAssignmentView> AssignmentQuery(CurrentUserSession session) =>

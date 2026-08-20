@@ -22,6 +22,15 @@ public sealed record ActiveAssignmentView(
     int? RecurrenceDays,
     DateTimeOffset AcceptedAt);
 
+public sealed record CompletedAssignmentView(
+    Guid AssignmentId,
+    Guid TaskId,
+    string TaskName,
+    string Kind,
+    DateTimeOffset CompletedAt,
+    DateTimeOffset? NextAvailableAt,
+    bool ReturnsToPot);
+
 public sealed record DrawTaskCommand(Guid PotId, IReadOnlyCollection<Guid> ExcludedTaskIds);
 
 public sealed record AssignmentResult<T>(bool Succeeded, T? Value, string? Code, string? Message);
@@ -42,4 +51,5 @@ public interface ITaskAssignmentService
     Task<AssignmentResult<ActiveAssignmentView?>> GetCurrentAsync(CancellationToken cancellationToken);
     Task<AssignmentResult<DrawProposalView>> DrawAsync(DrawTaskCommand command, CancellationToken cancellationToken);
     Task<AssignmentResult<ActiveAssignmentView>> AcceptAsync(Guid taskId, CancellationToken cancellationToken);
+    Task<AssignmentResult<CompletedAssignmentView>> CompleteCurrentAsync(CancellationToken cancellationToken);
 }

@@ -31,6 +31,10 @@ public sealed class AssignmentsController(ITaskAssignmentService assignments) : 
     public async Task<ObjectResult> Accept(AcceptTaskRequest request, CancellationToken cancellationToken) =>
         ToActionResult(await assignments.AcceptAsync(request.TaskId, cancellationToken), StatusCodes.Status201Created);
 
+    [HttpPost("current/complete")]
+    public async Task<ObjectResult> CompleteCurrent(CancellationToken cancellationToken) =>
+        ToActionResult(await assignments.CompleteCurrentAsync(cancellationToken), StatusCodes.Status200OK);
+
     private ObjectResult ToActionResult<T>(AssignmentResult<T> result, int successStatus) => result.Succeeded
         ? StatusCode(successStatus, result.Value)
         : Problem(statusCode: StatusCodes.Status400BadRequest, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
