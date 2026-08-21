@@ -12,8 +12,8 @@ Uma pessoa da casa mantém categorias e um catálogo de itens, escolhe gerar uma
 
 ## Subtarefas
 
-- [>] `HOUSE-100-01` — domínio, persistência e isolamento de categorias e itens;
-- [ ] `HOUSE-100-02` — CRUD de categorias e itens na API;
+- [x] `HOUSE-100-01` — domínio, persistência e isolamento de categorias e itens;
+- [>] `HOUSE-100-02` — CRUD de categorias e itens na API;
 - [ ] `HOUSE-100-03` — cadastro responsivo de categorias e itens;
 - [ ] `HOUSE-100-04` — geração, ordenação e seleção da lista;
 - [ ] `HOUSE-100-05` — integração, testes, evidência visual e documentação.

@@ -4,6 +4,7 @@ using HouseStuff.Domain.Residences;
 using HouseStuff.Domain.Pots;
 using HouseStuff.Domain.Tasks;
 using HouseStuff.Domain.Assignments;
+using HouseStuff.Domain.Shopping;
 
 namespace HouseStuff.Infrastructure.Identity;
 
@@ -14,6 +15,8 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
     public DbSet<Pot> Pots => Set<Pot>();
     public DbSet<HouseholdTask> HouseholdTasks => Set<HouseholdTask>();
     public DbSet<TaskAssignment> TaskAssignments => Set<TaskAssignment>();
+    public DbSet<ShoppingCategory> ShoppingCategories => Set<ShoppingCategory>();
+    public DbSet<ShoppingItem> ShoppingItems => Set<ShoppingItem>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -78,6 +81,31 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
                 .HasFilter("\"CompletedAt\" IS NULL");
             entity.HasOne<HouseholdTask>().WithMany().HasForeignKey(assignment => assignment.HouseholdTaskId).OnDelete(DeleteBehavior.Restrict);
             entity.HasOne<HouseStuffUser>().WithMany().HasForeignKey(assignment => assignment.AssignedToUserId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<ShoppingCategory>(entity =>
+        {
+            entity.ToTable("ShoppingCategories");
+            entity.HasKey(category => category.Id);
+            entity.Property(category => category.Name).HasMaxLength(60).IsRequired();
+            entity.Property(category => category.NormalizedName).HasMaxLength(60).IsRequired();
+            entity.HasIndex(category => new { category.ResidenceId, category.NormalizedName }).IsUnique();
+            entity.HasIndex(category => new { category.ResidenceId, category.DisplayOrder });
+            entity.HasOne<Residence>().WithMany().HasForeignKey(category => category.ResidenceId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasAlternateKey(category => new { category.Id, category.ResidenceId });
+        });
+
+        builder.Entity<ShoppingItem>(entity =>
+        {
+            entity.ToTable("ShoppingItems");
+            entity.HasKey(item => item.Id);
+            entity.Property(item => item.Name).HasMaxLength(100).IsRequired();
+            entity.Property(item => item.NormalizedName).HasMaxLength(100).IsRequired();
+            entity.HasIndex(item => new { item.ResidenceId, item.CategoryId, item.NormalizedName }).IsUnique();
+            entity.HasOne<ShoppingCategory>().WithMany()
+                .HasForeignKey(item => new { item.CategoryId, item.ResidenceId })
+                .HasPrincipalKey(category => new { category.Id, category.ResidenceId })
+                .OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

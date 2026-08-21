@@ -2,6 +2,7 @@ using HouseStuff.Domain.Residences;
 using HouseStuff.Domain.Pots;
 using HouseStuff.Domain.Tasks;
 using HouseStuff.Domain.Assignments;
+using HouseStuff.Domain.Shopping;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -102,6 +103,39 @@ public sealed class ResidencePersistenceTests
 
         await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
         database.ChangeTracker.Clear();
+        await database.Database.EnsureDeletedAsync();
+    }
+
+    [Fact]
+    public async Task ShoppingCatalogIsUniqueAndCannotCrossResidences()
+    {
+        await CreateTestDatabaseAsync();
+        var options = new DbContextOptionsBuilder<HouseStuffDbContext>().UseNpgsql(TestConnection).Options;
+        await using var database = new HouseStuffDbContext(options);
+        await database.Database.EnsureDeletedAsync();
+        await database.Database.EnsureCreatedAsync();
+
+        var first = Residence.Create("Casa Um", "admin-1", DateTimeOffset.UtcNow).Residence!;
+        var second = Residence.Create("Casa Dois", "admin-2", DateTimeOffset.UtcNow).Residence!;
+        var firstCategory = ShoppingCategory.Create(first.Id, "Limpeza", 0, DateTimeOffset.UtcNow).Value!;
+        var secondCategory = ShoppingCategory.Create(second.Id, "Limpeza", 0, DateTimeOffset.UtcNow).Value!;
+        database.Residences.AddRange(first, second);
+        database.ShoppingCategories.AddRange(firstCategory, secondCategory);
+        await database.SaveChangesAsync();
+
+        database.ShoppingItems.Add(ShoppingItem.Create(first.Id, secondCategory.Id, "Detergente", DateTimeOffset.UtcNow).Value!);
+        await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
+        database.ChangeTracker.Clear();
+
+        database.ShoppingCategories.Add(ShoppingCategory.Create(first.Id, " limpeza ", 1, DateTimeOffset.UtcNow).Value!);
+        await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
+        database.ChangeTracker.Clear();
+
+        database.ShoppingItems.Add(ShoppingItem.Create(first.Id, firstCategory.Id, "Detergente", DateTimeOffset.UtcNow).Value!);
+        await database.SaveChangesAsync();
+        database.ShoppingItems.Add(ShoppingItem.Create(first.Id, firstCategory.Id, " detergente ", DateTimeOffset.UtcNow).Value!);
+        await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
+
         await database.Database.EnsureDeletedAsync();
     }
 

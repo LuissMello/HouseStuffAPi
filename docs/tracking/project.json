@@ -199,8 +199,8 @@
       "status": "inProgress",
       "result": "Usuário mantém categorias e itens e gera uma lista com seleção individual ou por categoria.",
       "subtasks": [
-        { "id": "HOUSE-100-01", "title": "Domínio, persistência e isolamento de categorias e itens", "status": "inProgress" },
-        { "id": "HOUSE-100-02", "title": "CRUD de categorias e itens na API", "status": "pending" },
+        { "id": "HOUSE-100-01", "title": "Domínio, persistência e isolamento de categorias e itens", "status": "completed" },
+        { "id": "HOUSE-100-02", "title": "CRUD de categorias e itens na API", "status": "inProgress" },
         { "id": "HOUSE-100-03", "title": "Cadastro responsivo de categorias e itens", "status": "pending" },
         { "id": "HOUSE-100-04", "title": "Geração, ordenação e seleção da lista", "status": "pending" },
         { "id": "HOUSE-100-05", "title": "Integração, testes, evidência visual e documentação", "status": "pending" }

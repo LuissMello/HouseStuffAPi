@@ -46,6 +46,8 @@ Em `HOUSE-060`, a própria atribuição recebe `CompletedAt` e permanece como re
 
 Em `HOUSE-070`, a consulta de rotina combina duas projeções somente leitura: próximas recorrências da residência e atribuições concluídas pelo usuário. O identificador da casa e do usuário vem da sessão; a API não recebe filtros de identidade do cliente.
 
+Em `HOUSE-100`, `ShoppingCategories` possui ordem e unicidade por residência, enquanto `ShoppingItems` usa chave estrangeira composta `{CategoryId, ResidenceId}`. Essa composição impede no PostgreSQL que um item de uma casa seja ligado à categoria de outra; os nomes normalizados garantem unicidade por categoria.
+
 ## Entrega local
 
 Em `HOUSE-080`, o ambiente Development ganhou um cenário demonstrável idempotente da Casa do Luis. A API separa liveness (`/health/live`) de readiness (`/health/ready`), que inclui a conexão PostgreSQL. Scripts PowerShell no backend orquestram PostgreSQL, API e frontend, registram somente os processos que iniciam e oferecem um smoke autenticado não mutável junto aos gates dos dois repositórios.
