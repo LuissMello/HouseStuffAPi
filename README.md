@@ -33,10 +33,21 @@ Acesse `http://localhost:3000`. O comando prepara o PostgreSQL, restaura o backe
 .\scripts\stop-local.ps1
 ```
 
-Credenciais locais:
+Na configuração padrão, sem User Secrets, são criadas estas credenciais de demonstração:
 
 - administrador: `admin@housestuff.local` / `HouseStuff#2026`;
 - morador Luis: `luis@housestuff.local` / `LuisHouse#2026`.
+
+Uma conexão PostgreSQL remota e uma conta administrativa podem substituir os valores de demonstração sem gravar segredos no Git:
+
+```powershell
+dotnet user-secrets set "ConnectionStrings:HouseStuff" "<connection-string>" --project src/HouseStuff.Api
+dotnet user-secrets set "DevelopmentAdmin:Email" "<email>" --project src/HouseStuff.Api
+dotnet user-secrets set "DevelopmentAdmin:Password" "<senha>" --project src/HouseStuff.Api
+dotnet user-secrets set "DevelopmentDemo:Enabled" "false" --project src/HouseStuff.Api
+```
+
+O ambiente desta máquina está configurado dessa forma para usar o Neon; os valores reais permanecem somente no repositório de segredos do .NET.
 
 Consulte [docs/LOCAL_DELIVERY.md](docs/LOCAL_DELIVERY.md) para pré-requisitos, logs e resolução de problemas.
 
@@ -81,7 +92,7 @@ Endpoints iniciais:
 
 ## Validar
 
-Para validar backend, frontend, prontidão e sessão do Luis em um único roteiro:
+Para validar backend, frontend, prontidão e a sessão administrativa configurada em um único roteiro:
 
 ```powershell
 .\scripts\validate-local.ps1
