@@ -48,6 +48,8 @@ Em `HOUSE-070`, a consulta de rotina combina duas projeções somente leitura: p
 
 Em `HOUSE-100`, `ShoppingCategories` possui ordem e unicidade por residência, enquanto `ShoppingItems` usa chave estrangeira composta `{CategoryId, ResidenceId}`. Essa composição impede no PostgreSQL que um item de uma casa seja ligado à categoria de outra; os nomes normalizados garantem unicidade por categoria.
 
+Em `HOUSE-110`, `PurchaseWishes` pertence diretamente à residência e mantém uma prioridade inteira estável dentro dela. A chave estrangeira com exclusão em cascata impede desejos órfãos, enquanto todo acesso funcional deriva a casa da sessão e nunca aceita `ResidenceId` do cliente.
+
 ## Entrega local
 
 Em `HOUSE-080`, o ambiente Development ganhou um cenário demonstrável idempotente da Casa do Luis. A API separa liveness (`/health/live`) de readiness (`/health/ready`), que inclui a conexão PostgreSQL. Scripts PowerShell no backend orquestram PostgreSQL, API e frontend, registram somente os processos que iniciam e oferecem um smoke autenticado não mutável junto aos gates dos dois repositórios.

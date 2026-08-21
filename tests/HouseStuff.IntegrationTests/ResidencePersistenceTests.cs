@@ -3,6 +3,7 @@ using HouseStuff.Domain.Pots;
 using HouseStuff.Domain.Tasks;
 using HouseStuff.Domain.Assignments;
 using HouseStuff.Domain.Shopping;
+using HouseStuff.Domain.Purchases;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -136,6 +137,32 @@ public sealed class ResidencePersistenceTests
         database.ShoppingItems.Add(ShoppingItem.Create(first.Id, firstCategory.Id, " detergente ", DateTimeOffset.UtcNow).Value!);
         await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
 
+        await database.Database.EnsureDeletedAsync();
+    }
+
+    [Fact]
+    public async Task PurchaseWishesRequireResidenceAndKeepPrioritiesSeparated()
+    {
+        await CreateTestDatabaseAsync();
+        var options = new DbContextOptionsBuilder<HouseStuffDbContext>().UseNpgsql(TestConnection).Options;
+        await using var database = new HouseStuffDbContext(options);
+        await database.Database.EnsureDeletedAsync();
+        await database.Database.EnsureCreatedAsync();
+
+        var first = Residence.Create("Casa Um", "admin-1", DateTimeOffset.UtcNow).Residence!;
+        var second = Residence.Create("Casa Dois", "admin-2", DateTimeOffset.UtcNow).Residence!;
+        database.Residences.AddRange(first, second);
+        database.PurchaseWishes.AddRange(
+            PurchaseWish.Create(first.Id, "Sofá", null, 0, DateTimeOffset.UtcNow).Wish!,
+            PurchaseWish.Create(first.Id, "Mesa", null, 1, DateTimeOffset.UtcNow).Wish!,
+            PurchaseWish.Create(second.Id, "Sofá", null, 0, DateTimeOffset.UtcNow).Wish!);
+        await database.SaveChangesAsync();
+
+        var firstWishes = await database.PurchaseWishes.Where(wish => wish.ResidenceId == first.Id).OrderBy(wish => wish.Priority).ToListAsync();
+        Assert.Equal(["Sofá", "Mesa"], firstWishes.Select(wish => wish.Name));
+
+        database.PurchaseWishes.Add(PurchaseWish.Create(Guid.NewGuid(), "Inválido", null, 0, DateTimeOffset.UtcNow).Wish!);
+        await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
         await database.Database.EnsureDeletedAsync();
     }
 

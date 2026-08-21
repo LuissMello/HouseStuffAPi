@@ -5,6 +5,7 @@ using HouseStuff.Domain.Pots;
 using HouseStuff.Domain.Tasks;
 using HouseStuff.Domain.Assignments;
 using HouseStuff.Domain.Shopping;
+using HouseStuff.Domain.Purchases;
 
 namespace HouseStuff.Infrastructure.Identity;
 
@@ -17,6 +18,7 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
     public DbSet<TaskAssignment> TaskAssignments => Set<TaskAssignment>();
     public DbSet<ShoppingCategory> ShoppingCategories => Set<ShoppingCategory>();
     public DbSet<ShoppingItem> ShoppingItems => Set<ShoppingItem>();
+    public DbSet<PurchaseWish> PurchaseWishes => Set<PurchaseWish>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -106,6 +108,16 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
                 .HasForeignKey(item => new { item.CategoryId, item.ResidenceId })
                 .HasPrincipalKey(category => new { category.Id, category.ResidenceId })
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<PurchaseWish>(entity =>
+        {
+            entity.ToTable("PurchaseWishes");
+            entity.HasKey(wish => wish.Id);
+            entity.Property(wish => wish.Name).HasMaxLength(120).IsRequired();
+            entity.Property(wish => wish.StoreUrl).HasMaxLength(500);
+            entity.HasIndex(wish => new { wish.ResidenceId, wish.Priority });
+            entity.HasOne<Residence>().WithMany().HasForeignKey(wish => wish.ResidenceId).OnDelete(DeleteBehavior.Cascade);
         });
     }
 }
