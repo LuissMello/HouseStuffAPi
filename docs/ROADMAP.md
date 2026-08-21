@@ -50,7 +50,7 @@ Conclusões e próximas disponibilidades são registradas
 
 Usuário acompanha disponibilidade e histórico da própria casa
 
-- [ ] `HOUSE-070` — Calendário e histórico — Usuário consulta calendário e histórico reais da própria casa.
+- [x] `HOUSE-070` — Calendário e histórico — Usuário consulta calendário e histórico reais da própria casa.
 
 ## M8 — Entrega
 

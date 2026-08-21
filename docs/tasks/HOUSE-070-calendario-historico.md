@@ -1,6 +1,6 @@
 # HOUSE-070 — Calendário e histórico
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: funcional.
 
@@ -16,7 +16,7 @@ O usuário abre uma área responsiva de rotina para consultar as próximas taref
 - [x] `HOUSE-070-02` — consultas e endpoints isolados;
 - [x] `HOUSE-070-03` — tela responsiva e navegação;
 - [x] `HOUSE-070-04` — integração, estados e isolamento;
-- [>] `HOUSE-070-05` — testes e documentação.
+- [x] `HOUSE-070-05` — testes e documentação.
 
 ## Decisões do recorte
 
@@ -31,11 +31,20 @@ O usuário abre uma área responsiva de rotina para consultar as próximas taref
 
 ## Critérios de aceite
 
-- [ ] consulta deriva usuário e residência exclusivamente da sessão;
-- [ ] calendário retorna somente recorrências futuras da própria casa;
-- [ ] histórico retorna somente conclusões do usuário autenticado;
-- [ ] resultados possuem ordem determinística;
-- [ ] interface cobre loading, vazio, erro e dados reais;
-- [ ] navegação autenticada inclui a nova área;
-- [ ] fluxo é responsivo e utilizável por toque;
-- [ ] builds e testes passam nos dois repositórios.
+- [x] consulta deriva usuário e residência exclusivamente da sessão;
+- [x] calendário retorna somente recorrências futuras da própria casa;
+- [x] histórico retorna somente conclusões do usuário autenticado;
+- [x] resultados possuem ordem determinística;
+- [x] interface cobre loading, vazio, erro e dados reais;
+- [x] navegação autenticada inclui a nova área;
+- [x] fluxo é responsivo e utilizável por toque;
+- [x] builds e testes passam nos dois repositórios.
+
+## Validação funcional
+
+- Luis visualizou `Limpar a geladeira` disponível em 19/09/2026;
+- o histórico de Luis mostrou quatro conclusões reais em ordem decrescente;
+- a conta da Casa Independente recebeu calendário e histórico vazios, sem dados da Casa do Luis;
+- viewport de 390 × 844 validado sem rolagem horizontal;
+- navegação inferior permitiu alternar entre Casa e Rotina no celular;
+- próxima entrega: `HOUSE-080`, ainda não autorizada.

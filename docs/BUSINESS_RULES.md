@@ -51,7 +51,14 @@
 - consultas e sorteios consideram a tarefa elegível quando `nextAvailableAt` for menor ou igual ao instante atual;
 - o backend usa seu próprio relógio para decidir elegibilidade.
 
+## BR-005 — Calendário e histórico
+
+- o calendário lista recorrências futuras da residência autenticada sem identificar o morador que concluiu;
+- tarefas já disponíveis permanecem no fluxo de sorteio e não aparecem como evento futuro;
+- o histórico mostra somente as próprias conclusões do usuário autenticado;
+- a consulta inicial retorna as 50 conclusões mais recentes;
+- instantes são persistidos e transportados em UTC e exibidos no fuso do dispositivo.
+
 ## Pendências para as tarefas correspondentes
 
 - possibilidade e regras de mudança de residência;
-- timezone usado para exibição do calendário.

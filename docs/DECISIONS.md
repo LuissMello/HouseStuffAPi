@@ -64,3 +64,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: a conclusão encerra a atribuição e atualiza a tarefa na mesma unidade de persistência. Tarefas únicas são arquivadas, reutilizáveis ficam disponíveis imediatamente e recorrentes guardam `NextAvailableAt`; sorteio e aceite fazem a comparação no momento da consulta.
+
+## DEC-014 — Calendário residencial e histórico pessoal
+
+- Status: aceita em 20/08/2026.
+- Decisão: próximas recorrências são visíveis aos moradores da casa sem autoria; o histórico é pessoal e limitado às 50 conclusões mais recentes. A API trabalha em UTC e a interface apresenta datas no fuso do dispositivo.

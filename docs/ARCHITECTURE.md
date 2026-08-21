@@ -44,6 +44,8 @@ Em `HOUSE-050`, `TaskAssignments` registra a tarefa e o usuário que a aceitou. 
 
 Em `HOUSE-060`, a própria atribuição recebe `CompletedAt` e permanece como registro histórico. A tarefa guarda `NextAvailableAt`: nulo para reutilizáveis, data calculada para recorrentes e arquivamento para únicas. Não há processo agendado; sorteio e aceite avaliam a disponibilidade contra o relógio do backend.
 
+Em `HOUSE-070`, a consulta de rotina combina duas projeções somente leitura: próximas recorrências da residência e atribuições concluídas pelo usuário. O identificador da casa e do usuário vem da sessão; a API não recebe filtros de identidade do cliente.
+
 ## Acompanhamento
 
 `docs/tracking/project.json` é a única fonte editável. Ele gera `ROADMAP.md` e `STATUS.md`, é copiado para o frontend durante desenvolvimento/build e também é exposto por `GET /api/v1/project-tracking`.

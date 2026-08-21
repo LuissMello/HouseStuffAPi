@@ -55,6 +55,7 @@ Endpoints iniciais:
 - `GET /api/v1/assignments/current`;
 - `POST /api/v1/assignments/accept`.
 - `POST /api/v1/assignments/current/complete`.
+- `GET /api/v1/routine`.
 
 ## Validar
 
