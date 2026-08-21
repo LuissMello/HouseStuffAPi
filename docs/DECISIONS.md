@@ -94,3 +94,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: desejos de compra são compartilhados por todos os moradores e a prioridade é sua posição persistida na casa. A reordenação aceita arraste, toque, teclado e botões explícitos; itens comprados usam exclusão real, sem histórico nesta entrega.
+
+## DEC-020 — Agenda residencial compartilhada
+
+- Status: aceita em 20/08/2026.
+- Decisão: qualquer morador mantém eventos visíveis para toda a casa. Datas e aniversários usam data civil, compromissos usam UTC e somente aniversários repetem anualmente. Participantes individuais são exclusivos em relação à opção “Todos da casa”.

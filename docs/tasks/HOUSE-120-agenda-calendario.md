@@ -1,6 +1,6 @@
 # HOUSE-120 — Agenda e calendário da casa
 
-Status: proposta.
+Status: em andamento.
 
 Tipo: funcional.
 
@@ -12,7 +12,7 @@ Uma pessoa cadastra datas, aniversários e compromissos, informa quais moradores
 
 ## Subtarefas
 
-- [ ] `HOUSE-120-01` — domínio, participantes, datas e persistência;
+- [>] `HOUSE-120-01` — domínio, participantes, datas e persistência;
 - [ ] `HOUSE-120-02` — CRUD de eventos e consultas por período na API;
 - [ ] `HOUSE-120-03` — cadastro responsivo com seleção de envolvidos;
 - [ ] `HOUSE-120-04` — calendário diário, semanal e mensal;
@@ -57,11 +57,11 @@ Uma pessoa cadastra datas, aniversários e compromissos, informa quais moradores
 - consultas recebem apenas o intervalo visível; residência vem sempre da sessão;
 - eventos e recorrências de tarefas usam estilos diferentes no calendário.
 
-## Decisões pendentes antes da implementação
+## Decisões aprovadas para a implementação
 
-- confirmar se qualquer morador pode criar e editar eventos ou somente o administrador;
-- confirmar se compromissos comuns também poderão ser recorrentes;
-- confirmar se eventos individuais são visíveis para toda a casa ou somente para os envolvidos — a proposta inicial é visibilidade para toda a casa, mostrando os envolvidos.
+- qualquer morador vinculado pode criar, editar e excluir eventos da própria casa;
+- somente aniversários possuem recorrência anual nesta etapa;
+- todos os eventos são visíveis para a casa inteira e mostram claramente os moradores envolvidos.
 
 ## Critérios de aceite
 

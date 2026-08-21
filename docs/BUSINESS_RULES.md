@@ -81,6 +81,18 @@
 - links externos abrem em nova aba sem acesso à janela de origem;
 - item comprado pode ser excluído; estado adquirido, arquivamento e histórico ficam fora do escopo.
 
+## BR-008 — Agenda e calendário da casa
+
+- qualquer morador vinculado cria, edita e exclui eventos da própria residência;
+- eventos podem ser datas de dia inteiro, aniversários anuais ou compromissos com horário;
+- todo evento seleciona moradores da casa ou a opção exclusiva “Todos da casa”;
+- todos os moradores veem a agenda compartilhada e para quem cada evento foi marcado;
+- participantes de outra residência são recusados e nenhuma operação recebe `ResidenceId` do cliente;
+- datas civis são persistidas sem conversão de fuso; compromissos usam instantes UTC e horário final posterior ao inicial;
+- apenas aniversários se repetem nesta etapa;
+- consultas recebem o intervalo visível e combinam eventos com próximas recorrências de tarefas, mantendo estilos distintos;
+- o histórico de tarefas concluídas continua pessoal.
+
 ## Pendências para as tarefas correspondentes
 
 - possibilidade e regras de mudança de residência;
