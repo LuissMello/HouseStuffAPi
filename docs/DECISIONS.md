@@ -84,3 +84,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: qualquer morador vinculado pode manter potes, tarefas e futuras categorias e itens de compras da própria residência. A residência continua derivada da sessão e somente a criação e administração de usuários exige o papel `Administrator`.
+
+## DEC-018 — Lista de compras gerada sem histórico
+
+- Status: aceita em 20/08/2026.
+- Decisão: categorias e itens formam um catálogo residencial persistente, enquanto a lista atual é uma seleção temporária feita no frontend. Não há entidade de lista, estado de comprado ou histórico nesta entrega; a ordem das categorias é persistida.

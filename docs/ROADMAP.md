@@ -68,7 +68,7 @@ Tarefas em post-its e sorteio animado tornam a rotina mais leve e divertida
 
 A casa organiza compras recorrentes e desejos futuros por prioridade
 
-- [ ] `HOUSE-100` — Lista de compras por categorias — Usuário mantém categorias e itens e gera uma lista com seleção individual ou por categoria.
+- [>] `HOUSE-100` — Lista de compras por categorias — Usuário mantém categorias e itens e gera uma lista com seleção individual ou por categoria.
 - [ ] `HOUSE-110` — Coisas para comprar para a casa — Usuário mantém desejos da casa, ordena por prioridade e guarda um link opcional de loja.
 
 ## M11 — Agenda

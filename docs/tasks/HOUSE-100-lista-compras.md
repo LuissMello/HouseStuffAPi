@@ -1,6 +1,6 @@
 # HOUSE-100 — Lista de compras por categorias
 
-Status: proposta.
+Status: em andamento.
 
 Tipo: funcional.
 
@@ -12,7 +12,7 @@ Uma pessoa da casa mantém categorias e um catálogo de itens, escolhe gerar uma
 
 ## Subtarefas
 
-- [ ] `HOUSE-100-01` — domínio, persistência e isolamento de categorias e itens;
+- [>] `HOUSE-100-01` — domínio, persistência e isolamento de categorias e itens;
 - [ ] `HOUSE-100-02` — CRUD de categorias e itens na API;
 - [ ] `HOUSE-100-03` — cadastro responsivo de categorias e itens;
 - [ ] `HOUSE-100-04` — geração, ordenação e seleção da lista;
@@ -49,11 +49,14 @@ Uma pessoa da casa mantém categorias e um catálogo de itens, escolhe gerar uma
 - seleção individual atualiza o estado total, parcial ou vazio da categoria;
 - ordenação por categoria deve ser persistida ou derivada de uma ordem estável definida na casa;
 - nenhuma operação aceita `ResidenceId` enviado pelo cliente.
+- a lista gerada é uma seleção temporária do catálogo e não cria histórico ou múltiplas listas salvas;
+- marcar um item significa incluí-lo na compra, não registrar que já foi comprado;
+- categorias e itens usam exclusão real; categoria com itens precisa ser esvaziada antes da exclusão.
 
-## Decisões pendentes antes da implementação
+## Decisões aprovadas para a implementação
 
-- confirmar se haverá apenas uma lista atual por casa ou múltiplas listas salvas;
-- confirmar se a lista precisa marcar itens como comprados depois de gerada.
+- não haverá lista persistida ou múltiplas listas salvas nesta entrega;
+- a seleção serve apenas para compor a lista atual; estado de item comprado fica fora do escopo.
 
 ## Critérios de aceite
 

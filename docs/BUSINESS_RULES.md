@@ -59,6 +59,18 @@
 - a consulta inicial retorna as 50 conclusões mais recentes;
 - instantes são persistidos e transportados em UTC e exibidos no fuso do dispositivo.
 
+## BR-006 — Categorias, itens e lista de compras
+
+- qualquer morador vinculado mantém categorias e itens da própria residência;
+- categorias possuem nome único e ordem persistida dentro da residência;
+- cada item pertence a exatamente uma categoria da mesma residência;
+- nomes de itens são únicos dentro da categoria, ignorando maiúsculas e espaços externos;
+- nenhuma operação recebe `ResidenceId` do cliente; a residência é derivada da sessão;
+- categoria com itens não pode ser excluída antes de ser esvaziada;
+- a lista é gerada temporariamente a partir do catálogo, sem histórico ou múltiplas listas salvas;
+- selecionar uma categoria seleciona todos os seus itens, e a seleção individual atualiza o estado total, parcial ou vazio da categoria;
+- selecionar significa incluir na lista atual, não registrar a compra do item.
+
 ## Pendências para as tarefas correspondentes
 
 - possibilidade e regras de mudança de residência;
