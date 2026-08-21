@@ -1,8 +1,11 @@
+using HouseStuff.Api.Maintenance;
 using HouseStuff.Api.ProjectTracking;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
-var builder = WebApplication.CreateBuilder(args);
+// Argumentos de manutenção são posicionais e o provider de linha de comando só aceita `--chave=valor`.
+var maintenance = MaintenanceCommands.IsRequested(args);
+var builder = WebApplication.CreateBuilder(maintenance ? [] : args);
 
 builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
@@ -27,6 +30,13 @@ app.MapControllers();
 
 await app.Services.InitializeHouseStuffIdentityAsync();
 
+if (maintenance)
+{
+    return await MaintenanceCommands.RunAsync(app.Services, args, CancellationToken.None);
+}
+
 app.Run();
+
+return 0;
 
 public partial class Program;
