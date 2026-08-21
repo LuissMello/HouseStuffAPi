@@ -59,3 +59,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: o sorteio não reserva a tarefa. A troca exclui propostas vistas apenas durante a rodada do cliente, e o aceite revalida a elegibilidade antes de persistir. Índices únicos parciais limitam uma atribuição ativa por usuário e por tarefa.
+
+## DEC-013 — Disponibilidade calculada sem job
+
+- Status: aceita em 20/08/2026.
+- Decisão: a conclusão encerra a atribuição e atualiza a tarefa na mesma unidade de persistência. Tarefas únicas são arquivadas, reutilizáveis ficam disponíveis imediatamente e recorrentes guardam `NextAvailableAt`; sorteio e aceite fazem a comparação no momento da consulta.

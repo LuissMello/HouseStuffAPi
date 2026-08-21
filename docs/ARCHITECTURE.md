@@ -42,6 +42,8 @@ Em `HOUSE-040`, `HouseholdTasks` pertence ao pote por uma chave estrangeira comp
 
 Em `HOUSE-050`, `TaskAssignments` registra a tarefa e o usuário que a aceitou. Índices únicos parciais garantem no PostgreSQL no máximo uma atribuição ativa por usuário e por tarefa. Sorteio, consulta atual e aceite derivam usuário e residência da sessão; o aceite repete a validação de elegibilidade porque a proposta não cria reserva.
 
+Em `HOUSE-060`, a própria atribuição recebe `CompletedAt` e permanece como registro histórico. A tarefa guarda `NextAvailableAt`: nulo para reutilizáveis, data calculada para recorrentes e arquivamento para únicas. Não há processo agendado; sorteio e aceite avaliam a disponibilidade contra o relógio do backend.
+
 ## Acompanhamento
 
 `docs/tracking/project.json` é a única fonte editável. Ele gera `ROADMAP.md` e `STATUS.md`, é copiado para o frontend durante desenvolvimento/build e também é exposto por `GET /api/v1/project-tracking`.

@@ -27,7 +27,7 @@
 - o administrador pode mover a tarefa entre potes ativos da própria casa;
 - tarefas podem ser arquivadas e reativadas sem apagar seu registro;
 - tarefa única concluída nunca retorna ao pote;
-- tarefa reutilizável pode voltar a ficar disponível conforme sua política;
+- tarefa reutilizável volta a ficar disponível imediatamente após a conclusão;
 - tarefa recorrente possui um intervalo configurado.
 - apenas tarefa recorrente possui intervalo, entre 1 e 3650 dias;
 - tarefas não possuem data-alvo no cadastro inicial.
@@ -53,6 +53,5 @@
 
 ## Pendências para as tarefas correspondentes
 
-- política de tarefas reutilizáveis sem intervalo;
 - possibilidade e regras de mudança de residência;
 - timezone usado para exibição do calendário.

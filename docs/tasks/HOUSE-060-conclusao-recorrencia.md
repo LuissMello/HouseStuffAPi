@@ -1,6 +1,6 @@
 # HOUSE-060 — Conclusão e recorrência
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: funcional.
 
@@ -16,7 +16,7 @@ O morador conclui sua tarefa ativa pela área da casa e pode sortear novamente c
 - [x] `HOUSE-060-02` — domínio, persistência e migration;
 - [x] `HOUSE-060-03` — caso de uso e endpoint isolado;
 - [x] `HOUSE-060-04` — experiência responsiva de conclusão;
-- [>] `HOUSE-060-05` — integração, testes e documentação.
+- [x] `HOUSE-060-05` — integração, testes e documentação.
 
 ## Decisões do recorte
 
@@ -31,12 +31,23 @@ O morador conclui sua tarefa ativa pela área da casa e pode sortear novamente c
 
 ## Critérios de aceite
 
-- [ ] migration persiste a próxima disponibilidade da tarefa;
-- [ ] conclusão registra o instante e encerra a atribuição ativa;
-- [ ] tarefa única deixa de ser elegível definitivamente;
-- [ ] tarefa reutilizável volta ao sorteio imediatamente;
-- [ ] tarefa recorrente fica indisponível até o intervalo configurado;
-- [ ] outro usuário ou outra residência não conclui a atribuição;
-- [ ] interface cobre confirmação, processamento, erro e sucesso;
-- [ ] fluxo é responsivo e utilizável por toque;
-- [ ] builds e testes passam nos dois repositórios.
+- [x] migration persiste a próxima disponibilidade da tarefa;
+- [x] conclusão registra o instante e encerra a atribuição ativa;
+- [x] tarefa única deixa de ser elegível definitivamente;
+- [x] tarefa reutilizável volta ao sorteio imediatamente;
+- [x] tarefa recorrente fica indisponível até o intervalo configurado;
+- [x] outro usuário ou outra residência não conclui a atribuição;
+- [x] interface cobre confirmação, processamento, erro e sucesso;
+- [x] fluxo é responsivo e utilizável por toque;
+- [x] builds e testes passam nos dois repositórios.
+
+## Validação funcional
+
+- login do morador Luis em viewport de 390 × 844;
+- cancelamento e confirmação da conclusão de `Organizar a despensa`;
+- tarefa única removida dos sorteios após concluir;
+- `Limpar a geladeira` concluída com retorno exibido em 19/09/2026 e bloqueada até essa data;
+- `Lavar a louça` concluída e sorteada novamente de imediato;
+- administrador recebeu `active_assignment_not_found` ao tentar concluir a tarefa ativa de Luis;
+- recarga confirmou ausência de atribuição ativa e liberação para novo sorteio;
+- próxima entrega: `HOUSE-070`, ainda não autorizada.

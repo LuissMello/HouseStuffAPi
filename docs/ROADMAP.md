@@ -44,7 +44,7 @@ Usuário escolhe um pote, aceita a tarefa sorteada ou pede outra
 
 Conclusões e próximas disponibilidades são registradas
 
-- [ ] `HOUSE-060` — Conclusão e recorrência — Conclusão encerra tarefa única ou calcula a próxima disponibilidade.
+- [x] `HOUSE-060` — Conclusão e recorrência — Conclusão encerra tarefa única ou calcula a próxima disponibilidade.
 
 ## M7 — Calendário
 
