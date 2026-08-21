@@ -54,7 +54,9 @@ public static class IdentityServiceCollectionExtensions
         {
             options.Cookie.Name = "HouseStuff.Session";
             options.Cookie.HttpOnly = true;
-            options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+            options.Cookie.SameSite = environment.IsDevelopment()
+                ? Microsoft.AspNetCore.Http.SameSiteMode.Strict
+                : Microsoft.AspNetCore.Http.SameSiteMode.None;
             options.Cookie.SecurePolicy = environment.IsDevelopment()
                 ? Microsoft.AspNetCore.Http.CookieSecurePolicy.SameAsRequest
                 : Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
