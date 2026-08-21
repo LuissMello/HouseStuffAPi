@@ -89,6 +89,10 @@ Endpoints iniciais:
 - `POST /api/v1/assignments/accept`.
 - `POST /api/v1/assignments/current/complete`.
 - `GET /api/v1/routine`.
+- `GET /api/v1/shopping/catalog`;
+- `POST|PUT|DELETE /api/v1/shopping/categories`;
+- `POST /api/v1/shopping/categories/{id}/move`;
+- `POST|PUT|DELETE /api/v1/shopping/items`.
 
 ## Validar
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
+#pragma warning disable CA1861 // Código gerado pelo Entity Framework usa arrays nos índices compostos.
 
 namespace HouseStuff.Infrastructure.Identity.Migrations
 {
