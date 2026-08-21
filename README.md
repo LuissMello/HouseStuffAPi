@@ -93,6 +93,9 @@ Endpoints iniciais:
 - `POST|PUT|DELETE /api/v1/shopping/categories`;
 - `POST /api/v1/shopping/categories/{id}/move`;
 - `POST|PUT|DELETE /api/v1/shopping/items`.
+- `GET|POST /api/v1/purchase-wishes`;
+- `PUT|DELETE /api/v1/purchase-wishes/{id}`;
+- `PUT /api/v1/purchase-wishes/order`.
 
 ## Validar
 

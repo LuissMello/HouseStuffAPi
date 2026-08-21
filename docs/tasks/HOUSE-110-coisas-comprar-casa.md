@@ -13,8 +13,8 @@ Uma pessoa da casa cadastra coisas que pretende comprar no futuro, reorganiza a 
 ## Subtarefas
 
 - [x] `HOUSE-110-01` — domínio, persistência e isolamento dos desejos;
-- [>] `HOUSE-110-02` — CRUD e ordenação persistida na API;
-- [ ] `HOUSE-110-03` — cadastro responsivo com link opcional;
+- [x] `HOUSE-110-02` — CRUD e ordenação persistida na API;
+- [>] `HOUSE-110-03` — cadastro responsivo com link opcional;
 - [ ] `HOUSE-110-04` — lista com prioridade por arrastar e alternativa acessível;
 - [ ] `HOUSE-110-05` — integração, testes, evidência visual e documentação.
 

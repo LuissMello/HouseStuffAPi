@@ -11,6 +11,8 @@ using HouseStuff.Application.Routine;
 using HouseStuff.Infrastructure.Routine;
 using HouseStuff.Application.Shopping;
 using HouseStuff.Infrastructure.Shopping;
+using HouseStuff.Application.Purchases;
+using HouseStuff.Infrastructure.Purchases;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -77,6 +79,7 @@ public static class IdentityServiceCollectionExtensions
         services.AddScoped<ITaskAssignmentService, TaskAssignmentService>();
         services.AddScoped<IRoutineOverviewService, RoutineOverviewService>();
         services.AddScoped<IShoppingCatalogService, ShoppingCatalogService>();
+        services.AddScoped<IPurchaseWishService, PurchaseWishService>();
         return services;
     }
 
