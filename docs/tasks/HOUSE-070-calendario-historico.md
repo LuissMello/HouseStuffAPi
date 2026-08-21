@@ -13,8 +13,8 @@ O usuário abre uma área responsiva de rotina para consultar as próximas taref
 ## Subtarefas
 
 - [x] `HOUSE-070-01` — regras e contratos de consulta;
-- [>] `HOUSE-070-02` — consultas e endpoints isolados;
-- [ ] `HOUSE-070-03` — tela responsiva e navegação;
+- [x] `HOUSE-070-02` — consultas e endpoints isolados;
+- [>] `HOUSE-070-03` — tela responsiva e navegação;
 - [ ] `HOUSE-070-04` — integração, estados e isolamento;
 - [ ] `HOUSE-070-05` — testes e documentação.
 
