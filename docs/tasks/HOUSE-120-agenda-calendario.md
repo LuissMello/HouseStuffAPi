@@ -14,9 +14,9 @@ Uma pessoa cadastra datas, aniversários e compromissos, informa quais moradores
 
 - [x] `HOUSE-120-01` — domínio, participantes, datas e persistência;
 - [x] `HOUSE-120-02` — CRUD de eventos e consultas por período na API;
-- [>] `HOUSE-120-03` — cadastro responsivo com seleção de envolvidos;
-- [ ] `HOUSE-120-04` — calendário diário, semanal e mensal;
-- [ ] `HOUSE-120-05` — integração com recorrências, testes, evidência visual e documentação.
+- [x] `HOUSE-120-03` — cadastro responsivo com seleção de envolvidos;
+- [x] `HOUSE-120-04` — calendário diário, semanal e mensal;
+- [>] `HOUSE-120-05` — integração com recorrências, testes, evidência visual e documentação.
 
 ## Escopo
 

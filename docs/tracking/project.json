@@ -235,9 +235,9 @@
       "subtasks": [
         { "id": "HOUSE-120-01", "title": "Domínio, participantes, datas e persistência", "status": "completed" },
         { "id": "HOUSE-120-02", "title": "CRUD de eventos e consultas por período na API", "status": "completed" },
-        { "id": "HOUSE-120-03", "title": "Cadastro responsivo com seleção de envolvidos", "status": "inProgress" },
-        { "id": "HOUSE-120-04", "title": "Calendário diário, semanal e mensal", "status": "pending" },
-        { "id": "HOUSE-120-05", "title": "Integração com recorrências, testes, evidência visual e documentação", "status": "pending" }
+        { "id": "HOUSE-120-03", "title": "Cadastro responsivo com seleção de envolvidos", "status": "completed" },
+        { "id": "HOUSE-120-04", "title": "Calendário diário, semanal e mensal", "status": "completed" },
+        { "id": "HOUSE-120-05", "title": "Integração com recorrências, testes, evidência visual e documentação", "status": "inProgress" }
       ]
     },
     {
