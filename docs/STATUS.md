@@ -5,7 +5,7 @@
 Atualizado em: 2026-08-20.
 
 - Situação: **onTrack**.
-- Progresso: **10 de 12 tarefas concluídas**.
+- Progresso: **10 de 13 tarefas concluídas**.
 - Etapa atual: **M10**.
 - Tarefa ativa: **nenhuma**.
 - Próxima tarefa proposta: **HOUSE-100**.
