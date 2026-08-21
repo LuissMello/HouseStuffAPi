@@ -14,8 +14,8 @@ O usuário anota tarefas em uma interface de post-it e realiza o sorteio por uma
 
 - [x] `HOUSE-090-01` — direção visual e contrato da interação;
 - [x] `HOUSE-090-02` — cadastro e catálogo em estilo post-it;
-- [>] `HOUSE-090-03` — potes e sorteio animados;
-- [ ] `HOUSE-090-04` — acessibilidade, responsividade, testes e fechamento.
+- [x] `HOUSE-090-03` — potes e sorteio animados;
+- [>] `HOUSE-090-04` — acessibilidade, responsividade, testes e fechamento.
 
 ## Escopo
 
@@ -44,11 +44,11 @@ O usuário anota tarefas em uma interface de post-it e realiza o sorteio por uma
 
 - [x] nova tarefa é preenchida e salva em uma superfície de post-it;
 - [x] catálogo apresenta tarefas como post-its legíveis;
-- [ ] fluxo começa em “Sortear uma tarefa” e depois solicita o pote;
-- [ ] pote selecionado avança visualmente e informa seleção acessível;
-- [ ] pote chacoalha enquanto a API sorteia;
-- [ ] tarefa sorteada entra no centro como post-it;
-- [ ] aceite, troca e erros continuam integrados à API;
+- [x] fluxo começa em “Sortear uma tarefa” e depois solicita o pote;
+- [x] pote selecionado avança visualmente e informa seleção acessível;
+- [x] pote chacoalha enquanto a API sorteia;
+- [x] tarefa sorteada entra no centro como post-it;
+- [x] aceite, troca e erros continuam integrados à API;
 - [ ] experiência funciona em celular e desktop;
 - [ ] movimento reduzido é respeitado;
 - [ ] lint, build e testes passam;
