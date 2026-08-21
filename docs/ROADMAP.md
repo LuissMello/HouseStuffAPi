@@ -58,3 +58,9 @@ Ambiente local reproduzível, responsivo e validado ponta a ponta
 
 - [x] `HOUSE-080` — Qualidade e entrega local — Projeto completo inicia por roteiro único e possui validação ponta a ponta.
 
+## M9 — Experiência
+
+Tarefas em post-its e sorteio animado tornam a rotina mais leve e divertida
+
+- [>] `HOUSE-090` — Experiência lúdica e sorteio animado — Usuário anota tarefas em post-its e acompanha o pote escolhido entregar a proposta em uma animação.
+
