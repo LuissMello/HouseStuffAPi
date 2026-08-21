@@ -46,6 +46,10 @@ Em `HOUSE-060`, a própria atribuição recebe `CompletedAt` e permanece como re
 
 Em `HOUSE-070`, a consulta de rotina combina duas projeções somente leitura: próximas recorrências da residência e atribuições concluídas pelo usuário. O identificador da casa e do usuário vem da sessão; a API não recebe filtros de identidade do cliente.
 
+## Entrega local
+
+Em `HOUSE-080`, o ambiente Development ganhou um cenário demonstrável idempotente da Casa do Luis. A API separa liveness (`/health/live`) de readiness (`/health/ready`), que inclui a conexão PostgreSQL. Scripts PowerShell no backend orquestram PostgreSQL, API e frontend, registram somente os processos que iniciam e oferecem um smoke autenticado não mutável junto aos gates dos dois repositórios.
+
 ## Acompanhamento
 
 `docs/tracking/project.json` é a única fonte editável. Ele gera `ROADMAP.md` e `STATUS.md`, é copiado para o frontend durante desenvolvimento/build e também é exposto por `GET /api/v1/project-tracking`.

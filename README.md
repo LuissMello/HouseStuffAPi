@@ -19,7 +19,28 @@ docs/
   tasks/
 ```
 
-## Executar
+## Executar o projeto completo
+
+Com `HouseStuffAPi` e `HouseStuffFront` lado a lado, execute no backend:
+
+```powershell
+.\scripts\start-local.ps1
+```
+
+Acesse `http://localhost:3000`. O comando prepara o PostgreSQL, restaura o backend quando necessário, inicia API e frontend ausentes e aguarda a prontidão. Para encerrar somente os processos iniciados pelo HouseStuff:
+
+```powershell
+.\scripts\stop-local.ps1
+```
+
+Credenciais locais:
+
+- administrador: `admin@housestuff.local` / `HouseStuff#2026`;
+- morador Luis: `luis@housestuff.local` / `LuisHouse#2026`.
+
+Consulte [docs/LOCAL_DELIVERY.md](docs/LOCAL_DELIVERY.md) para pré-requisitos, logs e resolução de problemas.
+
+## Executar somente a API
 
 Use um SDK compatível com o `global.json`:
 
@@ -34,6 +55,7 @@ A API aplica migrations ao iniciar. Em desenvolvimento, cria o administrador `ad
 Endpoints iniciais:
 
 - `GET /health/live`;
+- `GET /health/ready`;
 - `GET /api/v1/project-tracking`.
 - `POST /api/v1/auth/login`;
 - `POST /api/v1/auth/logout`;
@@ -58,6 +80,14 @@ Endpoints iniciais:
 - `GET /api/v1/routine`.
 
 ## Validar
+
+Para validar backend, frontend, prontidão e sessão do Luis em um único roteiro:
+
+```powershell
+.\scripts\validate-local.ps1
+```
+
+Os gates isolados do backend continuam disponíveis:
 
 ```powershell
 dotnet format HouseStuff.slnx --verify-no-changes --no-restore

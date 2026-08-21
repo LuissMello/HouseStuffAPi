@@ -69,3 +69,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: próximas recorrências são visíveis aos moradores da casa sem autoria; o histórico é pessoal e limitado às 50 conclusões mais recentes. A API trabalha em UTC e a interface apresenta datas no fuso do dispositivo.
+
+## DEC-015 — Entrega local reproduzível
+
+- Status: aceita em 20/08/2026.
+- Decisão: a entrega permanece local e é orquestrada por scripts PowerShell versionados no backend. O início aguarda PostgreSQL, API e frontend; a parada usa PID e instante de início para encerrar somente processos registrados; a validação combina gates, readiness e smoke autenticado não mutável. Logs e registros de processo ficam em `.local/`, fora do Git.

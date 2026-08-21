@@ -56,5 +56,5 @@ Usuário acompanha disponibilidade e histórico da própria casa
 
 Ambiente local reproduzível, responsivo e validado ponta a ponta
 
-- [ ] `HOUSE-080` — Qualidade e entrega local — Projeto completo inicia por roteiro único e possui validação ponta a ponta.
+- [x] `HOUSE-080` — Qualidade e entrega local — Projeto completo inicia por roteiro único e possui validação ponta a ponta.
 

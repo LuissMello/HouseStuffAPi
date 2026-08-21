@@ -7,6 +7,7 @@ $workspaceRoot = Split-Path $apiRoot -Parent
 $frontRoot = Join-Path $workspaceRoot "HouseStuffFront"
 $localSdk = Join-Path $workspaceRoot ".dotnet-sdk-10\dotnet.exe"
 $dotnet = if (Test-Path -LiteralPath $localSdk) { $localSdk } else { (Get-Command dotnet -ErrorAction Stop).Source }
+$artifactsRoot = Join-Path $apiRoot ".local\validation-artifacts"
 
 function Assert-Exit([int]$ExitCode, [string]$Step) {
     if ($ExitCode -ne 0) { throw "$Step falhou." }
@@ -16,9 +17,11 @@ Push-Location $apiRoot
 try {
     & $dotnet format HouseStuff.slnx --verify-no-changes --no-restore
     Assert-Exit $LASTEXITCODE "Formatação do backend"
-    & $dotnet build HouseStuff.slnx --configuration Release --no-restore
+    & $dotnet restore HouseStuff.slnx --artifacts-path $artifactsRoot
+    Assert-Exit $LASTEXITCODE "Restauração isolada do backend"
+    & $dotnet build HouseStuff.slnx --configuration Release --no-restore --artifacts-path $artifactsRoot
     Assert-Exit $LASTEXITCODE "Build do backend"
-    & $dotnet test HouseStuff.slnx --configuration Release --no-build --no-restore
+    & $dotnet test HouseStuff.slnx --configuration Release --no-build --no-restore --artifacts-path $artifactsRoot
     Assert-Exit $LASTEXITCODE "Testes do backend"
 }
 finally { Pop-Location }

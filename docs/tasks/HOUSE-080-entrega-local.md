@@ -1,6 +1,6 @@
 # HOUSE-080 — Qualidade e entrega local
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: técnico.
 
@@ -16,7 +16,7 @@ Uma pessoa prepara e inicia o HouseStuff localmente por um comando, recebe dados
 - [x] `HOUSE-080-02` — prontidão e dados locais reproduzíveis;
 - [x] `HOUSE-080-03` — comandos de iniciar, parar e validar;
 - [x] `HOUSE-080-04` — smoke autenticado e auditoria responsiva;
-- [>] `HOUSE-080-05` — gates, documentação e fechamento.
+- [x] `HOUSE-080-05` — gates, documentação e fechamento.
 
 ## Decisões do recorte
 
@@ -35,9 +35,9 @@ Uma pessoa prepara e inicia o HouseStuff localmente por um comando, recebe dados
 - [x] um comando inicia banco, API e frontend e aguarda prontidão;
 - [x] um comando encerra somente os processos registrados pelo HouseStuff;
 - [x] um comando executa gates e smoke autenticado;
-- [ ] documentação contém pré-requisitos, credenciais e resolução de problemas;
+- [x] documentação contém pré-requisitos, credenciais e resolução de problemas;
 - [x] rotas críticas passam em auditoria responsiva;
-- [ ] builds e testes passam nos dois repositórios.
+- [x] builds e testes passam nos dois repositórios.
 
 ## Evidências da validação
 
