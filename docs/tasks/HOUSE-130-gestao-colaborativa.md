@@ -1,6 +1,6 @@
 # HOUSE-130 — Gestão colaborativa da casa
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: funcional.
 
@@ -13,9 +13,9 @@ Qualquer morador vinculado à casa cadastra, edita, ordena, arquiva e reativa po
 ## Subtarefas
 
 - [x] `HOUSE-130-01` — regra colaborativa e contrato de autorização;
-- [>] `HOUSE-130-02` — autorização de moradores na API;
-- [ ] `HOUSE-130-03` — navegação e telas compartilhadas no frontend;
-- [ ] `HOUSE-130-04` — integração com Luis, testes e fechamento.
+- [x] `HOUSE-130-02` — autorização de moradores na API;
+- [x] `HOUSE-130-03` — navegação e telas compartilhadas no frontend;
+- [x] `HOUSE-130-04` — integração com Luis, testes e fechamento.
 
 ## Escopo
 
@@ -45,13 +45,22 @@ Qualquer morador vinculado à casa cadastra, edita, ordena, arquiva e reativa po
 
 ## Critérios de aceite
 
-- [ ] endpoints de manutenção aceitam morador autenticado;
-- [ ] endpoints continuam recusando acesso sem autenticação;
-- [ ] serviços continuam isolando registros pela residência da sessão;
-- [ ] Luis acessa as telas de potes e tarefas;
-- [ ] Luis consegue criar e manter um pote e uma tarefa reais;
-- [ ] navegação desktop e celular expõe Potes e Tarefas para moradores;
-- [ ] rotas antigas continuam utilizáveis durante a transição;
-- [ ] usuário sem residência recebe erro orientativo;
-- [ ] builds e testes passam nos dois repositórios;
-- [ ] documentação e tracking são atualizados.
+- [x] endpoints de manutenção aceitam morador autenticado;
+- [x] endpoints continuam recusando acesso sem autenticação;
+- [x] serviços continuam isolando registros pela residência da sessão;
+- [x] Luis acessa as telas de potes e tarefas;
+- [x] Luis consegue criar e manter um pote e uma tarefa reais;
+- [x] navegação desktop e celular expõe Potes e Tarefas para moradores;
+- [x] rotas antigas continuam utilizáveis durante a transição;
+- [x] usuário sem residência recebe erro orientativo;
+- [x] builds e testes passam nos dois repositórios;
+- [x] documentação e tracking são atualizados.
+
+## Evidência de conclusão
+
+- API de potes e tarefas protegida por autenticação, sem exigir o papel de administrador;
+- rotas compartilhadas `/app/pots` e `/app/tasks`, com aliases administrativos preservados;
+- navegação desktop e inferior móvel disponível para todo morador autenticado;
+- smoke local com `luis@housestuff.local`: criação, leitura e arquivamento de pote e tarefa concluídos;
+- acesso de Luis a `/api/v1/admin/users` continuou retornando `403`;
+- lint, build e 12 testes do frontend aprovados, além dos gates do backend.

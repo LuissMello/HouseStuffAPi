@@ -28,10 +28,10 @@ finally { Pop-Location }
 
 Push-Location $frontRoot
 try {
-    npm.cmd run lint
-    Assert-Exit $LASTEXITCODE "Lint do frontend"
-    npm.cmd test
-    Assert-Exit $LASTEXITCODE "Testes do frontend"
+    $lint = Start-Process -FilePath "npm.cmd" -ArgumentList @("run", "lint") -WorkingDirectory $frontRoot -WindowStyle Hidden -Wait -PassThru
+    Assert-Exit $lint.ExitCode "Lint do frontend"
+    $tests = Start-Process -FilePath "npm.cmd" -ArgumentList @("test") -WorkingDirectory $frontRoot -WindowStyle Hidden -Wait -PassThru
+    Assert-Exit $tests.ExitCode "Testes do frontend"
 }
 finally { Pop-Location }
 

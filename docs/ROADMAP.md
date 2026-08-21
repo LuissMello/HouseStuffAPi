@@ -81,5 +81,5 @@ A casa visualiza datas, aniversários e compromissos em um calendário diário, 
 
 Todos os moradores organizam juntos os potes, tarefas e futuras listas da casa
 
-- [>] `HOUSE-130` — Gestão colaborativa da casa — Qualquer morador mantém potes e tarefas da própria casa pela interface.
+- [x] `HOUSE-130` — Gestão colaborativa da casa — Qualquer morador mantém potes e tarefas da própria casa pela interface.
 

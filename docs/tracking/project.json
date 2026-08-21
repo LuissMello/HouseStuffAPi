@@ -247,13 +247,13 @@
       "repository": "both",
       "type": "feature",
       "title": "Gestão colaborativa da casa",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Qualquer morador mantém potes e tarefas da própria casa pela interface.",
       "subtasks": [
         { "id": "HOUSE-130-01", "title": "Regra colaborativa e contrato de autorização", "status": "completed" },
-        { "id": "HOUSE-130-02", "title": "Autorização de moradores na API", "status": "inProgress" },
-        { "id": "HOUSE-130-03", "title": "Navegação e telas compartilhadas no frontend", "status": "pending" },
-        { "id": "HOUSE-130-04", "title": "Integração com Luis, testes e fechamento", "status": "pending" }
+        { "id": "HOUSE-130-02", "title": "Autorização de moradores na API", "status": "completed" },
+        { "id": "HOUSE-130-03", "title": "Navegação e telas compartilhadas no frontend", "status": "completed" },
+        { "id": "HOUSE-130-04", "title": "Integração com Luis, testes e fechamento", "status": "completed" }
       ]
     }
   ]

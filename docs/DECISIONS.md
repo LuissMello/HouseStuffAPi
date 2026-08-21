@@ -79,3 +79,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: tarefas são apresentadas como anotações em post-its e o sorteio usa potes construídos com HTML/CSS. A interação mantém textos, foco, estados da API e alternativa sem movimento; animações são uma camada de feedback e nunca uma regra de negócio.
+
+## DEC-017 — Organização colaborativa por residência
+
+- Status: aceita em 20/08/2026.
+- Decisão: qualquer morador vinculado pode manter potes, tarefas e futuras categorias e itens de compras da própria residência. A residência continua derivada da sessão e somente a criação e administração de usuários exige o papel `Administrator`.
