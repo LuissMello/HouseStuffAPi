@@ -123,5 +123,7 @@ public static class IdentityServiceCollectionExtensions
         {
             await userManager.AddToRoleAsync(user, HouseStuffRoles.Administrator);
         }
+
+        await DevelopmentDemoSeeder.SeedAsync(database, userManager, user, configuration);
     }
 }

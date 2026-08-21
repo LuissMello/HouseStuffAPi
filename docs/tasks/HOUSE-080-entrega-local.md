@@ -13,8 +13,8 @@ Uma pessoa prepara e inicia o HouseStuff localmente por um comando, recebe dados
 ## Subtarefas
 
 - [x] `HOUSE-080-01` — contrato de entrega e critérios operacionais;
-- [>] `HOUSE-080-02` — prontidão e dados locais reproduzíveis;
-- [ ] `HOUSE-080-03` — comandos de iniciar, parar e validar;
+- [x] `HOUSE-080-02` — prontidão e dados locais reproduzíveis;
+- [>] `HOUSE-080-03` — comandos de iniciar, parar e validar;
 - [ ] `HOUSE-080-04` — smoke autenticado e auditoria responsiva;
 - [ ] `HOUSE-080-05` — gates, documentação e fechamento.
 

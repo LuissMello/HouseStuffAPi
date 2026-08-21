@@ -7,6 +7,7 @@ using HouseStuff.Infrastructure.Identity;
 using HouseStuff.Infrastructure.Routine;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace HouseStuff.IntegrationTests;
 
@@ -54,6 +55,20 @@ public sealed class RoutineOverviewServiceTests
         Assert.True(result.Succeeded);
         Assert.Equal(["Minha recorrente"], result.Value!.Upcoming.Select(item => item.TaskName));
         Assert.Equal(["Minha recorrente"], result.Value.History.Select(item => item.TaskName));
+        await database.Database.EnsureDeletedAsync();
+    }
+
+    [Fact]
+    public async Task ReadinessIsHealthyWhenPostgresIsAvailable()
+    {
+        await CreateTestDatabaseAsync();
+        var options = new DbContextOptionsBuilder<HouseStuffDbContext>().UseNpgsql(TestConnection).Options;
+        await using var database = new HouseStuffDbContext(options);
+        await database.Database.EnsureCreatedAsync();
+
+        var result = await new PostgresReadinessCheck(database).CheckHealthAsync(new HealthCheckContext());
+
+        Assert.Equal(HealthStatus.Healthy, result.Status);
         await database.Database.EnsureDeletedAsync();
     }
 
