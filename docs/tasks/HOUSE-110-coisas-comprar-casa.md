@@ -1,6 +1,6 @@
 # HOUSE-110 — Coisas para comprar para a casa
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: funcional.
 
@@ -16,7 +16,7 @@ Uma pessoa da casa cadastra coisas que pretende comprar no futuro, reorganiza a 
 - [x] `HOUSE-110-02` — CRUD e ordenação persistida na API;
 - [x] `HOUSE-110-03` — cadastro responsivo com link opcional;
 - [x] `HOUSE-110-04` — lista com prioridade por arrastar e alternativa acessível;
-- [>] `HOUSE-110-05` — integração, testes, evidência visual e documentação.
+- [x] `HOUSE-110-05` — integração, testes, evidência visual e documentação.
 
 ## Escopo
 
@@ -55,22 +55,22 @@ Uma pessoa da casa cadastra coisas que pretende comprar no futuro, reorganiza a 
 
 ## Critérios de aceite
 
-- [ ] desejos possuem CRUD real em PostgreSQL e API;
-- [ ] vínculos e leituras de outra residência são recusados;
-- [ ] link de loja é opcional e validado;
-- [ ] usuário reordena por arrastar com toque e mouse;
-- [ ] nova prioridade permanece após recarregar a página;
-- [ ] teclado e botões de subir/descer oferecem o mesmo resultado;
-- [ ] link externo abre com segurança;
-- [ ] estados de loading, vazio, erro e sucesso estão cobertos;
-- [ ] fluxo completo funciona no celular e desktop;
-- [ ] testes, builds, documentação e tracking passam.
+- [x] desejos possuem CRUD real em PostgreSQL e API;
+- [x] vínculos e leituras de outra residência são recusados;
+- [x] link de loja é opcional e validado;
+- [x] usuário reordena por arrastar com toque e mouse;
+- [x] nova prioridade permanece após recarregar a página;
+- [x] teclado e botões de subir/descer oferecem o mesmo resultado;
+- [x] link externo abre com segurança;
+- [x] estados de loading, vazio, erro e sucesso estão cobertos;
+- [x] fluxo completo funciona no celular e desktop;
+- [x] testes, builds, documentação e tracking passam.
 
 ## Fechamento
 
-- Resultado:
-- Arquivos principais:
-- Testes e comandos:
-- Roteiro para testar:
-- Evidência visual:
-- Pendências fora do escopo:
+- Resultado: moradores mantêm uma lista compartilhada de coisas para comprar, com link opcional e prioridade persistida por arraste, teclado ou botões.
+- Arquivos principais: `PurchaseWish.cs`, `PurchaseWishService.cs`, `PurchaseWishesController.cs`, `app/app/wishes/page.tsx` e `app/globals.css`.
+- Testes e comandos: `scripts/validate-local.ps1 -SkipStart` aprovou build sem avisos, 70 testes de backend, 16 testes de frontend, readiness e sessão real; smoke no Neon cobriu criar, listar, editar, reordenar, recusar link inseguro e excluir com administrador e morador.
+- Roteiro para testar: execute `scripts/start-local.ps1 -SkipInstall`, entre em `http://localhost:3000`, abra **Desejos**, cadastre duas ideias, arraste uma delas, recarregue a página, edite o link e exclua os itens.
+- Evidência visual: a rota real `/app/wishes` respondeu `200`; a tela possui composição desktop e breakpoints dedicados em `900px` e `640px`, navegação móvel com rolagem segura e puxador com `touch-action: none`.
+- Pendências fora do escopo: categorias, orçamento, histórico de itens comprados e consulta automática de preço continuam deliberadamente fora desta entrega.

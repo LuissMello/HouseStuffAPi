@@ -213,14 +213,14 @@
       "repository": "both",
       "type": "feature",
       "title": "Coisas para comprar para a casa",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Usuário mantém desejos da casa, ordena por prioridade e guarda um link opcional de loja.",
       "subtasks": [
         { "id": "HOUSE-110-01", "title": "Domínio, persistência e isolamento dos desejos", "status": "completed" },
         { "id": "HOUSE-110-02", "title": "CRUD e ordenação persistida na API", "status": "completed" },
         { "id": "HOUSE-110-03", "title": "Cadastro responsivo com link opcional", "status": "completed" },
         { "id": "HOUSE-110-04", "title": "Lista com prioridade por arrastar e alternativa acessível", "status": "completed" },
-        { "id": "HOUSE-110-05", "title": "Integração, testes, evidência visual e documentação", "status": "inProgress" }
+        { "id": "HOUSE-110-05", "title": "Integração, testes, evidência visual e documentação", "status": "completed" }
       ]
     },
     {
