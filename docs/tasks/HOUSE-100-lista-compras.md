@@ -1,6 +1,6 @@
 # HOUSE-100 — Lista de compras por categorias
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: funcional.
 
@@ -16,7 +16,7 @@ Uma pessoa da casa mantém categorias e um catálogo de itens, escolhe gerar uma
 - [x] `HOUSE-100-02` — CRUD de categorias e itens na API;
 - [x] `HOUSE-100-03` — cadastro responsivo de categorias e itens;
 - [x] `HOUSE-100-04` — geração, ordenação e seleção da lista;
-- [>] `HOUSE-100-05` — integração, testes, evidência visual e documentação.
+- [x] `HOUSE-100-05` — integração, testes, evidência visual e documentação.
 
 ## Escopo
 
@@ -60,22 +60,23 @@ Uma pessoa da casa mantém categorias e um catálogo de itens, escolhe gerar uma
 
 ## Critérios de aceite
 
-- [ ] categorias e itens possuem CRUD real em PostgreSQL e API;
-- [ ] vínculos cruzados entre residências são recusados;
-- [ ] usuário alterna entre cadastro e geração da lista;
-- [ ] lista pode ser ordenada por categoria;
-- [ ] categoria inteira pode ser selecionada ou desselecionada;
-- [ ] item individual pode ser selecionado ou desselecionado;
-- [ ] seleção parcial da categoria é apresentada corretamente;
-- [ ] estados de loading, vazio, erro e sucesso estão cobertos;
-- [ ] fluxo completo funciona no celular e desktop;
-- [ ] testes, builds, documentação e tracking passam.
+- [x] categorias e itens possuem CRUD real em PostgreSQL e API;
+- [x] vínculos cruzados entre residências são recusados;
+- [x] usuário alterna entre cadastro e geração da lista;
+- [x] lista pode ser ordenada por categoria;
+- [x] categoria inteira pode ser selecionada ou desselecionada;
+- [x] item individual pode ser selecionado ou desselecionado;
+- [x] seleção parcial da categoria é apresentada corretamente;
+- [x] estados de loading, vazio, erro e sucesso estão cobertos;
+- [x] fluxo completo funciona no celular e desktop;
+- [x] testes, builds, documentação e tracking passam.
 
 ## Fechamento
 
-- Resultado:
-- Arquivos principais:
-- Testes e comandos:
-- Roteiro para testar:
-- Evidência visual:
-- Pendências fora do escopo:
+- Resultado: qualquer morador mantém categorias e itens e gera uma lista temporária com seleção individual, total ou parcial.
+- Arquivos principais: domínio `Shopping`, migration `AddShoppingCatalog`, `ShoppingCatalogService`, `ShoppingController` e rota frontend `/app/shopping`.
+- Testes e comandos: 23 testes de domínio, 24 de API, 10 de integração, 3 de arquitetura e 14 de frontend aprovados; validação completa terminou com código zero.
+- Roteiro para testar: entrar, abrir Compras, criar categorias, adicionar itens, reordenar categorias e usar Gerar lista para alternar seleções.
+- Evidência visual: hero e sacola lúdicos, cartões de categoria, estados total/parcial/vazio e layouts de uma coluna até 640 px; rota local respondeu `200`.
+- Integração: migration aplicada no Neon; CRUD real aprovado com administrador e moradora, inclusive conflito `409` para categoria com itens; dados temporários removidos.
+- Pendências fora do escopo: listas persistidas, histórico e marcação de item comprado.
