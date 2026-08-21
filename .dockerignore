@@ -3,6 +3,8 @@
 **/bin
 **/obj
 TestResults
-docs
+docs/**
+!docs/tracking/
+!docs/tracking/project.json
 tests
 *.user
