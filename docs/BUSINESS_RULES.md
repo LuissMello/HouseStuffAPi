@@ -71,6 +71,16 @@
 - selecionar uma categoria seleciona todos os seus itens, e a seleção individual atualiza o estado total, parcial ou vazio da categoria;
 - selecionar significa incluir na lista atual, não registrar a compra do item.
 
+## BR-007 — Desejos de compra da casa
+
+- qualquer morador vinculado cria, edita, exclui e reordena desejos da própria residência;
+- cada desejo possui nome obrigatório, link HTTP/HTTPS opcional e prioridade representada por sua posição;
+- a ordem é estável dentro da residência e uma reordenação persiste todas as posições afetadas;
+- a API aceita somente a lista completa de identificadores da residência ao reordenar;
+- nenhuma operação recebe `ResidenceId` do cliente;
+- links externos abrem em nova aba sem acesso à janela de origem;
+- item comprado pode ser excluído; estado adquirido, arquivamento e histórico ficam fora do escopo.
+
 ## Pendências para as tarefas correspondentes
 
 - possibilidade e regras de mudança de residência;

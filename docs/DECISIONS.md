@@ -89,3 +89,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: categorias e itens formam um catálogo residencial persistente, enquanto a lista atual é uma seleção temporária feita no frontend. Não há entidade de lista, estado de comprado ou histórico nesta entrega; a ordem das categorias é persistida.
+
+## DEC-019 — Desejos colaborativos ordenados
+
+- Status: aceita em 20/08/2026.
+- Decisão: desejos de compra são compartilhados por todos os moradores e a prioridade é sua posição persistida na casa. A reordenação aceita arraste, toque, teclado e botões explícitos; itens comprados usam exclusão real, sem histórico nesta entrega.

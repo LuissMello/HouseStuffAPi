@@ -1,6 +1,6 @@
 # HOUSE-110 — Coisas para comprar para a casa
 
-Status: proposta.
+Status: em andamento.
 
 Tipo: funcional.
 
@@ -12,7 +12,7 @@ Uma pessoa da casa cadastra coisas que pretende comprar no futuro, reorganiza a 
 
 ## Subtarefas
 
-- [ ] `HOUSE-110-01` — domínio, persistência e isolamento dos desejos;
+- [>] `HOUSE-110-01` — domínio, persistência e isolamento dos desejos;
 - [ ] `HOUSE-110-02` — CRUD e ordenação persistida na API;
 - [ ] `HOUSE-110-03` — cadastro responsivo com link opcional;
 - [ ] `HOUSE-110-04` — lista com prioridade por arrastar e alternativa acessível;
@@ -45,11 +45,13 @@ Uma pessoa da casa cadastra coisas que pretende comprar no futuro, reorganiza a 
 - link é opcional e, quando informado, aceita somente endereço HTTP ou HTTPS válido;
 - links externos abrem em nova aba com proteção contra acesso à janela de origem;
 - nenhuma operação aceita `ResidenceId` enviado pelo cliente.
+- qualquer morador vinculado pode criar, editar, excluir e reordenar desejos da própria casa;
+- um item comprado é removido pelo CRUD; não há estado adquirido ou histórico nesta entrega.
 
-## Decisões pendentes antes da implementação
+## Decisões aprovadas para a implementação
 
-- confirmar se qualquer morador pode criar, editar e reordenar ou somente o administrador;
-- confirmar se um item comprado deve ser excluído, arquivado ou marcado como adquirido.
+- qualquer morador vinculado mantém os desejos compartilhados da casa;
+- item comprado pode ser excluído; arquivamento e histórico ficam fora do escopo.
 
 ## Critérios de aceite
 
