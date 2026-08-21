@@ -96,6 +96,9 @@ Endpoints iniciais:
 - `GET|POST /api/v1/purchase-wishes`;
 - `PUT|DELETE /api/v1/purchase-wishes/{id}`;
 - `PUT /api/v1/purchase-wishes/order`.
+- `GET /api/v1/calendar?fromDate=&toDate=&fromUtc=&toUtc=`;
+- `POST /api/v1/calendar/events`;
+- `PUT|DELETE /api/v1/calendar/events/{id}`.
 
 ## Validar
 

@@ -13,6 +13,8 @@ using HouseStuff.Application.Shopping;
 using HouseStuff.Infrastructure.Shopping;
 using HouseStuff.Application.Purchases;
 using HouseStuff.Infrastructure.Purchases;
+using HouseStuff.Application.Calendar;
+using HouseStuff.Infrastructure.Calendar;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -80,6 +82,7 @@ public static class IdentityServiceCollectionExtensions
         services.AddScoped<IRoutineOverviewService, RoutineOverviewService>();
         services.AddScoped<IShoppingCatalogService, ShoppingCatalogService>();
         services.AddScoped<IPurchaseWishService, PurchaseWishService>();
+        services.AddScoped<ICalendarService, CalendarService>();
         return services;
     }
 
