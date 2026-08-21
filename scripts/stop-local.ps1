@@ -16,7 +16,16 @@ function Stop-RegisteredProcess($Entry) {
     if ($null -eq $Entry) { return }
     $process = Get-Process -Id ([int]$Entry.pid) -ErrorAction SilentlyContinue
     if ($null -eq $process) { return }
-    $expected = [DateTimeOffset]::Parse([string]$Entry.startedAt).UtcDateTime
+    $expected = if ($Entry.startedAt -is [DateTime]) {
+        $Entry.startedAt.ToUniversalTime()
+    }
+    else {
+        [DateTimeOffset]::Parse(
+            [string]$Entry.startedAt,
+            [System.Globalization.CultureInfo]::InvariantCulture,
+            [System.Globalization.DateTimeStyles]::RoundtripKind
+        ).UtcDateTime
+    }
     if ([Math]::Abs(($process.StartTime.ToUniversalTime() - $expected).TotalSeconds) -gt 2) {
         Write-Warning "PID $($Entry.pid) foi reutilizado e não será encerrado."
         return

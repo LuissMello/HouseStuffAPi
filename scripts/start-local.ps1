@@ -56,7 +56,15 @@ try {
 }
 finally { Pop-Location }
 
-$registered = [ordered]@{ startedAt = (Get-Date).ToUniversalTime().ToString("O"); api = $null; frontend = $null }
+$existing = if (Test-Path -LiteralPath $processFile) {
+    Get-Content -Raw -LiteralPath $processFile | ConvertFrom-Json
+}
+else { $null }
+$registered = [ordered]@{
+    startedAt = (Get-Date).ToUniversalTime().ToString("O")
+    api = if ($null -ne $existing) { $existing.api } else { $null }
+    frontend = if ($null -ne $existing) { $existing.frontend } else { $null }
+}
 if (-not (Test-Endpoint "http://localhost:5049/health/ready")) {
     $api = Start-Process -FilePath $dotnet -ArgumentList @("run", "--project", "src\HouseStuff.Api\HouseStuff.Api.csproj", "--no-restore", "--configuration", "Release") -WorkingDirectory $apiRoot -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $runtimeDir "api.stdout.log") -RedirectStandardError (Join-Path $runtimeDir "api.stderr.log")
     $registered.api = [ordered]@{ pid = $api.Id; startedAt = $api.StartTime.ToUniversalTime().ToString("O") }
