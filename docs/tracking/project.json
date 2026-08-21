@@ -233,8 +233,8 @@
       "status": "inProgress",
       "result": "Usuário cadastra eventos com participantes e consulta a agenda real nos modos diário, semanal e mensal.",
       "subtasks": [
-        { "id": "HOUSE-120-01", "title": "Domínio, participantes, datas e persistência", "status": "inProgress" },
-        { "id": "HOUSE-120-02", "title": "CRUD de eventos e consultas por período na API", "status": "pending" },
+        { "id": "HOUSE-120-01", "title": "Domínio, participantes, datas e persistência", "status": "completed" },
+        { "id": "HOUSE-120-02", "title": "CRUD de eventos e consultas por período na API", "status": "inProgress" },
         { "id": "HOUSE-120-03", "title": "Cadastro responsivo com seleção de envolvidos", "status": "pending" },
         { "id": "HOUSE-120-04", "title": "Calendário diário, semanal e mensal", "status": "pending" },
         { "id": "HOUSE-120-05", "title": "Integração com recorrências, testes, evidência visual e documentação", "status": "pending" }

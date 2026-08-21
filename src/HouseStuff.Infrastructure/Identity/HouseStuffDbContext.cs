@@ -6,6 +6,7 @@ using HouseStuff.Domain.Tasks;
 using HouseStuff.Domain.Assignments;
 using HouseStuff.Domain.Shopping;
 using HouseStuff.Domain.Purchases;
+using HouseStuff.Domain.Calendar;
 
 namespace HouseStuff.Infrastructure.Identity;
 
@@ -19,6 +20,8 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
     public DbSet<ShoppingCategory> ShoppingCategories => Set<ShoppingCategory>();
     public DbSet<ShoppingItem> ShoppingItems => Set<ShoppingItem>();
     public DbSet<PurchaseWish> PurchaseWishes => Set<PurchaseWish>();
+    public DbSet<CalendarEvent> CalendarEvents => Set<CalendarEvent>();
+    public DbSet<CalendarEventParticipant> CalendarEventParticipants => Set<CalendarEventParticipant>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -118,6 +121,33 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
             entity.Property(wish => wish.StoreUrl).HasMaxLength(500);
             entity.HasIndex(wish => new { wish.ResidenceId, wish.Priority });
             entity.HasOne<Residence>().WithMany().HasForeignKey(wish => wish.ResidenceId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<CalendarEvent>(entity =>
+        {
+            entity.ToTable("CalendarEvents");
+            entity.HasKey(calendarEvent => calendarEvent.Id);
+            entity.Property(calendarEvent => calendarEvent.Title).HasMaxLength(120).IsRequired();
+            entity.Property(calendarEvent => calendarEvent.Description).HasMaxLength(500);
+            entity.Property(calendarEvent => calendarEvent.Kind).HasConversion<string>().HasMaxLength(20).IsRequired();
+            entity.Property(calendarEvent => calendarEvent.AllDayDate).HasColumnType("date");
+            entity.HasIndex(calendarEvent => new { calendarEvent.ResidenceId, calendarEvent.AllDayDate });
+            entity.HasIndex(calendarEvent => new { calendarEvent.ResidenceId, calendarEvent.StartsAt });
+            entity.HasOne<Residence>().WithMany().HasForeignKey(calendarEvent => calendarEvent.ResidenceId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasAlternateKey(calendarEvent => new { calendarEvent.Id, calendarEvent.ResidenceId });
+            entity.HasMany(calendarEvent => calendarEvent.Participants).WithOne()
+                .HasForeignKey(participant => new { participant.CalendarEventId, participant.ResidenceId })
+                .HasPrincipalKey(calendarEvent => new { calendarEvent.Id, calendarEvent.ResidenceId })
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<CalendarEventParticipant>(entity =>
+        {
+            entity.ToTable("CalendarEventParticipants");
+            entity.HasKey(participant => new { participant.CalendarEventId, participant.UserId });
+            entity.Property(participant => participant.UserId).HasMaxLength(450).IsRequired();
+            entity.HasIndex(participant => new { participant.ResidenceId, participant.UserId });
+            entity.HasOne<HouseStuffUser>().WithMany().HasForeignKey(participant => participant.UserId).OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

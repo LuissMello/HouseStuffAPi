@@ -50,6 +50,8 @@ Em `HOUSE-100`, `ShoppingCategories` possui ordem e unicidade por residência, e
 
 Em `HOUSE-110`, `PurchaseWishes` pertence diretamente à residência e mantém uma prioridade inteira estável dentro dela. A chave estrangeira com exclusão em cascata impede desejos órfãos, enquanto todo acesso funcional deriva a casa da sessão e nunca aceita `ResidenceId` do cliente.
 
+Em `HOUSE-120`, `CalendarEvents` separa datas civis (`date`) de compromissos em UTC (`timestamp with time zone`). `CalendarEventParticipants` usa chave composta pelo evento e usuário e repete `ResidenceId` em uma FK composta com o evento, impedindo participantes ligados a um evento de outra casa; a aplicação também valida que cada usuário selecionado pertence à residência da sessão.
+
 ## Entrega local
 
 Em `HOUSE-080`, o ambiente Development ganhou um cenário demonstrável idempotente da Casa do Luis. A API separa liveness (`/health/live`) de readiness (`/health/ready`), que inclui a conexão PostgreSQL. Scripts PowerShell no backend orquestram PostgreSQL, API e frontend, registram somente os processos que iniciam e oferecem um smoke autenticado não mutável junto aos gates dos dois repositórios.

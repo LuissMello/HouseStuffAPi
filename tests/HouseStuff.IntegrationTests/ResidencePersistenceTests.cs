@@ -4,6 +4,7 @@ using HouseStuff.Domain.Tasks;
 using HouseStuff.Domain.Assignments;
 using HouseStuff.Domain.Shopping;
 using HouseStuff.Domain.Purchases;
+using HouseStuff.Domain.Calendar;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -162,6 +163,32 @@ public sealed class ResidencePersistenceTests
         Assert.Equal(["Sofá", "Mesa"], firstWishes.Select(wish => wish.Name));
 
         database.PurchaseWishes.Add(PurchaseWish.Create(Guid.NewGuid(), "Inválido", null, 0, DateTimeOffset.UtcNow).Wish!);
+        await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
+        await database.Database.EnsureDeletedAsync();
+    }
+
+    [Fact]
+    public async Task CalendarEventsPersistCivilDatesAndParticipantsInsideResidence()
+    {
+        await CreateTestDatabaseAsync();
+        var options = new DbContextOptionsBuilder<HouseStuffDbContext>().UseNpgsql(TestConnection).Options;
+        await using var database = new HouseStuffDbContext(options);
+        await database.Database.EnsureDeletedAsync();
+        await database.Database.EnsureCreatedAsync();
+
+        var residence = Residence.Create("Casa Um", "admin-1", DateTimeOffset.UtcNow).Residence!;
+        database.Residences.Add(residence);
+        database.Users.Add(new HouseStuffUser { Id = "user-1", Name = "Um", UserName = "um@house.local", ResidenceId = residence.Id });
+        var birthday = CalendarEvent.Create(residence.Id, "Aniversário", null, CalendarEventKind.Birthday, false, new DateOnly(1990, 8, 25), null, null, ["user-1"], DateTimeOffset.UtcNow).Event!;
+        database.CalendarEvents.Add(birthday);
+        await database.SaveChangesAsync();
+        database.ChangeTracker.Clear();
+
+        var persisted = await database.CalendarEvents.Include(calendarEvent => calendarEvent.Participants).SingleAsync();
+        Assert.Equal(new DateOnly(1990, 8, 25), persisted.AllDayDate);
+        Assert.Equal("user-1", Assert.Single(persisted.Participants).UserId);
+
+        database.CalendarEvents.Add(CalendarEvent.Create(Guid.NewGuid(), "Inválido", null, CalendarEventKind.Date, true, new DateOnly(2026, 8, 25), null, null, [], DateTimeOffset.UtcNow).Event!);
         await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
         await database.Database.EnsureDeletedAsync();
     }
