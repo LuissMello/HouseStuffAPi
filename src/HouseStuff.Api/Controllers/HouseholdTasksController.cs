@@ -1,4 +1,3 @@
-using HouseStuff.Application.Identity;
 using HouseStuff.Application.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HouseStuff.Api.Controllers;
 
 [ApiController]
-[Authorize(Roles = HouseStuffRoles.Administrator)]
+[Authorize]
 [Route("api/v1/admin/tasks")]
 public sealed class HouseholdTasksController(IHouseholdTaskService tasks) : ControllerBase
 {

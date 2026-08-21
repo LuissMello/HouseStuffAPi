@@ -1,5 +1,6 @@
 using HouseStuff.Api.Controllers;
 using HouseStuff.Application.Pots;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouseStuff.Api.UnitTests;
@@ -20,7 +21,7 @@ public sealed class PotsControllerTests
     }
 
     [Fact]
-    public async Task AdministratorCanCreatePot()
+    public async Task ResidentCanCreatePot()
     {
         var expected = new PotView(Guid.NewGuid(), "Semanal", "Toda semana", 1, true);
         var service = new StubPotService { CreateResult = PotResult.Success(expected) };
@@ -29,6 +30,14 @@ public sealed class PotsControllerTests
 
         Assert.Equal(201, result.StatusCode);
         Assert.Same(expected, result.Value);
+    }
+
+    [Fact]
+    public void ManagementRequiresAuthenticationWithoutAdministratorRole()
+    {
+        var authorization = Assert.Single(typeof(AdminPotsController).GetCustomAttributes(typeof(AuthorizeAttribute), true).Cast<AuthorizeAttribute>());
+
+        Assert.Null(authorization.Roles);
     }
 
     [Fact]

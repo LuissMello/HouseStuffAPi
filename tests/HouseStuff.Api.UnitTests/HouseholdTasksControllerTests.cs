@@ -1,12 +1,13 @@
 using HouseStuff.Api.Controllers;
 using HouseStuff.Application.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HouseStuff.Api.UnitTests;
 
 public sealed class HouseholdTasksControllerTests
 {
     [Fact]
-    public async Task ListIncludesArchivedForAdministrator()
+    public async Task ResidentListIncludesArchivedTasksForManagement()
     {
         var expected = new[] { new HouseholdTaskView(Guid.NewGuid(), Guid.NewGuid(), "Mensal", "Limpar geladeira", null, "recurring", 30, true) };
         var service = new StubHouseholdTaskService { ListResult = HouseholdTaskResult.Success<IReadOnlyList<HouseholdTaskView>>(expected) };
@@ -16,6 +17,14 @@ public sealed class HouseholdTasksControllerTests
         Assert.True(service.IncludeArchivedRequested);
         Assert.Equal(200, result.StatusCode);
         Assert.Same(expected, result.Value);
+    }
+
+    [Fact]
+    public void ManagementRequiresAuthenticationWithoutAdministratorRole()
+    {
+        var authorization = Assert.Single(typeof(HouseholdTasksController).GetCustomAttributes(typeof(AuthorizeAttribute), true).Cast<AuthorizeAttribute>());
+
+        Assert.Null(authorization.Roles);
     }
 
     [Fact]

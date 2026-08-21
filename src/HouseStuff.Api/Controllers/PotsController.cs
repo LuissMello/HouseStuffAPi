@@ -1,4 +1,3 @@
-using HouseStuff.Application.Identity;
 using HouseStuff.Application.Pots;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +19,7 @@ public sealed class PotsController(IPotService pots) : ControllerBase
 }
 
 [ApiController]
-[Authorize(Roles = HouseStuffRoles.Administrator)]
+[Authorize]
 [Route("api/v1/admin/pots")]
 public sealed class AdminPotsController(IPotService pots) : ControllerBase
 {
