@@ -75,7 +75,7 @@ A casa organiza compras recorrentes e desejos futuros por prioridade
 
 A casa visualiza datas, aniversários e compromissos em um calendário diário, semanal ou mensal
 
-- [>] `HOUSE-120` — Agenda e calendário da casa — Usuário cadastra eventos com participantes e consulta a agenda real nos modos diário, semanal e mensal.
+- [x] `HOUSE-120` — Agenda e calendário da casa — Usuário cadastra eventos com participantes e consulta a agenda real nos modos diário, semanal e mensal.
 
 ## M12 — Colaboração
 

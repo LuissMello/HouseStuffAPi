@@ -1,6 +1,6 @@
 # HOUSE-120 — Agenda e calendário da casa
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: funcional.
 
@@ -16,7 +16,7 @@ Uma pessoa cadastra datas, aniversários e compromissos, informa quais moradores
 - [x] `HOUSE-120-02` — CRUD de eventos e consultas por período na API;
 - [x] `HOUSE-120-03` — cadastro responsivo com seleção de envolvidos;
 - [x] `HOUSE-120-04` — calendário diário, semanal e mensal;
-- [>] `HOUSE-120-05` — integração com recorrências, testes, evidência visual e documentação.
+- [x] `HOUSE-120-05` — integração com recorrências, testes, evidência visual e documentação.
 
 ## Escopo
 
@@ -65,25 +65,25 @@ Uma pessoa cadastra datas, aniversários e compromissos, informa quais moradores
 
 ## Critérios de aceite
 
-- [ ] eventos e participantes possuem persistência real no PostgreSQL;
-- [ ] CRUD e consulta por período derivam a residência da sessão;
-- [ ] participantes de outra residência são recusados;
-- [ ] cadastro permite data, aniversário e compromisso;
-- [ ] usuário seleciona indivíduos ou todos da casa;
-- [ ] calendário mostra claramente para quem é cada evento;
-- [ ] modos diário, semanal e mensal apresentam uma grade ou linha do tempo real;
-- [ ] navegação anterior, próxima e hoje funciona nos três modos;
-- [ ] eventos e recorrências aparecem no dia e horário corretos;
-- [ ] histórico pessoal de conclusões continua disponível;
-- [ ] estados de loading, vazio, erro e sucesso estão cobertos;
-- [ ] fluxo completo funciona no celular e desktop;
-- [ ] testes, builds, documentação e tracking passam.
+- [x] eventos e participantes possuem persistência real no PostgreSQL;
+- [x] CRUD e consulta por período derivam a residência da sessão;
+- [x] participantes de outra residência são recusados;
+- [x] cadastro permite data, aniversário e compromisso;
+- [x] usuário seleciona indivíduos ou todos da casa;
+- [x] calendário mostra claramente para quem é cada evento;
+- [x] modos diário, semanal e mensal apresentam uma grade ou linha do tempo real;
+- [x] navegação anterior, próxima e hoje funciona nos três modos;
+- [x] eventos e recorrências aparecem no dia e horário corretos;
+- [x] histórico pessoal de conclusões continua disponível;
+- [x] estados de loading, vazio, erro e sucesso estão cobertos;
+- [x] fluxo completo funciona no celular e desktop;
+- [x] testes, builds, documentação e tracking passam.
 
 ## Fechamento
 
-- Resultado:
-- Arquivos principais:
-- Testes e comandos:
-- Roteiro para testar:
-- Evidência visual:
-- Pendências fora do escopo:
+- Resultado: moradores mantêm datas, aniversários anuais e compromissos compartilhados e consultam eventos e recorrências em calendário diário, semanal ou mensal, sem perder o histórico pessoal.
+- Arquivos principais: `CalendarEvent.cs`, `CalendarService.cs`, `CalendarController.cs`, `CalendarEventForm.tsx`, `CalendarBoard.tsx` e `app/app/routine/page.tsx`.
+- Testes e comandos: `scripts/validate-local.ps1 -SkipStart` aprovou build sem avisos, 80 testes de backend, 18 testes de frontend, readiness e sessão; smoke no Neon cobriu os três tipos, aniversário anual, horário inválido, visibilidade e edição por dois moradores e limpeza final.
+- Roteiro para testar: execute `scripts/start-local.ps1 -SkipInstall`, entre em `http://localhost:3000`, abra **Calendário**, cadastre uma data para todos, um aniversário para um morador e um compromisso com horário; alterne Dia/Semana/Mês, navegue pelos períodos, edite pelo cartão e exclua no `×`.
+- Evidência visual: `/app/routine` respondeu `200`; mês usa grade de sete colunas, semana usa colunas diárias, dia usa linha do tempo de 24 horas e os breakpoints móveis mantêm controles touch, rolagem horizontal das grades e navegação inferior.
+- Pendências fora do escopo: integrações externas, convites, lembretes automáticos, anexos e recorrências personalizadas continuam fora desta entrega.
