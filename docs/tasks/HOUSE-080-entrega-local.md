@@ -14,8 +14,8 @@ Uma pessoa prepara e inicia o HouseStuff localmente por um comando, recebe dados
 
 - [x] `HOUSE-080-01` — contrato de entrega e critérios operacionais;
 - [x] `HOUSE-080-02` — prontidão e dados locais reproduzíveis;
-- [>] `HOUSE-080-03` — comandos de iniciar, parar e validar;
-- [ ] `HOUSE-080-04` — smoke autenticado e auditoria responsiva;
+- [x] `HOUSE-080-03` — comandos de iniciar, parar e validar;
+- [>] `HOUSE-080-04` — smoke autenticado e auditoria responsiva;
 - [ ] `HOUSE-080-05` — gates, documentação e fechamento.
 
 ## Decisões do recorte
