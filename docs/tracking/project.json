@@ -135,7 +135,23 @@
         { "id": "HOUSE-060-05", "title": "Integração, testes e documentação", "status": "completed" }
       ]
     },
-    { "id": "HOUSE-070", "stageId": "M7", "area": "Geral", "repository": "both", "type": "feature", "title": "Calendário e histórico", "status": "pending", "result": "Usuário consulta calendário e histórico reais da própria casa.", "subtasks": [] },
+    {
+      "id": "HOUSE-070",
+      "stageId": "M7",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Calendário e histórico",
+      "status": "inProgress",
+      "result": "Usuário consulta calendário e histórico reais da própria casa.",
+      "subtasks": [
+        { "id": "HOUSE-070-01", "title": "Regras e contratos de consulta", "status": "completed" },
+        { "id": "HOUSE-070-02", "title": "Consultas e endpoints isolados", "status": "inProgress" },
+        { "id": "HOUSE-070-03", "title": "Tela responsiva e navegação", "status": "pending" },
+        { "id": "HOUSE-070-04", "title": "Integração, estados e isolamento", "status": "pending" },
+        { "id": "HOUSE-070-05", "title": "Testes e documentação", "status": "pending" }
+      ]
+    },
     { "id": "HOUSE-080", "stageId": "M8", "area": "Geral", "repository": "both", "type": "technical", "title": "Qualidade e entrega local", "status": "pending", "result": "Projeto completo inicia por roteiro único e possui validação ponta a ponta.", "subtasks": [] }
   ]
 }
