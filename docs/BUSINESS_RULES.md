@@ -16,7 +16,7 @@
 ## BR-002 — Potes e tarefas
 
 - cada pote pertence a uma única residência e seu nome é único dentro dela;
-- o administrador cria, edita, ordena, arquiva e reativa potes da própria casa;
+- qualquer morador vinculado cria, edita, ordena, arquiva e reativa potes da própria casa;
 - moradores visualizam somente potes ativos da própria residência;
 - arquivar preserva o pote para o histórico e para vínculos futuros;
 - o usuário escolhe explicitamente um pote, como `Mensal`;
@@ -24,7 +24,7 @@
 - uma tarefa pode ser única, reutilizável ou recorrente;
 - toda tarefa pertence a exatamente um pote da mesma residência;
 - o nome da tarefa é único dentro do pote, ignorando maiúsculas e espaços externos;
-- o administrador pode mover a tarefa entre potes ativos da própria casa;
+- qualquer morador vinculado cria, edita, move, arquiva e reativa tarefas entre potes ativos da própria casa;
 - tarefas podem ser arquivadas e reativadas sem apagar seu registro;
 - tarefa única concluída nunca retorna ao pote;
 - tarefa reutilizável volta a ficar disponível imediatamente após a conclusão;

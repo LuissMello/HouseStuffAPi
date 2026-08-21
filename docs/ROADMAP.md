@@ -77,3 +77,9 @@ A casa visualiza datas, aniversários e compromissos em um calendário diário, 
 
 - [ ] `HOUSE-120` — Agenda e calendário da casa — Usuário cadastra eventos com participantes e consulta a agenda real nos modos diário, semanal e mensal.
 
+## M12 — Colaboração
+
+Todos os moradores organizam juntos os potes, tarefas e futuras listas da casa
+
+- [>] `HOUSE-130` — Gestão colaborativa da casa — Qualquer morador mantém potes e tarefas da própria casa pela interface.
+

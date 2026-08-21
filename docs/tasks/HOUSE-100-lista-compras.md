@@ -41,6 +41,7 @@ Uma pessoa da casa mantém categorias e um catálogo de itens, escolhe gerar uma
 
 ## Regras propostas
 
+- qualquer morador vinculado pode manter categorias e itens de compra da própria residência;
 - categorias pertencem a uma residência e têm nome único dentro dela;
 - cada item pertence a exatamente uma categoria da mesma residência;
 - nomes de itens são únicos dentro da categoria, ignorando maiúsculas e espaços externos;
@@ -51,7 +52,6 @@ Uma pessoa da casa mantém categorias e um catálogo de itens, escolhe gerar uma
 
 ## Decisões pendentes antes da implementação
 
-- confirmar se qualquer morador pode manter categorias e itens ou somente o administrador;
 - confirmar se haverá apenas uma lista atual por casa ou múltiplas listas salvas;
 - confirmar se a lista precisa marcar itens como comprados depois de gerada.
 
