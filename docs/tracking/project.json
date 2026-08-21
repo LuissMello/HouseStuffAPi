@@ -148,8 +148,8 @@
         { "id": "HOUSE-070-01", "title": "Regras e contratos de consulta", "status": "completed" },
         { "id": "HOUSE-070-02", "title": "Consultas e endpoints isolados", "status": "completed" },
         { "id": "HOUSE-070-03", "title": "Tela responsiva e navegação", "status": "completed" },
-        { "id": "HOUSE-070-04", "title": "Integração, estados e isolamento", "status": "inProgress" },
-        { "id": "HOUSE-070-05", "title": "Testes e documentação", "status": "pending" }
+        { "id": "HOUSE-070-04", "title": "Integração, estados e isolamento", "status": "completed" },
+        { "id": "HOUSE-070-05", "title": "Testes e documentação", "status": "inProgress" }
       ]
     },
     { "id": "HOUSE-080", "stageId": "M8", "area": "Geral", "repository": "both", "type": "technical", "title": "Qualidade e entrega local", "status": "pending", "result": "Projeto completo inicia por roteiro único e possui validação ponta a ponta.", "subtasks": [] }
