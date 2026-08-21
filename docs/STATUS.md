@@ -5,10 +5,10 @@
 Atualizado em: 2026-08-20.
 
 - Situação: **onTrack**.
-- Progresso: **10 de 10 tarefas concluídas**.
-- Etapa atual: **M9**.
+- Progresso: **10 de 12 tarefas concluídas**.
+- Etapa atual: **M10**.
 - Tarefa ativa: **nenhuma**.
-- Próxima tarefa proposta: **nenhuma**.
+- Próxima tarefa proposta: **HOUSE-100**.
 
 ## Regra de conclusão
 

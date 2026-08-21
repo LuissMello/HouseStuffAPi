@@ -64,3 +64,10 @@ Tarefas em post-its e sorteio animado tornam a rotina mais leve e divertida
 
 - [x] `HOUSE-090` — Experiência lúdica e sorteio animado — Usuário anota tarefas em post-its e acompanha o pote escolhido entregar a proposta em uma animação.
 
+## M10 — Compras
+
+A casa organiza compras recorrentes e desejos futuros por prioridade
+
+- [ ] `HOUSE-100` — Lista de compras por categorias — Usuário mantém categorias e itens e gera uma lista com seleção individual ou por categoria.
+- [ ] `HOUSE-110` — Coisas para comprar para a casa — Usuário mantém desejos da casa, ordena por prioridade e guarda um link opcional de loja.
+

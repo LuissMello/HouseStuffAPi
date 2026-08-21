@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-20",
   "status": "onTrack",
-  "currentStageId": "M9",
+  "currentStageId": "M10",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -14,7 +14,8 @@
     { "id": "M6", "name": "Rotina", "outcome": "Conclusões e próximas disponibilidades são registradas" },
     { "id": "M7", "name": "Calendário", "outcome": "Usuário acompanha disponibilidade e histórico da própria casa" },
     { "id": "M8", "name": "Entrega", "outcome": "Ambiente local reproduzível, responsivo e validado ponta a ponta" },
-    { "id": "M9", "name": "Experiência", "outcome": "Tarefas em post-its e sorteio animado tornam a rotina mais leve e divertida" }
+    { "id": "M9", "name": "Experiência", "outcome": "Tarefas em post-its e sorteio animado tornam a rotina mais leve e divertida" },
+    { "id": "M10", "name": "Compras", "outcome": "A casa organiza compras recorrentes e desejos futuros por prioridade" }
   ],
   "tasks": [
     {
@@ -184,6 +185,40 @@
         { "id": "HOUSE-090-02", "title": "Cadastro e catálogo em estilo post-it", "status": "completed" },
         { "id": "HOUSE-090-03", "title": "Potes e sorteio animados", "status": "completed" },
         { "id": "HOUSE-090-04", "title": "Acessibilidade, responsividade, testes e fechamento", "status": "completed" }
+      ]
+    },
+    {
+      "id": "HOUSE-100",
+      "stageId": "M10",
+      "area": "Compras",
+      "repository": "both",
+      "type": "feature",
+      "title": "Lista de compras por categorias",
+      "status": "pending",
+      "result": "Usuário mantém categorias e itens e gera uma lista com seleção individual ou por categoria.",
+      "subtasks": [
+        { "id": "HOUSE-100-01", "title": "Domínio, persistência e isolamento de categorias e itens", "status": "pending" },
+        { "id": "HOUSE-100-02", "title": "CRUD de categorias e itens na API", "status": "pending" },
+        { "id": "HOUSE-100-03", "title": "Cadastro responsivo de categorias e itens", "status": "pending" },
+        { "id": "HOUSE-100-04", "title": "Geração, ordenação e seleção da lista", "status": "pending" },
+        { "id": "HOUSE-100-05", "title": "Integração, testes, evidência visual e documentação", "status": "pending" }
+      ]
+    },
+    {
+      "id": "HOUSE-110",
+      "stageId": "M10",
+      "area": "Compras",
+      "repository": "both",
+      "type": "feature",
+      "title": "Coisas para comprar para a casa",
+      "status": "pending",
+      "result": "Usuário mantém desejos da casa, ordena por prioridade e guarda um link opcional de loja.",
+      "subtasks": [
+        { "id": "HOUSE-110-01", "title": "Domínio, persistência e isolamento dos desejos", "status": "pending" },
+        { "id": "HOUSE-110-02", "title": "CRUD e ordenação persistida na API", "status": "pending" },
+        { "id": "HOUSE-110-03", "title": "Cadastro responsivo com link opcional", "status": "pending" },
+        { "id": "HOUSE-110-04", "title": "Lista com prioridade por arrastar e alternativa acessível", "status": "pending" },
+        { "id": "HOUSE-110-05", "title": "Integração, testes, evidência visual e documentação", "status": "pending" }
       ]
     }
   ]
