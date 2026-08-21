@@ -15,8 +15,8 @@ Uma pessoa prepara e inicia o HouseStuff localmente por um comando, recebe dados
 - [x] `HOUSE-080-01` — contrato de entrega e critérios operacionais;
 - [x] `HOUSE-080-02` — prontidão e dados locais reproduzíveis;
 - [x] `HOUSE-080-03` — comandos de iniciar, parar e validar;
-- [>] `HOUSE-080-04` — smoke autenticado e auditoria responsiva;
-- [ ] `HOUSE-080-05` — gates, documentação e fechamento.
+- [x] `HOUSE-080-04` — smoke autenticado e auditoria responsiva;
+- [>] `HOUSE-080-05` — gates, documentação e fechamento.
 
 ## Decisões do recorte
 
@@ -30,11 +30,19 @@ Uma pessoa prepara e inicia o HouseStuff localmente por um comando, recebe dados
 
 ## Critérios de aceite
 
-- [ ] banco vazio inicia com administrador, Luis, residência, potes e tarefas de demonstração;
-- [ ] readiness falha quando o banco não pode ser acessado;
-- [ ] um comando inicia banco, API e frontend e aguarda prontidão;
-- [ ] um comando encerra somente os processos registrados pelo HouseStuff;
-- [ ] um comando executa gates e smoke autenticado;
+- [x] banco vazio inicia com administrador, Luis, residência, potes e tarefas de demonstração;
+- [x] readiness falha quando o banco não pode ser acessado;
+- [x] um comando inicia banco, API e frontend e aguarda prontidão;
+- [x] um comando encerra somente os processos registrados pelo HouseStuff;
+- [x] um comando executa gates e smoke autenticado;
 - [ ] documentação contém pré-requisitos, credenciais e resolução de problemas;
-- [ ] rotas críticas passam em auditoria responsiva;
+- [x] rotas críticas passam em auditoria responsiva;
 - [ ] builds e testes passam nos dois repositórios.
+
+## Evidências da validação
+
+- banco PostgreSQL temporário vazio recebeu migrations, administrador, Luis, Casa do Luis, três potes e tarefas; o banco foi removido após o teste;
+- `start-local.ps1` preservou processos já registrados e iniciou somente os serviços ausentes;
+- `stop-local.ps1` encerrou a API registrada e manteve o frontend que já estava em execução;
+- `validate-local.ps1 -SkipStart` aprovou os gates e o smoke autenticado não mutável do Luis;
+- `/`, `/login`, `/app`, `/app/routine`, `/admin/users`, `/admin/pots` e `/admin/tasks` foram verificadas em 390 × 844 e 1280 × 720, sem overflow horizontal e sem erros de aplicação no console.
