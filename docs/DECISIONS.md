@@ -74,3 +74,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: a entrega permanece local e é orquestrada por scripts PowerShell versionados no backend. O início aguarda PostgreSQL, API e frontend; a parada usa PID e instante de início para encerrar somente processos registrados; a validação combina gates, readiness e smoke autenticado não mutável. Logs e registros de processo ficam em `.local/`, fora do Git.
+
+## DEC-016 — Metáfora visual de post-its e potes
+
+- Status: aceita em 20/08/2026.
+- Decisão: tarefas são apresentadas como anotações em post-its e o sorteio usa potes construídos com HTML/CSS. A interação mantém textos, foco, estados da API e alternativa sem movimento; animações são uma camada de feedback e nunca uma regra de negócio.

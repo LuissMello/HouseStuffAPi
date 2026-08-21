@@ -62,5 +62,5 @@ Ambiente local reproduzível, responsivo e validado ponta a ponta
 
 Tarefas em post-its e sorteio animado tornam a rotina mais leve e divertida
 
-- [>] `HOUSE-090` — Experiência lúdica e sorteio animado — Usuário anota tarefas em post-its e acompanha o pote escolhido entregar a proposta em uma animação.
+- [x] `HOUSE-090` — Experiência lúdica e sorteio animado — Usuário anota tarefas em post-its e acompanha o pote escolhido entregar a proposta em uma animação.
 

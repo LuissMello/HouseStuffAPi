@@ -1,6 +1,6 @@
 # HOUSE-090 — Experiência lúdica e sorteio animado
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: funcional.
 
@@ -15,7 +15,7 @@ O usuário anota tarefas em uma interface de post-it e realiza o sorteio por uma
 - [x] `HOUSE-090-01` — direção visual e contrato da interação;
 - [x] `HOUSE-090-02` — cadastro e catálogo em estilo post-it;
 - [x] `HOUSE-090-03` — potes e sorteio animados;
-- [>] `HOUSE-090-04` — acessibilidade, responsividade, testes e fechamento.
+- [x] `HOUSE-090-04` — acessibilidade, responsividade, testes e fechamento.
 
 ## Escopo
 
@@ -49,7 +49,15 @@ O usuário anota tarefas em uma interface de post-it e realiza o sorteio por uma
 - [x] pote chacoalha enquanto a API sorteia;
 - [x] tarefa sorteada entra no centro como post-it;
 - [x] aceite, troca e erros continuam integrados à API;
-- [ ] experiência funciona em celular e desktop;
-- [ ] movimento reduzido é respeitado;
-- [ ] lint, build e testes passam;
-- [ ] documentação e tracking atualizados.
+- [x] experiência funciona em celular e desktop;
+- [x] movimento reduzido é respeitado;
+- [x] lint, build e testes passam;
+- [x] documentação e tracking atualizados.
+
+## Fechamento
+
+- Resultado: cadastro em post-it, catálogo colorido e sorteio em duas etapas com pote selecionado, chacoalho e post-it central;
+- Integração: endpoints e regras de proposta, aceite e troca foram preservados;
+- Acessibilidade: seleção usa `aria-pressed`, resultado é um diálogo focável, Escape fecha e movimento reduzido desativa animações;
+- Responsividade: potes usam duas colunas e post-it central adaptado nas telas pequenas;
+- Testes: lint, build e nove testes do frontend aprovados, além do roteiro local completo.
