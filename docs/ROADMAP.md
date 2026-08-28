@@ -95,3 +95,9 @@ Perfis administrativos podem ser ajustados com segurança dentro da casa
 
 - [x] `HOUSE-150` — Alteração de perfil dos moradores — Administrador promove outro morador ou o rebaixa pela tela de pessoas da casa.
 
+## M15 — Navegação
+
+O mural usa os próprios potes para navegar entre as tarefas
+
+- [>] `HOUSE-160` — Prateleira de potes no mural de tarefas — Morador troca o filtro do mural navegando visualmente pelos potes da prateleira.
+

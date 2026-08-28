@@ -114,3 +114,8 @@
 
 - Status: aceita em 28/08/2026.
 - Decisão: um administrador pode promover ou rebaixar outro usuário vinculado à mesma residência. A operação não aceita o próprio usuário, acessos pendentes nem moradores de outra casa; o backend troca os papéis do ASP.NET Identity como unidade lógica e invalida as sessões do usuário alterado.
+
+## DEC-024 — Prateleira como navegação do catálogo de tarefas
+
+- Status: aceita em 28/08/2026.
+- Decisão: o filtro do mural de tarefas usa a mesma metáfora visual dos potes. Uma prateleira apresenta o filtro atual entre ações anterior/próximo, com navegação circular, suporte a teclado e a opção “Todos os potes” como visão geral.
