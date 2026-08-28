@@ -23,6 +23,17 @@ public sealed class UsersController(IUserAccessService users) : ControllerBase
             ? Created($"/api/v1/admin/users/{result.Value!.Id}", result.Value)
             : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
     }
+
+    [HttpPatch("{userId}/role")]
+    public async Task<IActionResult> ChangeRole(string userId, ChangeUserRoleRequest request, CancellationToken cancellationToken)
+    {
+        var result = await users.ChangeRoleAsync(new ChangeUserRoleCommand(userId, request.IsAdministrator), cancellationToken);
+        return result.Succeeded
+            ? Ok(result.Value)
+            : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
+    }
 }
 
 public sealed record CreateUserRequest(string Email, string Name, string TemporaryPassword, bool IsAdministrator);
+
+public sealed record ChangeUserRoleRequest(bool IsAdministrator);

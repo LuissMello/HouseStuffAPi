@@ -49,10 +49,24 @@ public sealed class AccessControllerTests
         Assert.Same(expected, created.Value);
     }
 
+    [Fact]
+    public async Task ChangeRoleReturnsUpdatedUser()
+    {
+        var expected = new UserSummary("2", "luis@house.local", "Luis", true);
+        var service = new StubUserAccessService { ChangeRoleResult = AccessResult.Success(expected) };
+        var controller = new UsersController(service);
+
+        var result = await controller.ChangeRole(expected.Id, new ChangeUserRoleRequest(true), CancellationToken.None);
+
+        var ok = Assert.IsType<OkObjectResult>(result);
+        Assert.Same(expected, ok.Value);
+    }
+
     private sealed class StubUserAccessService : IUserAccessService
     {
         public AccessResult<CurrentUser> SignInResult { get; init; } = AccessResult.Failure<CurrentUser>("missing", "missing");
         public AccessResult<UserSummary> CreateResult { get; init; } = AccessResult.Failure<UserSummary>("missing", "missing");
+        public AccessResult<UserSummary> ChangeRoleResult { get; init; } = AccessResult.Failure<UserSummary>("missing", "missing");
 
         public Task<AccessResult<CurrentUser>> SignInAsync(string email, string password, bool rememberMe, CancellationToken cancellationToken) =>
             Task.FromResult(SignInResult);
@@ -66,5 +80,8 @@ public sealed class AccessControllerTests
 
         public Task<AccessResult<UserSummary>> CreateAsync(CreateUserCommand command, CancellationToken cancellationToken) =>
             Task.FromResult(CreateResult);
+
+        public Task<AccessResult<UserSummary>> ChangeRoleAsync(ChangeUserRoleCommand command, CancellationToken cancellationToken) =>
+            Task.FromResult(ChangeRoleResult);
     }
 }

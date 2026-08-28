@@ -12,6 +12,8 @@ public sealed record UserSummary(string Id, string Email, string Name, bool IsAd
 
 public sealed record CreateUserCommand(string Email, string Name, string TemporaryPassword, bool IsAdministrator);
 
+public sealed record ChangeUserRoleCommand(string UserId, bool IsAdministrator);
+
 public sealed record AccessResult<T>(bool Succeeded, T? Value, string? Code, string? Message);
 
 public static class AccessResult
@@ -28,4 +30,5 @@ public interface IUserAccessService
     Task<CurrentUser?> GetCurrentAsync(CancellationToken cancellationToken);
     Task<IReadOnlyList<UserSummary>> ListAsync(CancellationToken cancellationToken);
     Task<AccessResult<UserSummary>> CreateAsync(CreateUserCommand command, CancellationToken cancellationToken);
+    Task<AccessResult<UserSummary>> ChangeRoleAsync(ChangeUserRoleCommand command, CancellationToken cancellationToken);
 }

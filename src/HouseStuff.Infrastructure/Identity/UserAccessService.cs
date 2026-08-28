@@ -107,6 +107,64 @@ internal sealed class UserAccessService(
         return AccessResult.Success(await ToSummaryAsync(user));
     }
 
+    public async Task<AccessResult<UserSummary>> ChangeRoleAsync(
+        ChangeUserRoleCommand command,
+        CancellationToken cancellationToken)
+    {
+        var currentId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (currentId is null)
+        {
+            return AccessResult.Failure<UserSummary>("current_user_not_found", "Não foi possível identificar o administrador atual.");
+        }
+
+        if (string.Equals(currentId, command.UserId, StringComparison.Ordinal))
+        {
+            return AccessResult.Failure<UserSummary>("own_role_change_not_allowed", "Altere somente o perfil de outra pessoa da casa.");
+        }
+
+        var current = await database.Users.SingleOrDefaultAsync(user => user.Id == currentId, cancellationToken);
+        var target = await database.Users.SingleOrDefaultAsync(user => user.Id == command.UserId, cancellationToken);
+        if (current?.ResidenceId is null || target?.ResidenceId is null || current.ResidenceId != target.ResidenceId)
+        {
+            return AccessResult.Failure<UserSummary>("user_role_change_not_allowed", "O perfil só pode ser alterado para outra pessoa da sua casa.");
+        }
+
+        var desiredRole = command.IsAdministrator ? HouseStuffRoles.Administrator : HouseStuffRoles.Member;
+        var currentRoles = await userManager.GetRolesAsync(target);
+        if (currentRoles.Count == 1 && string.Equals(currentRoles[0], desiredRole, StringComparison.Ordinal))
+        {
+            return AccessResult.Success(await ToSummaryAsync(target));
+        }
+
+        await using var transaction = await database.Database.BeginTransactionAsync(cancellationToken);
+        var houseStuffRoles = currentRoles
+            .Where(role => role is HouseStuffRoles.Administrator or HouseStuffRoles.Member)
+            .ToArray();
+        if (houseStuffRoles.Length > 0)
+        {
+            var removeResult = await userManager.RemoveFromRolesAsync(target, houseStuffRoles);
+            if (!removeResult.Succeeded)
+            {
+                return AccessResult.Failure<UserSummary>("user_role_not_changed", "Não foi possível remover o perfil anterior.");
+            }
+        }
+
+        var addResult = await userManager.AddToRoleAsync(target, desiredRole);
+        if (!addResult.Succeeded)
+        {
+            return AccessResult.Failure<UserSummary>("user_role_not_changed", "Não foi possível atribuir o novo perfil.");
+        }
+
+        var stampResult = await userManager.UpdateSecurityStampAsync(target);
+        if (!stampResult.Succeeded)
+        {
+            return AccessResult.Failure<UserSummary>("user_role_not_changed", "Não foi possível invalidar as sessões anteriores.");
+        }
+
+        await transaction.CommitAsync(cancellationToken);
+        return AccessResult.Success(await ToSummaryAsync(target));
+    }
+
     private async Task<CurrentUser> ToCurrentUserAsync(HouseStuffUser user)
     {
         var residenceName = user.ResidenceId is null
