@@ -282,13 +282,13 @@
       "repository": "both",
       "type": "feature",
       "title": "Alteração de perfil dos moradores",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Administrador promove outro morador ou o rebaixa pela tela de pessoas da casa.",
       "subtasks": [
         { "id": "HOUSE-150-01", "title": "Regras, contrato e critérios de aceite", "status": "completed" },
-        { "id": "HOUSE-150-02", "title": "API segura de alteração de perfil", "status": "pending" },
-        { "id": "HOUSE-150-03", "title": "Ação responsiva na tela de pessoas", "status": "pending" },
-        { "id": "HOUSE-150-04", "title": "Integração, testes, publicação e fechamento", "status": "pending" }
+        { "id": "HOUSE-150-02", "title": "API segura de alteração de perfil", "status": "completed" },
+        { "id": "HOUSE-150-03", "title": "Ação responsiva na tela de pessoas", "status": "completed" },
+        { "id": "HOUSE-150-04", "title": "Integração, testes, publicação e fechamento", "status": "completed" }
       ]
     }
   ]

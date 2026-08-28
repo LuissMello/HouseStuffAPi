@@ -93,5 +93,5 @@ Tarefas respeitam esforço desejado e quem pode realizá-las
 
 Perfis administrativos podem ser ajustados com segurança dentro da casa
 
-- [>] `HOUSE-150` — Alteração de perfil dos moradores — Administrador promove outro morador ou o rebaixa pela tela de pessoas da casa.
+- [x] `HOUSE-150` — Alteração de perfil dos moradores — Administrador promove outro morador ou o rebaixa pela tela de pessoas da casa.
 
