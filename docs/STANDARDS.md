@@ -10,7 +10,7 @@
 
 ## Backend
 
-- .NET 10, nullable, warnings como erros e APIs assíncronas com `CancellationToken` para I/O;
+- .NET 8, nullable, warnings como erros e APIs assíncronas com `CancellationToken` para I/O;
 - Controllers finos, Application Services orquestrando e Domain protegendo invariantes;
 - repositories específicos como fronteira de persistência;
 - falhas esperadas por Result Pattern e HTTP Problem Details com código estável;

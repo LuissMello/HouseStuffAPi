@@ -15,7 +15,7 @@ public sealed class PotsController(IPotService pots) : ControllerBase
 
     private ObjectResult ToActionResult<T>(PotResult<T> result, int successStatus) => result.Succeeded
         ? StatusCode(successStatus, result.Value)
-        : Problem(statusCode: StatusCodes.Status400BadRequest, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
+        : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
 }
 
 [ApiController]
@@ -51,7 +51,7 @@ public sealed class AdminPotsController(IPotService pots) : ControllerBase
         }
 
         var status = result.Code == "pot_not_found" ? StatusCodes.Status404NotFound : StatusCodes.Status400BadRequest;
-        return Problem(statusCode: status, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
+        return this.ProblemWithCode(status, result.Message, result.Code);
     }
 }
 

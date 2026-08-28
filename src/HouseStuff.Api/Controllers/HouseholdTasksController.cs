@@ -33,7 +33,7 @@ public sealed class HouseholdTasksController(IHouseholdTaskService tasks) : Cont
         }
 
         var status = result.Code is "task_not_found" or "pot_not_found" ? StatusCodes.Status404NotFound : StatusCodes.Status400BadRequest;
-        return Problem(statusCode: status, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
+        return this.ProblemWithCode(status, result.Message, result.Code);
     }
 }
 

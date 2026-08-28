@@ -21,7 +21,7 @@ public sealed class UsersController(IUserAccessService users) : ControllerBase
             cancellationToken);
         return result.Succeeded
             ? Created($"/api/v1/admin/users/{result.Value!.Id}", result.Value)
-            : Problem(statusCode: StatusCodes.Status400BadRequest, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
+            : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
     }
 }
 

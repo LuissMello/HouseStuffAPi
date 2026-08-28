@@ -25,13 +25,13 @@ function Get-UserSecrets {
 
 Push-Location $apiRoot
 try {
-    & $dotnet format HouseStuff.slnx --verify-no-changes --no-restore
+    & $dotnet format HouseStuff.sln --verify-no-changes --no-restore
     Assert-Exit $LASTEXITCODE "Formatação do backend"
-    & $dotnet restore HouseStuff.slnx --artifacts-path $artifactsRoot
+    & $dotnet restore HouseStuff.sln --artifacts-path $artifactsRoot
     Assert-Exit $LASTEXITCODE "Restauração isolada do backend"
-    & $dotnet build HouseStuff.slnx --configuration Release --no-restore --artifacts-path $artifactsRoot
+    & $dotnet build HouseStuff.sln --configuration Release --no-restore --artifacts-path $artifactsRoot
     Assert-Exit $LASTEXITCODE "Build do backend"
-    & $dotnet test HouseStuff.slnx --configuration Release --no-build --no-restore --artifacts-path $artifactsRoot
+    & $dotnet test HouseStuff.sln --configuration Release --no-build --no-restore --artifacts-path $artifactsRoot
     Assert-Exit $LASTEXITCODE "Testes do backend"
 }
 finally { Pop-Location }

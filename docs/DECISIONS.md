@@ -5,9 +5,9 @@
 - Status: aceita em 20/08/2026.
 - Decisão: backend em `HouseStuffAPi`, frontend em `HouseStuffFront`; documentação global e tarefas ficam no backend.
 
-## DEC-002 — Backend .NET 10 em monólito modular
+## DEC-002 — Backend .NET 10 em monólito modular (substituída)
 
-- Status: aceita em 20/08/2026.
+- Status: substituída pela DEC-021 em 28/08/2026.
 - Decisão: ASP.NET Core Web API, Clean Architecture em quatro camadas e módulos por domínio.
 
 ## DEC-003 — Frontend web único
@@ -99,3 +99,8 @@
 
 - Status: aceita em 20/08/2026.
 - Decisão: qualquer morador mantém eventos visíveis para toda a casa. Datas e aniversários usam data civil, compromissos usam UTC e somente aniversários repetem anualmente. Participantes individuais são exclusivos em relação à opção “Todos da casa”.
+
+## DEC-021 — Backend compatível com .NET 8
+
+- Status: aceita em 28/08/2026.
+- Decisão: o backend passa a usar .NET 8, EF Core 8 e imagens de runtime .NET 8 para permitir desenvolvimento no Visual Studio 2022 e nas máquinas atuais do projeto, preservando a arquitetura modular existente.

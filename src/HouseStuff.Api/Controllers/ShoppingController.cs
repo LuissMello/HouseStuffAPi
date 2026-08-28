@@ -54,7 +54,7 @@ public sealed class ShoppingController(IShoppingCatalogService shopping) : Contr
             "shopping_category_not_empty" or "shopping_category_duplicated" or "shopping_item_duplicated" => StatusCodes.Status409Conflict,
             _ => StatusCodes.Status400BadRequest,
         };
-        return Problem(statusCode: status, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
+        return this.ProblemWithCode(status, result.Message, result.Code);
     }
 }
 

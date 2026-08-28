@@ -15,7 +15,7 @@ public sealed class DrawsController(ITaskAssignmentService assignments) : Contro
 
     private ObjectResult ToActionResult<T>(AssignmentResult<T> result) => result.Succeeded
         ? StatusCode(StatusCodes.Status200OK, result.Value)
-        : Problem(statusCode: StatusCodes.Status400BadRequest, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
+        : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
 }
 
 [ApiController]
@@ -37,7 +37,7 @@ public sealed class AssignmentsController(ITaskAssignmentService assignments) : 
 
     private ObjectResult ToActionResult<T>(AssignmentResult<T> result, int successStatus) => result.Succeeded
         ? StatusCode(successStatus, result.Value)
-        : Problem(statusCode: StatusCodes.Status400BadRequest, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
+        : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
 }
 
 public sealed record DrawTaskRequest(Guid PotId, IReadOnlyCollection<Guid>? ExcludedTaskIds);

@@ -8,7 +8,7 @@ Repositório: ambos.
 
 ## Resultado observável
 
-Disponibilizar uma API .NET 10 executável, um frontend web responsivo executável, documentação canônica e uma tela de acompanhamento derivada da mesma fonte do Roadmap e Status.
+Disponibilizar uma API .NET 8 executável, um frontend web responsivo executável, documentação canônica e uma tela de acompanhamento derivada da mesma fonte do Roadmap e Status.
 
 ## Subtarefas
 

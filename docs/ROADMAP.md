@@ -2,13 +2,13 @@
 
 > Arquivo gerado por `scripts/generate-project-docs.ps1`. Edite somente `docs/tracking/project.json`.
 
-Atualizado em: 2026-08-20.
+Atualizado em: 2026-08-28.
 
 ## M0 — Fundação
 
 Projetos executáveis, governança e acompanhamento em fonte única
 
-- [x] `HOUSE-001` — Fundação e documentação do HouseStuff — API .NET 10 e frontend executáveis, documentação canônica e tela de acompanhamento conectada à fonte única.
+- [x] `HOUSE-001` — Fundação e documentação do HouseStuff — API .NET 8 e frontend executáveis, documentação canônica e tela de acompanhamento conectada à fonte única.
 
 ## M1 — Acesso
 

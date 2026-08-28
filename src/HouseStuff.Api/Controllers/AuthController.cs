@@ -15,7 +15,7 @@ public sealed class AuthController(IUserAccessService users) : ControllerBase
         var result = await users.SignInAsync(request.Email, request.Password, request.RememberMe, cancellationToken);
         return result.Succeeded
             ? Ok(result.Value)
-            : Problem(statusCode: StatusCodes.Status401Unauthorized, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
+            : this.ProblemWithCode(StatusCodes.Status401Unauthorized, result.Message, result.Code);
     }
 
     [Authorize]

@@ -18,7 +18,7 @@ Antes de alterar código, ler `PROJECT.md`, `ARCHITECTURE.md`, `BUSINESS_RULES.m
 
 ## Arquitetura backend
 
-- .NET 10 e ASP.NET Core Web API;
+- .NET 8 e ASP.NET Core Web API;
 - monólito modular com `Api`, `Application`, `Domain` e `Infrastructure`;
 - Controllers finos; Application Services orquestram; Domain protege invariantes; Infrastructure persiste;
 - módulos não acessam repository, Entity ou tabela de outro módulo sem contrato explícito;
@@ -36,10 +36,10 @@ Antes de alterar código, ler `PROJECT.md`, `ARCHITECTURE.md`, `BUSINESS_RULES.m
 ## Gates
 
 ```powershell
-dotnet restore HouseStuff.slnx
-dotnet format HouseStuff.slnx --verify-no-changes --no-restore
-dotnet build HouseStuff.slnx --configuration Release --no-restore
-dotnet test HouseStuff.slnx --configuration Release --no-build --no-restore
+dotnet restore HouseStuff.sln
+dotnet format HouseStuff.sln --verify-no-changes --no-restore
+dotnet build HouseStuff.sln --configuration Release --no-restore
+dotnet test HouseStuff.sln --configuration Release --no-build --no-restore
 ```
 
 ## Fechamento

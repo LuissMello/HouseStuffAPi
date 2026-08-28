@@ -1,6 +1,6 @@
 # Projeto HouseStuff
 
-Atualizado em 20/08/2026.
+Atualizado em 28/08/2026.
 
 ## Objetivo
 

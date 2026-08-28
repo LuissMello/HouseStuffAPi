@@ -1,6 +1,6 @@
 # HouseStuff API
 
-Backend .NET 10 e fonte canônica das regras e do acompanhamento do HouseStuff.
+Backend .NET 8 e fonte canônica das regras e do acompanhamento do HouseStuff.
 
 ## Estrutura
 
@@ -57,7 +57,7 @@ Use um SDK compatível com o `global.json`:
 
 ```powershell
 docker compose up -d postgres
-dotnet restore HouseStuff.slnx
+dotnet restore HouseStuff.sln
 dotnet run --project src/HouseStuff.Api
 ```
 
@@ -111,9 +111,9 @@ Para validar backend, frontend, prontidão e a sessão administrativa configurad
 Os gates isolados do backend continuam disponíveis:
 
 ```powershell
-dotnet format HouseStuff.slnx --verify-no-changes --no-restore
-dotnet build HouseStuff.slnx --configuration Release --no-restore
-dotnet test HouseStuff.slnx --configuration Release --no-build --no-restore
+dotnet format HouseStuff.sln --verify-no-changes --no-restore
+dotnet build HouseStuff.sln --configuration Release --no-restore
+dotnet test HouseStuff.sln --configuration Release --no-build --no-restore
 ```
 
 ## Atualizar acompanhamento

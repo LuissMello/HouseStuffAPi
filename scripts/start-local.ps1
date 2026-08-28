@@ -9,11 +9,11 @@ $runtimeDir = Join-Path $apiRoot ".local"
 $processFile = Join-Path $runtimeDir "processes.json"
 
 function Resolve-DotNet {
-    $localSdk = Join-Path $workspaceRoot ".dotnet-sdk-10\dotnet.exe"
+    $localSdk = Join-Path $workspaceRoot ".dotnet-sdk-8\dotnet.exe"
     if (Test-Path -LiteralPath $localSdk) { return $localSdk }
     $command = Get-Command dotnet -ErrorAction SilentlyContinue
     if ($command) { return $command.Source }
-    throw ".NET 10 não foi encontrado. Instale o SDK indicado pelo global.json."
+    throw ".NET 8 não foi encontrado. Instale o SDK indicado pelo global.json."
 }
 
 function Test-Endpoint([string]$Uri) {
@@ -45,7 +45,7 @@ try {
     docker compose up -d postgres
     if ($LASTEXITCODE -ne 0) { throw "Não foi possível iniciar o PostgreSQL." }
     if (-not $SkipInstall) {
-        & $dotnet restore HouseStuff.slnx
+        & $dotnet restore HouseStuff.sln
         if ($LASTEXITCODE -ne 0) { throw "Falha ao restaurar o backend." }
         if (-not (Test-Path -LiteralPath (Join-Path $frontRoot "node_modules"))) {
             Push-Location $frontRoot

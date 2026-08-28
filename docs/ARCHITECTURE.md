@@ -6,7 +6,7 @@
 HouseStuffFront (React/Vite)
           |
           v
-HouseStuff.Api (.NET 10) -> Application -> Domain
+HouseStuff.Api (.NET 8) -> Application -> Domain
           |                    ^
           +-> Infrastructure --+
                     |

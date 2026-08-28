@@ -32,7 +32,7 @@ public sealed class ResidencesController(IResidenceService residences) : Control
         }
 
         var status = result.Code == "residence_not_found" ? StatusCodes.Status404NotFound : StatusCodes.Status400BadRequest;
-        return Problem(statusCode: status, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
+        return this.ProblemWithCode(status, result.Message, result.Code);
     }
 }
 

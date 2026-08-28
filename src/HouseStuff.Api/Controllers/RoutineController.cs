@@ -15,6 +15,6 @@ public sealed class RoutineController(IRoutineOverviewService routine) : Control
         var result = await routine.GetAsync(cancellationToken);
         return result.Succeeded
             ? StatusCode(StatusCodes.Status200OK, result.Value)
-            : Problem(statusCode: StatusCodes.Status400BadRequest, title: result.Message, extensions: new Dictionary<string, object?> { ["code"] = result.Code });
+            : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
     }
 }

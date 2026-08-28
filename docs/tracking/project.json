@@ -1,7 +1,7 @@
 {
   "$schema": "./project.schema.json",
   "project": "HouseStuff",
-  "updatedAt": "2026-08-20",
+  "updatedAt": "2026-08-28",
   "status": "onTrack",
   "currentStageId": "M10",
   "stages": [
@@ -28,7 +28,7 @@
       "type": "technical",
       "title": "Fundação e documentação do HouseStuff",
       "status": "completed",
-      "result": "API .NET 10 e frontend executáveis, documentação canônica e tela de acompanhamento conectada à fonte única.",
+      "result": "API .NET 8 e frontend executáveis, documentação canônica e tela de acompanhamento conectada à fonte única.",
       "subtasks": [
         { "id": "HOUSE-001-01", "title": "Governança e decisões", "status": "completed" },
         { "id": "HOUSE-001-02", "title": "Fundação backend", "status": "completed" },
