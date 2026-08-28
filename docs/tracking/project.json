@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-28",
   "status": "onTrack",
-  "currentStageId": "M13",
+  "currentStageId": "M14",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -18,7 +18,8 @@
     { "id": "M10", "name": "Compras", "outcome": "A casa organiza compras recorrentes e desejos futuros por prioridade" },
     { "id": "M11", "name": "Agenda", "outcome": "A casa visualiza datas, aniversários e compromissos em um calendário diário, semanal ou mensal" },
     { "id": "M12", "name": "Colaboração", "outcome": "Todos os moradores organizam juntos os potes, tarefas e futuras listas da casa" },
-    { "id": "M13", "name": "Distribuição", "outcome": "Tarefas respeitam esforço desejado e quem pode realizá-las" }
+    { "id": "M13", "name": "Distribuição", "outcome": "Tarefas respeitam esforço desejado e quem pode realizá-las" },
+    { "id": "M14", "name": "Administração", "outcome": "Perfis administrativos podem ser ajustados com segurança dentro da casa" }
   ],
   "tasks": [
     {
@@ -272,6 +273,22 @@
         { "id": "HOUSE-140-03", "title": "API de cadastro e sorteio filtrado", "status": "completed" },
         { "id": "HOUSE-140-04", "title": "Cadastro responsivo e animação do post-it", "status": "completed" },
         { "id": "HOUSE-140-05", "title": "Integração, testes, documentação e fechamento", "status": "completed" }
+      ]
+    },
+    {
+      "id": "HOUSE-150",
+      "stageId": "M14",
+      "area": "Acesso",
+      "repository": "both",
+      "type": "feature",
+      "title": "Alteração de perfil dos moradores",
+      "status": "inProgress",
+      "result": "Administrador promove outro morador ou o rebaixa pela tela de pessoas da casa.",
+      "subtasks": [
+        { "id": "HOUSE-150-01", "title": "Regras, contrato e critérios de aceite", "status": "completed" },
+        { "id": "HOUSE-150-02", "title": "API segura de alteração de perfil", "status": "pending" },
+        { "id": "HOUSE-150-03", "title": "Ação responsiva na tela de pessoas", "status": "pending" },
+        { "id": "HOUSE-150-04", "title": "Integração, testes, publicação e fechamento", "status": "pending" }
       ]
     }
   ]

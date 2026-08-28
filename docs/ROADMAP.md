@@ -89,3 +89,9 @@ Tarefas respeitam esforço desejado e quem pode realizá-las
 
 - [x] `HOUSE-140` — Dificuldade e moradores elegíveis nas tarefas — Morador cadastra post-it com dificuldade e pessoas elegíveis e sorteia somente tarefas adequadas para si.
 
+## M14 — Administração
+
+Perfis administrativos podem ser ajustados com segurança dentro da casa
+
+- [>] `HOUSE-150` — Alteração de perfil dos moradores — Administrador promove outro morador ou o rebaixa pela tela de pessoas da casa.
+

@@ -109,3 +109,8 @@
 
 - Status: aceita em 28/08/2026.
 - Decisão: toda tarefa possui dificuldade obrigatória e define elegibilidade para todos os moradores ou para usuários específicos. A opção “todos” é dinâmica e inclui moradores futuros; a seleção específica é persistida em vínculo próprio e validada novamente no aceite.
+
+## DEC-023 — Administração de perfis dentro da residência
+
+- Status: aceita em 28/08/2026.
+- Decisão: um administrador pode promover ou rebaixar outro usuário vinculado à mesma residência. A operação não aceita o próprio usuário, acessos pendentes nem moradores de outra casa; o backend troca os papéis do ASP.NET Identity como unidade lógica e invalida as sessões do usuário alterado.
