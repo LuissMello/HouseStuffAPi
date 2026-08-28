@@ -9,7 +9,8 @@ public sealed record DrawProposalView(
     string TaskName,
     string? Description,
     string Kind,
-    int? RecurrenceDays);
+    int? RecurrenceDays,
+    string Difficulty = "medium");
 
 public sealed record ActiveAssignmentView(
     Guid AssignmentId,
@@ -20,7 +21,8 @@ public sealed record ActiveAssignmentView(
     string? Description,
     string Kind,
     int? RecurrenceDays,
-    DateTimeOffset AcceptedAt);
+    DateTimeOffset AcceptedAt,
+    string Difficulty = "medium");
 
 public sealed record CompletedAssignmentView(
     Guid AssignmentId,
@@ -31,7 +33,7 @@ public sealed record CompletedAssignmentView(
     DateTimeOffset? NextAvailableAt,
     bool ReturnsToPot);
 
-public sealed record DrawTaskCommand(Guid PotId, IReadOnlyCollection<Guid> ExcludedTaskIds);
+public sealed record DrawTaskCommand(Guid PotId, IReadOnlyCollection<Guid> ExcludedTaskIds, string? Difficulty = null);
 
 public sealed record AssignmentResult<T>(bool Succeeded, T? Value, string? Code, string? Message);
 

@@ -41,6 +41,17 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
             return AssignmentResult.Failure<DrawProposalView>("pot_not_found", "Pote ativo não encontrado na sua casa.");
         }
 
+        HouseholdTaskDifficulty? difficulty = null;
+        if (!string.IsNullOrWhiteSpace(command.Difficulty))
+        {
+            if (!Enum.TryParse<HouseholdTaskDifficulty>(command.Difficulty, ignoreCase: true, out var parsedDifficulty) || !Enum.IsDefined(parsedDifficulty))
+            {
+                return AssignmentResult.Failure<DrawProposalView>("task_difficulty_invalid", "Selecione uma dificuldade válida.");
+            }
+
+            difficulty = parsedDifficulty;
+        }
+
         var excluded = command.ExcludedTaskIds.Distinct().Take(100).ToArray();
         var now = DateTimeOffset.UtcNow;
         var candidates = await (from task in database.HouseholdTasks
@@ -48,6 +59,8 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
                                 where task.ResidenceId == session.ResidenceId
                                     && task.PotId == command.PotId
                                     && task.IsActive
+                                    && (difficulty == null || task.Difficulty == difficulty)
+                                    && (task.IsAvailableToAllResidents || task.EligibleUsers.Any(user => user.UserId == session.UserId))
                                     && (task.NextAvailableAt == null || task.NextAvailableAt <= now)
                                     && pot.IsActive
                                     && !excluded.Contains(task.Id)
@@ -59,7 +72,8 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
                                     task.Name,
                                     task.Description,
                                     ToKind(task.Kind),
-                                    task.RecurrenceDays))
+                                    task.RecurrenceDays,
+                                    ToDifficulty(task.Difficulty)))
             .ToListAsync(cancellationToken);
 
         if (candidates.Count == 0)
@@ -89,6 +103,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
                                where task.Id == taskId
                                    && task.ResidenceId == session.ResidenceId
                                    && task.IsActive
+                                   && (task.IsAvailableToAllResidents || task.EligibleUsers.Any(user => user.UserId == session.UserId))
                                    && (task.NextAvailableAt == null || task.NextAvailableAt <= now)
                                    && pot.IsActive
                                    && !database.TaskAssignments.Any(assignment => assignment.HouseholdTaskId == task.Id && assignment.CompletedAt == null)
@@ -176,7 +191,8 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
             task.Description,
             ToKind(task.Kind),
             task.RecurrenceDays,
-            assignment.AcceptedAt);
+            assignment.AcceptedAt,
+            ToDifficulty(task.Difficulty));
 
     private static ActiveAssignmentView ToView(TaskAssignment assignment, Domain.Tasks.HouseholdTask task, string potName) => new(
         assignment.Id,
@@ -187,7 +203,9 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
         task.Description,
         ToKind(task.Kind),
         task.RecurrenceDays,
-        assignment.AcceptedAt);
+        assignment.AcceptedAt,
+        ToDifficulty(task.Difficulty));
 
     private static string ToKind(Domain.Tasks.HouseholdTaskKind kind) => char.ToLowerInvariant(kind.ToString()[0]) + kind.ToString()[1..];
+    private static string ToDifficulty(HouseholdTaskDifficulty difficulty) => char.ToLowerInvariant(difficulty.ToString()[0]) + difficulty.ToString()[1..];
 }

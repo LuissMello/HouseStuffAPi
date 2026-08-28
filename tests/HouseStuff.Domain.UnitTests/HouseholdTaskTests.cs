@@ -78,4 +78,44 @@ public sealed class HouseholdTaskTests
         Assert.True(task.IsActive);
         Assert.Equal(completedAt.AddDays(30), task.NextAvailableAt);
     }
+
+    [Fact]
+    public void CreatesTaskWithDifficultyAndSpecificEligibleUsers()
+    {
+        var result = HouseholdTask.Create(
+            Guid.NewGuid(),
+            Guid.NewGuid(),
+            "Limpar quintal",
+            null,
+            HouseholdTaskKind.Reusable,
+            null,
+            DateTimeOffset.UtcNow,
+            HouseholdTaskDifficulty.Hard,
+            false,
+            ["user-2", "user-1", "user-2"]);
+
+        Assert.True(result.Succeeded);
+        Assert.Equal(HouseholdTaskDifficulty.Hard, result.Task!.Difficulty);
+        Assert.False(result.Task.IsAvailableToAllResidents);
+        Assert.Equal(["user-1", "user-2"], result.Task.EligibleUsers.Select(user => user.UserId).Order());
+    }
+
+    [Fact]
+    public void SpecificEligibilityRequiresAtLeastOneUser()
+    {
+        var result = HouseholdTask.Create(
+            Guid.NewGuid(),
+            Guid.NewGuid(),
+            "Limpar quintal",
+            null,
+            HouseholdTaskKind.Reusable,
+            null,
+            DateTimeOffset.UtcNow,
+            HouseholdTaskDifficulty.Easy,
+            false,
+            []);
+
+        Assert.False(result.Succeeded);
+        Assert.Equal("task_eligible_users_required", result.Code);
+    }
 }

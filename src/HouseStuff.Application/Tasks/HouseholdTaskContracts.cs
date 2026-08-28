@@ -8,9 +8,20 @@ public sealed record HouseholdTaskView(
     string? Description,
     string Kind,
     int? RecurrenceDays,
-    bool IsActive);
+    bool IsActive,
+    string Difficulty = "medium",
+    bool IsAvailableToAllResidents = true,
+    IReadOnlyList<string>? EligibleUserIds = null);
 
-public sealed record SaveHouseholdTaskCommand(Guid PotId, string Name, string? Description, string Kind, int? RecurrenceDays);
+public sealed record SaveHouseholdTaskCommand(
+    Guid PotId,
+    string Name,
+    string? Description,
+    string Kind,
+    int? RecurrenceDays,
+    string? Difficulty = null,
+    bool? IsAvailableToAllResidents = null,
+    IReadOnlyCollection<string>? EligibleUserIds = null);
 
 public sealed record HouseholdTaskResult<T>(bool Succeeded, T? Value, string? Code, string? Message);
 

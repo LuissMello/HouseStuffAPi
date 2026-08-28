@@ -21,6 +21,7 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
     public DbSet<Residence> Residences => Set<Residence>();
     public DbSet<Pot> Pots => Set<Pot>();
     public DbSet<HouseholdTask> HouseholdTasks => Set<HouseholdTask>();
+    public DbSet<HouseholdTaskEligibleUser> HouseholdTaskEligibleUsers => Set<HouseholdTaskEligibleUser>();
     public DbSet<TaskAssignment> TaskAssignments => Set<TaskAssignment>();
     public DbSet<ShoppingCategory> ShoppingCategories => Set<ShoppingCategory>();
     public DbSet<ShoppingItem> ShoppingItems => Set<ShoppingItem>();
@@ -70,11 +71,28 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
             entity.Property(task => task.NormalizedName).HasMaxLength(100).IsRequired();
             entity.Property(task => task.Description).HasMaxLength(300);
             entity.Property(task => task.Kind).HasConversion<string>().HasMaxLength(20).IsRequired();
+            entity.Property(task => task.Difficulty).HasConversion<string>().HasMaxLength(20).IsRequired();
             entity.HasIndex(task => new { task.ResidenceId, task.PotId, task.NormalizedName }).IsUnique();
             entity.HasIndex(task => new { task.ResidenceId, task.PotId, task.IsActive, task.NextAvailableAt });
+            entity.HasAlternateKey(task => new { task.Id, task.ResidenceId });
             entity.HasOne<Pot>().WithMany()
                 .HasForeignKey(task => new { task.PotId, task.ResidenceId })
                 .HasPrincipalKey(pot => new { pot.Id, pot.ResidenceId })
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany(task => task.EligibleUsers).WithOne()
+                .HasForeignKey(user => new { user.HouseholdTaskId, user.ResidenceId })
+                .HasPrincipalKey(task => new { task.Id, task.ResidenceId })
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<HouseholdTaskEligibleUser>(entity =>
+        {
+            entity.ToTable("HouseholdTaskEligibleUsers");
+            entity.HasKey(user => new { user.HouseholdTaskId, user.UserId });
+            entity.Property(user => user.UserId).HasMaxLength(450).IsRequired();
+            entity.HasIndex(user => new { user.ResidenceId, user.UserId });
+            entity.HasOne<HouseStuffUser>().WithMany()
+                .HasForeignKey(user => user.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 

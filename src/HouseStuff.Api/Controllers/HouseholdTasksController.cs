@@ -37,9 +37,17 @@ public sealed class HouseholdTasksController(IHouseholdTaskService tasks) : Cont
     }
 }
 
-public sealed record SaveHouseholdTaskRequest(Guid PotId, string Name, string? Description, string Kind, int? RecurrenceDays)
+public sealed record SaveHouseholdTaskRequest(
+    Guid PotId,
+    string Name,
+    string? Description,
+    string Kind,
+    int? RecurrenceDays,
+    string? Difficulty = null,
+    bool? IsAvailableToAllResidents = null,
+    IReadOnlyCollection<string>? EligibleUserIds = null)
 {
-    public SaveHouseholdTaskCommand ToCommand() => new(PotId, Name, Description, Kind, RecurrenceDays);
+    public SaveHouseholdTaskCommand ToCommand() => new(PotId, Name, Description, Kind, RecurrenceDays, Difficulty, IsAvailableToAllResidents, EligibleUserIds);
 }
 
 public sealed record SetHouseholdTaskStatusRequest(bool IsActive);
