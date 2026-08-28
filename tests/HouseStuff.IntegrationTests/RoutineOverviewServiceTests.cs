@@ -65,8 +65,10 @@ public sealed class RoutineOverviewServiceTests
         var options = new DbContextOptionsBuilder<HouseStuffDbContext>().UseNpgsql(TestConnection).Options;
         await using var database = new HouseStuffDbContext(options);
         await database.Database.EnsureCreatedAsync();
+        var startup = new StartupState();
+        startup.MarkReady();
 
-        var result = await new PostgresReadinessCheck(database).CheckHealthAsync(new HealthCheckContext());
+        var result = await new PostgresReadinessCheck(database, startup).CheckHealthAsync(new HealthCheckContext());
 
         Assert.Equal(HealthStatus.Healthy, result.Status);
         await database.Database.EnsureDeletedAsync();

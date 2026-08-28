@@ -28,14 +28,18 @@ app.MapHealthChecks("/health/live", new HealthCheckOptions { Predicate = _ => fa
 app.MapHealthChecks("/health/ready", new HealthCheckOptions { Predicate = check => check.Tags.Contains("ready") });
 app.MapControllers();
 
-await app.Services.InitializeHouseStuffIdentityAsync();
-
 if (maintenance)
 {
+    await app.Services.InitializeHouseStuffIdentityAsync();
     return await MaintenanceCommands.RunAsync(app.Services, args, CancellationToken.None);
 }
 
-app.Run();
+// A porta precisa abrir antes das migrations: o proxy do Fly desiste da máquina se demorarmos
+// para ficar acessíveis, e o banco fica em outra região. O readiness segura o tráfego até o fim.
+await app.StartAsync();
+await app.Services.InitializeHouseStuffIdentityAsync();
+app.Services.GetRequiredService<StartupState>().MarkReady();
+await app.WaitForShutdownAsync();
 
 return 0;
 

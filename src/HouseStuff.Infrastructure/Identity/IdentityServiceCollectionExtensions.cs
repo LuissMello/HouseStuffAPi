@@ -15,6 +15,7 @@ using HouseStuff.Application.Purchases;
 using HouseStuff.Infrastructure.Purchases;
 using HouseStuff.Application.Calendar;
 using HouseStuff.Infrastructure.Calendar;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,6 +38,12 @@ public static class IdentityServiceCollectionExtensions
             ?? throw new InvalidOperationException("ConnectionStrings:HouseStuff não foi configurada.");
 
         services.AddDbContext<HouseStuffDbContext>(options => options.UseNpgsql(connectionString));
+
+        // Sem chaves compartilhadas cada máquina cifra o cookie com a sua, e a sessão cai ao trocar de máquina.
+        services.AddDataProtection()
+            .PersistKeysToDbContext<HouseStuffDbContext>()
+            .SetApplicationName("HouseStuff");
+
         services.AddIdentity<HouseStuffUser, IdentityRole>(options =>
         {
             options.User.RequireUniqueEmail = true;
@@ -85,6 +92,7 @@ public static class IdentityServiceCollectionExtensions
         services.AddScoped<IShoppingCatalogService, ShoppingCatalogService>();
         services.AddScoped<IPurchaseWishService, PurchaseWishService>();
         services.AddScoped<ICalendarService, CalendarService>();
+        services.AddSingleton<StartupState>();
         return services;
     }
 

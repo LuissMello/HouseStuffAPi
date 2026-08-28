@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using HouseStuff.Domain.Residences;
@@ -11,8 +12,12 @@ using HouseStuff.Domain.Calendar;
 namespace HouseStuff.Infrastructure.Identity;
 
 public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> options)
-    : IdentityDbContext<HouseStuffUser>(options)
+    : IdentityDbContext<HouseStuffUser>(options), IDataProtectionKeyContext
 {
+    // As chaves precisam ser compartilhadas: cada máquina do Fly geraria as suas e o cookie
+    // emitido por uma seria rejeitado pela outra, derrubando a sessão de forma intermitente.
+    public DbSet<DataProtectionKey> DataProtectionKeys => Set<DataProtectionKey>();
+
     public DbSet<Residence> Residences => Set<Residence>();
     public DbSet<Pot> Pots => Set<Pot>();
     public DbSet<HouseholdTask> HouseholdTasks => Set<HouseholdTask>();
