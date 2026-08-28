@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-28",
   "status": "onTrack",
-  "currentStageId": "M10",
+  "currentStageId": "M13",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -17,7 +17,8 @@
     { "id": "M9", "name": "Experiência", "outcome": "Tarefas em post-its e sorteio animado tornam a rotina mais leve e divertida" },
     { "id": "M10", "name": "Compras", "outcome": "A casa organiza compras recorrentes e desejos futuros por prioridade" },
     { "id": "M11", "name": "Agenda", "outcome": "A casa visualiza datas, aniversários e compromissos em um calendário diário, semanal ou mensal" },
-    { "id": "M12", "name": "Colaboração", "outcome": "Todos os moradores organizam juntos os potes, tarefas e futuras listas da casa" }
+    { "id": "M12", "name": "Colaboração", "outcome": "Todos os moradores organizam juntos os potes, tarefas e futuras listas da casa" },
+    { "id": "M13", "name": "Distribuição", "outcome": "Tarefas respeitam esforço desejado e quem pode realizá-las" }
   ],
   "tasks": [
     {
@@ -254,6 +255,23 @@
         { "id": "HOUSE-130-02", "title": "Autorização de moradores na API", "status": "completed" },
         { "id": "HOUSE-130-03", "title": "Navegação e telas compartilhadas no frontend", "status": "completed" },
         { "id": "HOUSE-130-04", "title": "Integração com Luis, testes e fechamento", "status": "completed" }
+      ]
+    },
+    {
+      "id": "HOUSE-140",
+      "stageId": "M13",
+      "area": "Tarefas",
+      "repository": "both",
+      "type": "feature",
+      "title": "Dificuldade e moradores elegíveis nas tarefas",
+      "status": "inProgress",
+      "result": "Morador cadastra post-it com dificuldade e pessoas elegíveis e sorteia somente tarefas adequadas para si.",
+      "subtasks": [
+        { "id": "HOUSE-140-01", "title": "Regras, contrato e critérios de aceite", "status": "completed" },
+        { "id": "HOUSE-140-02", "title": "Domínio, persistência e migration", "status": "inProgress" },
+        { "id": "HOUSE-140-03", "title": "API de cadastro e sorteio filtrado", "status": "pending" },
+        { "id": "HOUSE-140-04", "title": "Cadastro responsivo e animação do post-it", "status": "pending" },
+        { "id": "HOUSE-140-05", "title": "Integração, testes, documentação e fechamento", "status": "pending" }
       ]
     }
   ]

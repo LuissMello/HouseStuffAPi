@@ -104,3 +104,8 @@
 
 - Status: aceita em 28/08/2026.
 - Decisão: o backend passa a usar .NET 8, EF Core 8 e imagens de runtime .NET 8 para permitir desenvolvimento no Visual Studio 2022 e nas máquinas atuais do projeto, preservando a arquitetura modular existente.
+
+## DEC-022 — Elegibilidade dinâmica e dificuldade das tarefas
+
+- Status: aceita em 28/08/2026.
+- Decisão: toda tarefa possui dificuldade obrigatória e define elegibilidade para todos os moradores ou para usuários específicos. A opção “todos” é dinâmica e inclui moradores futuros; a seleção específica é persistida em vínculo próprio e validada novamente no aceite.

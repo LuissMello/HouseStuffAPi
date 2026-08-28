@@ -83,3 +83,9 @@ Todos os moradores organizam juntos os potes, tarefas e futuras listas da casa
 
 - [x] `HOUSE-130` — Gestão colaborativa da casa — Qualquer morador mantém potes e tarefas da própria casa pela interface.
 
+## M13 — Distribuição
+
+Tarefas respeitam esforço desejado e quem pode realizá-las
+
+- [>] `HOUSE-140` — Dificuldade e moradores elegíveis nas tarefas — Morador cadastra post-it com dificuldade e pessoas elegíveis e sorteia somente tarefas adequadas para si.
+

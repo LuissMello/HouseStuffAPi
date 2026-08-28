@@ -20,6 +20,7 @@
 - moradores visualizam somente potes ativos da própria residência;
 - arquivar preserva o pote para o histórico e para vínculos futuros;
 - o usuário escolhe explicitamente um pote, como `Mensal`;
+- o usuário pode filtrar o sorteio por dificuldade ou considerar qualquer dificuldade;
 - o sorteio considera somente tarefas elegíveis daquele pote e da residência do usuário;
 - uma tarefa pode ser única, reutilizável ou recorrente;
 - toda tarefa pertence a exatamente um pote da mesma residência;
@@ -31,6 +32,9 @@
 - tarefa recorrente possui um intervalo configurado.
 - apenas tarefa recorrente possui intervalo, entre 1 e 3650 dias;
 - tarefas não possuem data-alvo no cadastro inicial.
+- toda tarefa possui dificuldade fácil, média ou difícil;
+- a tarefa pode ser elegível para todos os moradores, incluindo futuros moradores, ou para uma seleção não vazia de usuários da própria residência;
+- sorteio e aceite consideram somente tarefas que o usuário autenticado pode pegar;
 
 ## BR-003 — Sorteio e aceite
 
