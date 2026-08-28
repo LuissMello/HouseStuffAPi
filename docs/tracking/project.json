@@ -264,14 +264,14 @@
       "repository": "both",
       "type": "feature",
       "title": "Dificuldade e moradores elegíveis nas tarefas",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Morador cadastra post-it com dificuldade e pessoas elegíveis e sorteia somente tarefas adequadas para si.",
       "subtasks": [
         { "id": "HOUSE-140-01", "title": "Regras, contrato e critérios de aceite", "status": "completed" },
-        { "id": "HOUSE-140-02", "title": "Domínio, persistência e migration", "status": "inProgress" },
-        { "id": "HOUSE-140-03", "title": "API de cadastro e sorteio filtrado", "status": "pending" },
-        { "id": "HOUSE-140-04", "title": "Cadastro responsivo e animação do post-it", "status": "pending" },
-        { "id": "HOUSE-140-05", "title": "Integração, testes, documentação e fechamento", "status": "pending" }
+        { "id": "HOUSE-140-02", "title": "Domínio, persistência e migration", "status": "completed" },
+        { "id": "HOUSE-140-03", "title": "API de cadastro e sorteio filtrado", "status": "completed" },
+        { "id": "HOUSE-140-04", "title": "Cadastro responsivo e animação do post-it", "status": "completed" },
+        { "id": "HOUSE-140-05", "title": "Integração, testes, documentação e fechamento", "status": "completed" }
       ]
     }
   ]

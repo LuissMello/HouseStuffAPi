@@ -87,5 +87,5 @@ Todos os moradores organizam juntos os potes, tarefas e futuras listas da casa
 
 Tarefas respeitam esforço desejado e quem pode realizá-las
 
-- [>] `HOUSE-140` — Dificuldade e moradores elegíveis nas tarefas — Morador cadastra post-it com dificuldade e pessoas elegíveis e sorteia somente tarefas adequadas para si.
+- [x] `HOUSE-140` — Dificuldade e moradores elegíveis nas tarefas — Morador cadastra post-it com dificuldade e pessoas elegíveis e sorteia somente tarefas adequadas para si.
 

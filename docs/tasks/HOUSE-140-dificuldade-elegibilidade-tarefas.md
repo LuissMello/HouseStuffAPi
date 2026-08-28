@@ -1,6 +1,6 @@
 # HOUSE-140 — Dificuldade e moradores elegíveis nas tarefas
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: funcional.
 
@@ -13,10 +13,10 @@ Ao cadastrar ou editar um post-it, o morador escolhe sua dificuldade e define se
 ## Subtarefas
 
 - [x] `HOUSE-140-01` — regras, contrato e critérios de aceite;
-- [>] `HOUSE-140-02` — domínio, persistência e migration;
-- [ ] `HOUSE-140-03` — API de cadastro e sorteio filtrado;
-- [ ] `HOUSE-140-04` — cadastro responsivo e animação do post-it;
-- [ ] `HOUSE-140-05` — integração, testes, documentação e fechamento.
+- [x] `HOUSE-140-02` — domínio, persistência e migration;
+- [x] `HOUSE-140-03` — API de cadastro e sorteio filtrado;
+- [x] `HOUSE-140-04` — cadastro responsivo e animação do post-it;
+- [x] `HOUSE-140-05` — integração, testes, documentação e fechamento.
 
 ## Regras
 
@@ -32,13 +32,13 @@ Ao cadastrar ou editar um post-it, o morador escolhe sua dificuldade e define se
 
 ## Critérios de aceite
 
-- [ ] banco persiste dificuldade e elegibilidade por usuário com isolamento residencial;
-- [ ] cadastro e edição retornam dificuldade e moradores elegíveis;
-- [ ] tarefa específica nunca é sorteada nem aceita por morador não selecionado;
-- [ ] seleção “todos” funciona para moradores atuais e futuros;
-- [ ] sorteio permite qualquer dificuldade, fácil, média ou difícil;
-- [ ] formulário funciona por toque, teclado e leitor de tela;
-- [ ] animação ocorre somente após confirmação real da API;
-- [ ] telas continuam responsivas no celular;
-- [ ] builds e testes dos dois repositórios passam;
-- [ ] fluxo integrado pode ser executado pelo usuário.
+- [x] banco persiste dificuldade e elegibilidade por usuário com isolamento residencial;
+- [x] cadastro e edição retornam dificuldade e moradores elegíveis;
+- [x] tarefa específica nunca é sorteada nem aceita por morador não selecionado;
+- [x] seleção “todos” funciona para moradores atuais e futuros;
+- [x] sorteio permite qualquer dificuldade, fácil, média ou difícil;
+- [x] formulário funciona por toque, teclado e leitor de tela;
+- [x] animação ocorre somente após confirmação real da API;
+- [x] telas continuam responsivas no celular;
+- [x] builds e testes dos dois repositórios passam;
+- [x] fluxo integrado pode ser executado pelo usuário.
