@@ -64,7 +64,7 @@ public sealed class UserRoleManagementServiceTests
                     "Test")),
             },
         };
-        var service = new UserAccessService(users, null!, accessor, database);
+        var service = new UserAccessService(users, null!, accessor, database, null!, TimeProvider.System);
         var previousStamp = member.SecurityStamp;
 
         var promoted = await service.ChangeRoleAsync(new ChangeUserRoleCommand(member.Id, true), CancellationToken.None);

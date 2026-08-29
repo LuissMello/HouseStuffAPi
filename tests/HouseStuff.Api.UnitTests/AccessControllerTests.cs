@@ -7,16 +7,14 @@ namespace HouseStuff.Api.UnitTests;
 public sealed class AccessControllerTests
 {
     [Fact]
-    public async Task LoginReturnsUserWhenCredentialsAreValid()
+    public async Task LoginLetsBearerHandlerWriteTokensWhenCredentialsAreValid()
     {
-        var expected = new CurrentUser("1", "admin@house.local", "Admin", true);
-        var service = new StubUserAccessService { SignInResult = AccessResult.Success(expected) };
+        var service = new StubUserAccessService { SignInResult = AccessResult.Success(true) };
         var controller = new AuthController(service);
 
-        var result = await controller.Login(new LoginRequest(expected.Email, "Secret#123", false), CancellationToken.None);
+        var result = await controller.Login(new LoginRequest("admin@house.local", "Secret#123", false), CancellationToken.None);
 
-        var ok = Assert.IsType<OkObjectResult>(result);
-        Assert.Same(expected, ok.Value);
+        Assert.IsType<EmptyResult>(result);
     }
 
     [Fact]
@@ -24,11 +22,26 @@ public sealed class AccessControllerTests
     {
         var service = new StubUserAccessService
         {
-            SignInResult = AccessResult.Failure<CurrentUser>("invalid_credentials", "E-mail ou senha inválidos."),
+            SignInResult = AccessResult.Failure<bool>("invalid_credentials", "E-mail ou senha inválidos."),
         };
         var controller = new AuthController(service);
 
         var result = await controller.Login(new LoginRequest("x@house.local", "wrong", false), CancellationToken.None);
+
+        var problem = Assert.IsType<ObjectResult>(result);
+        Assert.Equal(401, problem.StatusCode);
+    }
+
+    [Fact]
+    public async Task RefreshReturnsUnauthorizedForExpiredToken()
+    {
+        var service = new StubUserAccessService
+        {
+            RefreshResult = AccessResult.Failure<bool>("invalid_refresh_token", "A sessão expirou. Entre novamente."),
+        };
+        var controller = new AuthController(service);
+
+        var result = await controller.Refresh(new RefreshTokenRequest("expired"), CancellationToken.None);
 
         var problem = Assert.IsType<ObjectResult>(result);
         Assert.Equal(401, problem.StatusCode);
@@ -64,12 +77,16 @@ public sealed class AccessControllerTests
 
     private sealed class StubUserAccessService : IUserAccessService
     {
-        public AccessResult<CurrentUser> SignInResult { get; init; } = AccessResult.Failure<CurrentUser>("missing", "missing");
+        public AccessResult<bool> SignInResult { get; init; } = AccessResult.Failure<bool>("missing", "missing");
+        public AccessResult<bool> RefreshResult { get; init; } = AccessResult.Failure<bool>("missing", "missing");
         public AccessResult<UserSummary> CreateResult { get; init; } = AccessResult.Failure<UserSummary>("missing", "missing");
         public AccessResult<UserSummary> ChangeRoleResult { get; init; } = AccessResult.Failure<UserSummary>("missing", "missing");
 
-        public Task<AccessResult<CurrentUser>> SignInAsync(string email, string password, bool rememberMe, CancellationToken cancellationToken) =>
+        public Task<AccessResult<bool>> SignInWithTokenAsync(string email, string password, CancellationToken cancellationToken) =>
             Task.FromResult(SignInResult);
+
+        public Task<AccessResult<bool>> RefreshTokenAsync(string refreshToken, CancellationToken cancellationToken) =>
+            Task.FromResult(RefreshResult);
 
         public Task SignOutAsync() => Task.CompletedTask;
 

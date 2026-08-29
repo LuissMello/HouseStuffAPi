@@ -1,8 +1,11 @@
 using System.Security.Claims;
 using HouseStuff.Application.Identity;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace HouseStuff.Infrastructure.Identity;
 
@@ -10,28 +13,51 @@ internal sealed class UserAccessService(
     UserManager<HouseStuffUser> userManager,
     SignInManager<HouseStuffUser> signInManager,
     IHttpContextAccessor httpContextAccessor,
-    HouseStuffDbContext database) : IUserAccessService
+    HouseStuffDbContext database,
+    IOptionsMonitor<BearerTokenOptions> bearerTokenOptions,
+    TimeProvider timeProvider) : IUserAccessService
 {
-    public async Task<AccessResult<CurrentUser>> SignInAsync(
+    public async Task<AccessResult<bool>> SignInWithTokenAsync(
         string email,
         string password,
-        bool rememberMe,
         CancellationToken cancellationToken)
     {
         var normalizedEmail = email.Trim();
         var user = await userManager.FindByEmailAsync(normalizedEmail);
         if (user is null)
         {
-            return AccessResult.Failure<CurrentUser>("invalid_credentials", "E-mail ou senha inválidos.");
+            return AccessResult.Failure<bool>("invalid_credentials", "E-mail ou senha inválidos.");
         }
 
-        var result = await signInManager.PasswordSignInAsync(user, password, rememberMe, lockoutOnFailure: true);
+        signInManager.AuthenticationScheme = IdentityConstants.BearerScheme;
+        var result = await signInManager.PasswordSignInAsync(user, password, isPersistent: false, lockoutOnFailure: true);
         if (!result.Succeeded)
         {
-            return AccessResult.Failure<CurrentUser>("invalid_credentials", "E-mail ou senha inválidos.");
+            return AccessResult.Failure<bool>("invalid_credentials", "E-mail ou senha inválidos.");
         }
 
-        return AccessResult.Success(await ToCurrentUserAsync(user));
+        return AccessResult.Success(true);
+    }
+
+    public async Task<AccessResult<bool>> RefreshTokenAsync(
+        string refreshToken,
+        CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        var tokenProtector = bearerTokenOptions.Get(IdentityConstants.BearerScheme).RefreshTokenProtector;
+        var refreshTicket = tokenProtector.Unprotect(refreshToken);
+        if (refreshTicket?.Properties.ExpiresUtc is not { } expiresUtc ||
+            timeProvider.GetUtcNow() >= expiresUtc ||
+            await signInManager.ValidateSecurityStampAsync(refreshTicket.Principal) is not { } user)
+        {
+            return AccessResult.Failure<bool>("invalid_refresh_token", "A sessão expirou. Entre novamente.");
+        }
+
+        var principal = await signInManager.CreateUserPrincipalAsync(user);
+        var context = httpContextAccessor.HttpContext
+            ?? throw new InvalidOperationException("Não foi possível acessar a requisição atual.");
+        await context.SignInAsync(IdentityConstants.BearerScheme, principal);
+        return AccessResult.Success(true);
     }
 
     public Task SignOutAsync() => signInManager.SignOutAsync();

@@ -25,7 +25,8 @@ public static class AccessResult
 
 public interface IUserAccessService
 {
-    Task<AccessResult<CurrentUser>> SignInAsync(string email, string password, bool rememberMe, CancellationToken cancellationToken);
+    Task<AccessResult<bool>> SignInWithTokenAsync(string email, string password, CancellationToken cancellationToken);
+    Task<AccessResult<bool>> RefreshTokenAsync(string refreshToken, CancellationToken cancellationToken);
     Task SignOutAsync();
     Task<CurrentUser?> GetCurrentAsync(CancellationToken cancellationToken);
     Task<IReadOnlyList<UserSummary>> ListAsync(CancellationToken cancellationToken);

@@ -16,6 +16,8 @@ using HouseStuff.Infrastructure.Purchases;
 using HouseStuff.Application.Calendar;
 using HouseStuff.Infrastructure.Calendar;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -57,6 +59,24 @@ public static class IdentityServiceCollectionExtensions
         .AddEntityFrameworkStores<HouseStuffDbContext>()
         .AddDefaultTokenProviders();
 
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = "HouseStuff.SessionOrToken";
+            options.DefaultChallengeScheme = "HouseStuff.SessionOrToken";
+        })
+        .AddPolicyScheme("HouseStuff.SessionOrToken", null, options =>
+        {
+            options.ForwardDefaultSelector = context =>
+                context.Request.Headers.Authorization.ToString().StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)
+                    ? IdentityConstants.BearerScheme
+                    : IdentityConstants.ApplicationScheme;
+        })
+        .AddBearerToken(IdentityConstants.BearerScheme, options =>
+        {
+            options.BearerTokenExpiration = TimeSpan.FromHours(1);
+            options.RefreshTokenExpiration = TimeSpan.FromDays(30);
+        });
+
         services.ConfigureApplicationCookie(options =>
         {
             options.Cookie.Name = "HouseStuff.Session";
@@ -80,6 +100,7 @@ public static class IdentityServiceCollectionExtensions
         });
 
         services.AddAuthorization();
+        services.AddSingleton(TimeProvider.System);
         services.AddHttpContextAccessor();
         services.AddScoped<IUserAccessService, UserAccessService>();
         services.AddScoped<IResidenceService, ResidenceService>();

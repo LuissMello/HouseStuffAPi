@@ -32,7 +32,7 @@ Aplicação web responsiva única, sem apps de loja. A base usa React, TypeScrip
 
 ## Dados e autenticação
 
-Recomendação aprovada: solução mais simples possível. A direção inicial é ASP.NET Core Identity no backend, autenticação por cookie seguro em implantação same-origin e PostgreSQL via EF Core. A implementação pertence a `HOUSE-010`.
+Recomendação aprovada: solução mais simples possível. A base usa ASP.NET Core Identity no backend e PostgreSQL via EF Core. Em `HOUSE-200`, a aplicação publicada passou a usar tokens opacos protegidos pelo Data Protection, com acesso curto e renovação validada pelo security stamp; o cookie seguro permanece compatível para implantação same-origin, mas o GitHub Pages não depende de cookies de terceiros.
 
 Em `HOUSE-020`, `Residences` passou a ser o agregado de contexto residencial. O usuário do Identity possui uma única chave estrangeira opcional `ResidenceId`; toda leitura de residência parte do identificador da sessão, sem aceitar um ID de casa fornecido pelo cliente.
 

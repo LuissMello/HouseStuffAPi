@@ -12,9 +12,19 @@ public sealed class AuthController(IUserAccessService users) : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request, CancellationToken cancellationToken)
     {
-        var result = await users.SignInAsync(request.Email, request.Password, request.RememberMe, cancellationToken);
+        var result = await users.SignInWithTokenAsync(request.Email, request.Password, cancellationToken);
         return result.Succeeded
-            ? Ok(result.Value)
+            ? new EmptyResult()
+            : this.ProblemWithCode(StatusCodes.Status401Unauthorized, result.Message, result.Code);
+    }
+
+    [AllowAnonymous]
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh(RefreshTokenRequest request, CancellationToken cancellationToken)
+    {
+        var result = await users.RefreshTokenAsync(request.RefreshToken, cancellationToken);
+        return result.Succeeded
+            ? new EmptyResult()
             : this.ProblemWithCode(StatusCodes.Status401Unauthorized, result.Message, result.Code);
     }
 
@@ -36,3 +46,5 @@ public sealed class AuthController(IUserAccessService users) : ControllerBase
 }
 
 public sealed record LoginRequest(string Email, string Password, bool RememberMe);
+
+public sealed record RefreshTokenRequest(string RefreshToken);
