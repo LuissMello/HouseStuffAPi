@@ -99,5 +99,5 @@ Perfis administrativos podem ser ajustados com segurança dentro da casa
 
 O mural usa os próprios potes para navegar entre as tarefas
 
-- [>] `HOUSE-160` — Prateleira de potes no mural de tarefas — Morador troca o filtro do mural navegando visualmente pelos potes da prateleira.
+- [x] `HOUSE-160` — Prateleira de potes no mural de tarefas — Morador troca o filtro do mural navegando visualmente pelos potes da prateleira.
 

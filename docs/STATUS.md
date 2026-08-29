@@ -5,9 +5,9 @@
 Atualizado em: 2026-08-28.
 
 - Situação: **onTrack**.
-- Progresso: **16 de 17 tarefas concluídas**.
+- Progresso: **17 de 17 tarefas concluídas**.
 - Etapa atual: **M15**.
-- Tarefa ativa: **HOUSE-160**.
+- Tarefa ativa: **nenhuma**.
 - Próxima tarefa proposta: **nenhuma**.
 
 ## Regra de conclusão

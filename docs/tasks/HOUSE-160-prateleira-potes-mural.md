@@ -1,6 +1,6 @@
 # HOUSE-160 — Prateleira de potes no mural de tarefas
 
-Status: em andamento.
+Status: concluída.
 
 Tipo: funcional de frontend.
 
@@ -13,8 +13,8 @@ No mural de tarefas, o seletor tradicional é substituído por uma prateleira de
 ## Subtarefas
 
 - [x] `HOUSE-160-01` — interação, acessibilidade e critérios de aceite;
-- [ ] `HOUSE-160-02` — prateleira e navegação circular entre potes;
-- [ ] `HOUSE-160-03` — responsividade, testes, publicação e fechamento.
+- [x] `HOUSE-160-02` — prateleira e navegação circular entre potes;
+- [x] `HOUSE-160-03` — responsividade, testes, publicação e fechamento.
 
 ## Regras de interação
 
@@ -28,11 +28,11 @@ No mural de tarefas, o seletor tradicional é substituído por uma prateleira de
 
 ## Critérios de aceite
 
-- [ ] dropdown deixa de ser a navegação principal do mural;
-- [ ] prateleira exibe o filtro atual e seus vizinhos;
-- [ ] `‹‹` e `››` percorrem todos os filtros circularmente;
-- [ ] cartões exibidos correspondem ao pote selecionado;
-- [ ] teclado e leitor de tela identificam ação e destino;
-- [ ] layout funciona em celular e desktop;
-- [ ] lint, testes e build do Pages passam;
-- [ ] versão pública pode ser testada pelo usuário.
+- [x] dropdown deixa de ser a navegação principal do mural;
+- [x] prateleira exibe o filtro atual e seus vizinhos;
+- [x] `‹‹` e `››` percorrem todos os filtros circularmente;
+- [x] cartões exibidos correspondem ao pote selecionado;
+- [x] teclado e leitor de tela identificam ação e destino;
+- [x] layout funciona em celular e desktop;
+- [x] lint, testes e build do Pages passam;
+- [x] versão pública pode ser testada pelo usuário.

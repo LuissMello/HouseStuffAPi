@@ -299,12 +299,12 @@
       "repository": "front",
       "type": "feature",
       "title": "Prateleira de potes no mural de tarefas",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Morador troca o filtro do mural navegando visualmente pelos potes da prateleira.",
       "subtasks": [
         { "id": "HOUSE-160-01", "title": "Interação, acessibilidade e critérios de aceite", "status": "completed" },
-        { "id": "HOUSE-160-02", "title": "Prateleira e navegação circular entre potes", "status": "pending" },
-        { "id": "HOUSE-160-03", "title": "Responsividade, testes, publicação e fechamento", "status": "pending" }
+        { "id": "HOUSE-160-02", "title": "Prateleira e navegação circular entre potes", "status": "completed" },
+        { "id": "HOUSE-160-03", "title": "Responsividade, testes, publicação e fechamento", "status": "completed" }
       ]
     }
   ]
