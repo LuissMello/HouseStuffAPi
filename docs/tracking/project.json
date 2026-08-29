@@ -364,13 +364,13 @@
       "repository": "both",
       "type": "feature",
       "title": "Login compatível com navegadores móveis",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Morador entra pelo GitHub Pages no celular sem depender da aceitação de cookies de terceiros.",
       "subtasks": [
         { "id": "HOUSE-200-01", "title": "Diagnóstico e contrato de sessão", "status": "completed" },
-        { "id": "HOUSE-200-02", "title": "Tokens de acesso e renovação na API", "status": "inProgress" },
-        { "id": "HOUSE-200-03", "title": "Sessão por token no frontend", "status": "pending" },
-        { "id": "HOUSE-200-04", "title": "Testes, publicação e validação em produção", "status": "pending" }
+        { "id": "HOUSE-200-02", "title": "Tokens de acesso e renovação na API", "status": "completed" },
+        { "id": "HOUSE-200-03", "title": "Sessão por token no frontend", "status": "completed" },
+        { "id": "HOUSE-200-04", "title": "Testes, publicação e validação em produção", "status": "completed" }
       ]
     }
   ]

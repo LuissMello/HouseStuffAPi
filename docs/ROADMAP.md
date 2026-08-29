@@ -123,5 +123,5 @@ A navegação por hash funciona no GitHub Pages e no desenvolvimento local
 
 O login publicado funciona mesmo quando o navegador bloqueia cookies entre sites
 
-- [>] `HOUSE-200` — Login compatível com navegadores móveis — Morador entra pelo GitHub Pages no celular sem depender da aceitação de cookies de terceiros.
+- [x] `HOUSE-200` — Login compatível com navegadores móveis — Morador entra pelo GitHub Pages no celular sem depender da aceitação de cookies de terceiros.
 
