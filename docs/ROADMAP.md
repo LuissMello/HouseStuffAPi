@@ -113,3 +113,9 @@ API e frontend iniciam juntos no Visual Studio contra PostgreSQL real
 
 - [x] `HOUSE-180` — Execução conjunta no Visual Studio — Desenvolvedor abre uma solução, inicia API e frontend juntos e testa dados persistidos em PostgreSQL real.
 
+## M18 — Roteamento
+
+A navegação por hash funciona no GitHub Pages e no desenvolvimento local
+
+- [>] `HOUSE-190` — Navegação por hash no ambiente local — Links e redirecionamentos por hash abrem as telas corretas no Visual Studio sem quebrar o GitHub Pages.
+

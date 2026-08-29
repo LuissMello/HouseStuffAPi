@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-29",
   "status": "onTrack",
-  "currentStageId": "M17",
+  "currentStageId": "M18",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -22,7 +22,8 @@
     { "id": "M14", "name": "Administração", "outcome": "Perfis administrativos podem ser ajustados com segurança dentro da casa" },
     { "id": "M15", "name": "Navegação", "outcome": "O mural usa os próprios potes para navegar entre as tarefas" },
     { "id": "M16", "name": "Acessibilidade", "outcome": "Senhas podem ser conferidas antes do envio sem perder a proteção padrão" },
-    { "id": "M17", "name": "Desenvolvimento", "outcome": "API e frontend iniciam juntos no Visual Studio contra PostgreSQL real" }
+    { "id": "M17", "name": "Desenvolvimento", "outcome": "API e frontend iniciam juntos no Visual Studio contra PostgreSQL real" },
+    { "id": "M18", "name": "Roteamento", "outcome": "A navegação por hash funciona no GitHub Pages e no desenvolvimento local" }
   ],
   "tasks": [
     {
@@ -338,6 +339,21 @@
         { "id": "HOUSE-180-02", "title": "Projeto frontend e proxy local para a API", "status": "completed" },
         { "id": "HOUSE-180-03", "title": "Solução e perfil conjunto do Visual Studio", "status": "completed" },
         { "id": "HOUSE-180-04", "title": "Validação, documentação e fechamento", "status": "completed" }
+      ]
+    },
+    {
+      "id": "HOUSE-190",
+      "stageId": "M18",
+      "area": "Frontend",
+      "repository": "front",
+      "type": "technical",
+      "title": "Navegação por hash no ambiente local",
+      "status": "inProgress",
+      "result": "Links e redirecionamentos por hash abrem as telas corretas no Visual Studio sem quebrar o GitHub Pages.",
+      "subtasks": [
+        { "id": "HOUSE-190-01", "title": "Reprodução e contrato de compatibilidade", "status": "completed" },
+        { "id": "HOUSE-190-02", "title": "Ponte de navegação local", "status": "inProgress" },
+        { "id": "HOUSE-190-03", "title": "Teste visual, gates e fechamento", "status": "pending" }
       ]
     }
   ]
