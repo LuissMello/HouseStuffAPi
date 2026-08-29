@@ -111,5 +111,5 @@ Senhas podem ser conferidas antes do envio sem perder a proteção padrão
 
 API e frontend iniciam juntos no Visual Studio contra PostgreSQL real
 
-- [>] `HOUSE-180` — Execução conjunta no Visual Studio — Desenvolvedor abre uma solução, inicia API e frontend juntos e testa dados persistidos em PostgreSQL real.
+- [x] `HOUSE-180` — Execução conjunta no Visual Studio — Desenvolvedor abre uma solução, inicia API e frontend juntos e testa dados persistidos em PostgreSQL real.
 
