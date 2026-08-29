@@ -119,3 +119,9 @@ A navegação por hash funciona no GitHub Pages e no desenvolvimento local
 
 - [x] `HOUSE-190` — Navegação por hash no ambiente local — Links e redirecionamentos por hash abrem as telas corretas no Visual Studio sem quebrar o GitHub Pages.
 
+## M19 — Sessão móvel
+
+O login publicado funciona mesmo quando o navegador bloqueia cookies entre sites
+
+- [>] `HOUSE-200` — Login compatível com navegadores móveis — Morador entra pelo GitHub Pages no celular sem depender da aceitação de cookies de terceiros.
+
