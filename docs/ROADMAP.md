@@ -2,7 +2,7 @@
 
 > Arquivo gerado por `scripts/generate-project-docs.ps1`. Edite somente `docs/tracking/project.json`.
 
-Atualizado em: 2026-08-28.
+Atualizado em: 2026-08-29.
 
 ## M0 — Fundação
 
@@ -100,4 +100,10 @@ Perfis administrativos podem ser ajustados com segurança dentro da casa
 O mural usa os próprios potes para navegar entre as tarefas
 
 - [x] `HOUSE-160` — Prateleira de potes no mural de tarefas — Morador troca o filtro do mural navegando visualmente pelos potes da prateleira.
+
+## M16 — Acessibilidade
+
+Senhas podem ser conferidas antes do envio sem perder a proteção padrão
+
+- [>] `HOUSE-170` — Mostrar e ocultar senha — Usuário confere a senha digitada no login e na criação de acessos.
 

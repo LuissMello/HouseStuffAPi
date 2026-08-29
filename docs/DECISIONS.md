@@ -119,3 +119,8 @@
 
 - Status: aceita em 28/08/2026.
 - Decisão: o filtro do mural de tarefas usa a mesma metáfora visual dos potes. Uma prateleira apresenta o filtro atual entre ações anterior/próximo, com navegação circular, suporte a teclado e a opção “Todos os potes” como visão geral.
+
+## DEC-025 — Visibilidade opcional de senhas
+
+- Status: aceita em 29/08/2026.
+- Decisão: campos de senha do login e da criação administrativa começam mascarados e oferecem ação explícita para mostrar ou ocultar o valor, sem alterar o conteúdo, autocomplete ou envio do formulário.

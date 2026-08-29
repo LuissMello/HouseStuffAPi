@@ -1,9 +1,9 @@
 {
   "$schema": "./project.schema.json",
   "project": "HouseStuff",
-  "updatedAt": "2026-08-28",
+  "updatedAt": "2026-08-29",
   "status": "onTrack",
-  "currentStageId": "M15",
+  "currentStageId": "M16",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -20,7 +20,8 @@
     { "id": "M12", "name": "Colaboração", "outcome": "Todos os moradores organizam juntos os potes, tarefas e futuras listas da casa" },
     { "id": "M13", "name": "Distribuição", "outcome": "Tarefas respeitam esforço desejado e quem pode realizá-las" },
     { "id": "M14", "name": "Administração", "outcome": "Perfis administrativos podem ser ajustados com segurança dentro da casa" },
-    { "id": "M15", "name": "Navegação", "outcome": "O mural usa os próprios potes para navegar entre as tarefas" }
+    { "id": "M15", "name": "Navegação", "outcome": "O mural usa os próprios potes para navegar entre as tarefas" },
+    { "id": "M16", "name": "Acessibilidade", "outcome": "Senhas podem ser conferidas antes do envio sem perder a proteção padrão" }
   ],
   "tasks": [
     {
@@ -305,6 +306,21 @@
         { "id": "HOUSE-160-01", "title": "Interação, acessibilidade e critérios de aceite", "status": "completed" },
         { "id": "HOUSE-160-02", "title": "Prateleira e navegação circular entre potes", "status": "completed" },
         { "id": "HOUSE-160-03", "title": "Responsividade, testes, publicação e fechamento", "status": "completed" }
+      ]
+    },
+    {
+      "id": "HOUSE-170",
+      "stageId": "M16",
+      "area": "Acesso",
+      "repository": "front",
+      "type": "feature",
+      "title": "Mostrar e ocultar senha",
+      "status": "inProgress",
+      "result": "Usuário confere a senha digitada no login e na criação de acessos.",
+      "subtasks": [
+        { "id": "HOUSE-170-01", "title": "Componente acessível de senha", "status": "inProgress" },
+        { "id": "HOUSE-170-02", "title": "Integração no login e administração", "status": "pending" },
+        { "id": "HOUSE-170-03", "title": "Testes, publicação e fechamento", "status": "pending" }
       ]
     }
   ]

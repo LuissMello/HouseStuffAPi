@@ -2,12 +2,12 @@
 
 > Arquivo gerado por `scripts/generate-project-docs.ps1`. Edite somente `docs/tracking/project.json`.
 
-Atualizado em: 2026-08-28.
+Atualizado em: 2026-08-29.
 
 - Situação: **onTrack**.
-- Progresso: **17 de 17 tarefas concluídas**.
-- Etapa atual: **M15**.
-- Tarefa ativa: **nenhuma**.
+- Progresso: **17 de 18 tarefas concluídas**.
+- Etapa atual: **M16**.
+- Tarefa ativa: **HOUSE-170**.
 - Próxima tarefa proposta: **nenhuma**.
 
 ## Regra de conclusão
