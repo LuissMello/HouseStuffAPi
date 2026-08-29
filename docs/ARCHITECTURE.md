@@ -56,6 +56,8 @@ Em `HOUSE-120`, `CalendarEvents` separa datas civis (`date`) de compromissos em 
 
 Em `HOUSE-080`, o ambiente Development ganhou um cenário demonstrável idempotente da Casa do Luis. A API separa liveness (`/health/live`) de readiness (`/health/ready`), que inclui a conexão PostgreSQL. Scripts PowerShell no backend orquestram PostgreSQL, API e frontend, registram somente os processos que iniciam e oferecem um smoke autenticado não mutável junto aos gates dos dois repositórios.
 
+Em `HOUSE-180`, uma solução própria do Visual Studio reúne a API .NET 8 e o projeto JavaScript mantidos em repositórios irmãos. O perfil conjunto executa ambos localmente; o frontend usa proxy same-origin para a API local e a API resolve a conexão PostgreSQL real por User Secrets, sem mock, seed demonstrativo ou segredo versionado.
+
 ## Acompanhamento
 
 `docs/tracking/project.json` é a única fonte editável. Ele gera `ROADMAP.md` e `STATUS.md`, é copiado para o frontend durante desenvolvimento/build e também é exposto por `GET /api/v1/project-tracking`.

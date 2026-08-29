@@ -5,7 +5,7 @@ $ErrorActionPreference = "Stop"
 $apiRoot = Split-Path $PSScriptRoot -Parent
 $workspaceRoot = Split-Path $apiRoot -Parent
 $frontRoot = Join-Path $workspaceRoot "HouseStuffFront"
-$localSdk = Join-Path $workspaceRoot ".dotnet-sdk-10\dotnet.exe"
+$localSdk = Join-Path $workspaceRoot ".dotnet-sdk-8\dotnet.exe"
 $dotnet = if (Test-Path -LiteralPath $localSdk) { $localSdk } else { (Get-Command dotnet -ErrorAction Stop).Source }
 $artifactsRoot = Join-Path $apiRoot ".local\validation-artifacts"
 

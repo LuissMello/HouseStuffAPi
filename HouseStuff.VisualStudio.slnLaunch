@@ -1,0 +1,16 @@
+[
+  {
+    "Name": "HouseStuff completo",
+    "Projects": [
+      {
+        "Path": "src\\HouseStuff.Api\\HouseStuff.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "Visual Studio (PostgreSQL real)"
+      },
+      {
+        "Path": "..\\HouseStuffFront\\HouseStuffFront.esproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

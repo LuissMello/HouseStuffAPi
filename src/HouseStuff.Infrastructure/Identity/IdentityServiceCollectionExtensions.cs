@@ -113,7 +113,7 @@ public static class IdentityServiceCollectionExtensions
 
         var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
         var environment = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
-        if (!environment.IsDevelopment())
+        if (!environment.IsDevelopment() || !configuration.GetValue("DevelopmentSeed:Enabled", true))
         {
             return;
         }

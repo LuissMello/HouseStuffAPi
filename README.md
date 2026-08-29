@@ -51,6 +51,18 @@ O ambiente desta máquina está configurado dessa forma para usar o Neon; os val
 
 Consulte [docs/LOCAL_DELIVERY.md](docs/LOCAL_DELIVERY.md) para pré-requisitos, logs e resolução de problemas.
 
+## Executar no Visual Studio
+
+Para abrir backend e frontend juntos, use `HouseStuff.VisualStudio.sln`. Na primeira execução:
+
+```powershell
+.\scripts\prepare-visual-studio.ps1
+```
+
+Depois, abra a solução, selecione o perfil **HouseStuff completo** e pressione `F5`. O frontend abre em `http://localhost:3000` e encaminha as chamadas para a API local em `http://localhost:5049`. A API usa o PostgreSQL real configurado em `ConnectionStrings:HouseStuff` nos User Secrets; esse fluxo não usa mock, não executa o seed demonstrativo e não grava a conexão no Git.
+
+Consulte [docs/VISUAL_STUDIO.md](docs/VISUAL_STUDIO.md) para instalar as cargas de trabalho necessárias e configurar o banco com segurança.
+
 ## Executar somente a API
 
 Use um SDK compatível com o `global.json`:

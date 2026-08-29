@@ -124,3 +124,8 @@
 
 - Status: aceita em 29/08/2026.
 - Decisão: campos de senha do login e da criação administrativa começam mascarados e oferecem ação explícita para mostrar ou ocultar o valor, sem alterar o conteúdo, autocomplete ou envio do formulário.
+
+## DEC-026 — Execução conjunta com banco real no Visual Studio
+
+- Status: aceita em 29/08/2026.
+- Decisão: uma solução dedicada referencia a API e o frontend nos repositórios irmãos e compartilha um perfil de inicialização múltipla. O navegador permanece same-origin com o frontend, `/api` é encaminhado à API local e a API usa PostgreSQL configurado em User Secrets; o perfil desabilita o seed demonstrativo e não há mock nem segredo no repositório.
