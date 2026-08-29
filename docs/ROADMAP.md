@@ -107,3 +107,9 @@ Senhas podem ser conferidas antes do envio sem perder a proteção padrão
 
 - [x] `HOUSE-170` — Mostrar e ocultar senha — Usuário confere a senha digitada no login e na criação de acessos.
 
+## M17 — Desenvolvimento
+
+API e frontend iniciam juntos no Visual Studio contra PostgreSQL real
+
+- [>] `HOUSE-180` — Execução conjunta no Visual Studio — Desenvolvedor abre uma solução, inicia API e frontend juntos e testa dados persistidos em PostgreSQL real.
+

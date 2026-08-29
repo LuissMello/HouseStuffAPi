@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-29",
   "status": "onTrack",
-  "currentStageId": "M16",
+  "currentStageId": "M17",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -21,7 +21,8 @@
     { "id": "M13", "name": "Distribuição", "outcome": "Tarefas respeitam esforço desejado e quem pode realizá-las" },
     { "id": "M14", "name": "Administração", "outcome": "Perfis administrativos podem ser ajustados com segurança dentro da casa" },
     { "id": "M15", "name": "Navegação", "outcome": "O mural usa os próprios potes para navegar entre as tarefas" },
-    { "id": "M16", "name": "Acessibilidade", "outcome": "Senhas podem ser conferidas antes do envio sem perder a proteção padrão" }
+    { "id": "M16", "name": "Acessibilidade", "outcome": "Senhas podem ser conferidas antes do envio sem perder a proteção padrão" },
+    { "id": "M17", "name": "Desenvolvimento", "outcome": "API e frontend iniciam juntos no Visual Studio contra PostgreSQL real" }
   ],
   "tasks": [
     {
@@ -321,6 +322,22 @@
         { "id": "HOUSE-170-01", "title": "Componente acessível de senha", "status": "completed" },
         { "id": "HOUSE-170-02", "title": "Integração no login e administração", "status": "completed" },
         { "id": "HOUSE-170-03", "title": "Testes, publicação e fechamento", "status": "completed" }
+      ]
+    },
+    {
+      "id": "HOUSE-180",
+      "stageId": "M17",
+      "area": "Geral",
+      "repository": "both",
+      "type": "technical",
+      "title": "Execução conjunta no Visual Studio",
+      "status": "inProgress",
+      "result": "Desenvolvedor abre uma solução, inicia API e frontend juntos e testa dados persistidos em PostgreSQL real.",
+      "subtasks": [
+        { "id": "HOUSE-180-01", "title": "Contrato de execução e banco real", "status": "completed" },
+        { "id": "HOUSE-180-02", "title": "Projeto frontend e proxy local para a API", "status": "inProgress" },
+        { "id": "HOUSE-180-03", "title": "Solução e perfil conjunto do Visual Studio", "status": "pending" },
+        { "id": "HOUSE-180-04", "title": "Validação, documentação e fechamento", "status": "pending" }
       ]
     }
   ]
