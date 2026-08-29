@@ -105,5 +105,5 @@ O mural usa os próprios potes para navegar entre as tarefas
 
 Senhas podem ser conferidas antes do envio sem perder a proteção padrão
 
-- [>] `HOUSE-170` — Mostrar e ocultar senha — Usuário confere a senha digitada no login e na criação de acessos.
+- [x] `HOUSE-170` — Mostrar e ocultar senha — Usuário confere a senha digitada no login e na criação de acessos.
 

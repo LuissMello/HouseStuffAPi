@@ -315,12 +315,12 @@
       "repository": "front",
       "type": "feature",
       "title": "Mostrar e ocultar senha",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Usuário confere a senha digitada no login e na criação de acessos.",
       "subtasks": [
-        { "id": "HOUSE-170-01", "title": "Componente acessível de senha", "status": "inProgress" },
-        { "id": "HOUSE-170-02", "title": "Integração no login e administração", "status": "pending" },
-        { "id": "HOUSE-170-03", "title": "Testes, publicação e fechamento", "status": "pending" }
+        { "id": "HOUSE-170-01", "title": "Componente acessível de senha", "status": "completed" },
+        { "id": "HOUSE-170-02", "title": "Integração no login e administração", "status": "completed" },
+        { "id": "HOUSE-170-03", "title": "Testes, publicação e fechamento", "status": "completed" }
       ]
     }
   ]
