@@ -348,12 +348,12 @@
       "repository": "front",
       "type": "technical",
       "title": "Navegação por hash no ambiente local",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Links e redirecionamentos por hash abrem as telas corretas no Visual Studio sem quebrar o GitHub Pages.",
       "subtasks": [
         { "id": "HOUSE-190-01", "title": "Reprodução e contrato de compatibilidade", "status": "completed" },
-        { "id": "HOUSE-190-02", "title": "Ponte de navegação local", "status": "inProgress" },
-        { "id": "HOUSE-190-03", "title": "Teste visual, gates e fechamento", "status": "pending" }
+        { "id": "HOUSE-190-02", "title": "Ponte de navegação local", "status": "completed" },
+        { "id": "HOUSE-190-03", "title": "Teste visual, gates e fechamento", "status": "completed" }
       ]
     }
   ]

@@ -117,5 +117,5 @@ API e frontend iniciam juntos no Visual Studio contra PostgreSQL real
 
 A navegação por hash funciona no GitHub Pages e no desenvolvimento local
 
-- [>] `HOUSE-190` — Navegação por hash no ambiente local — Links e redirecionamentos por hash abrem as telas corretas no Visual Studio sem quebrar o GitHub Pages.
+- [x] `HOUSE-190` — Navegação por hash no ambiente local — Links e redirecionamentos por hash abrem as telas corretas no Visual Studio sem quebrar o GitHub Pages.
 
