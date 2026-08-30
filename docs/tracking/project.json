@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-30",
   "status": "onTrack",
-  "currentStageId": "M21",
+  "currentStageId": "M22",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -26,7 +26,8 @@
     { "id": "M18", "name": "Roteamento", "outcome": "A navegação por hash funciona no GitHub Pages e no desenvolvimento local" },
     { "id": "M19", "name": "Sessão móvel", "outcome": "O login publicado funciona mesmo quando o navegador bloqueia cookies entre sites" },
     { "id": "M20", "name": "Interface móvel", "outcome": "Cadastros são mais simples e o calendário cabe integralmente na largura do celular" },
-    { "id": "M21", "name": "Página inicial", "outcome": "A página da casa mostra somente conteúdo útil para a rotina atual" }
+    { "id": "M21", "name": "Página inicial", "outcome": "A página da casa mostra somente conteúdo útil para a rotina atual" },
+    { "id": "M22", "name": "Navegação móvel", "outcome": "Os menus usam nomes claros e consistentes em todas as telas" }
   ],
   "tasks": [
     {
@@ -402,6 +403,20 @@
       "subtasks": [
         { "id": "HOUSE-220-01", "title": "Remoção do bloco e cobertura automatizada", "status": "completed" },
         { "id": "HOUSE-220-02", "title": "Publicação e fechamento", "status": "completed" }
+      ]
+    },
+    {
+      "id": "HOUSE-230",
+      "stageId": "M22",
+      "area": "Frontend",
+      "repository": "front",
+      "type": "feature",
+      "title": "Calendário no menu móvel",
+      "status": "inProgress",
+      "result": "Morador encontra o calendário pelo mesmo nome nos menus desktop e mobile.",
+      "subtasks": [
+        { "id": "HOUSE-230-01", "title": "Rótulo, teste e documentação", "status": "inProgress" },
+        { "id": "HOUSE-230-02", "title": "Publicação e fechamento", "status": "pending" }
       ]
     }
   ]

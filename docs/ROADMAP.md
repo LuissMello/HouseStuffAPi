@@ -137,3 +137,9 @@ A página da casa mostra somente conteúdo útil para a rotina atual
 
 - [x] `HOUSE-220` — Remoção dos atalhos da página da casa — Morador acessa a página da casa sem o bloco redundante de atalhos administrativos.
 
+## M22 — Navegação móvel
+
+Os menus usam nomes claros e consistentes em todas as telas
+
+- [>] `HOUSE-230` — Calendário no menu móvel — Morador encontra o calendário pelo mesmo nome nos menus desktop e mobile.
+
