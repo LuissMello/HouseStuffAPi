@@ -129,5 +129,5 @@ O login publicado funciona mesmo quando o navegador bloqueia cookies entre sites
 
 Cadastros são mais simples e o calendário cabe integralmente na largura do celular
 
-- [>] `HOUSE-210` — Cadastro simplificado e calendário móvel compacto — Morador cadastra uma tarefa sem escolher comportamento e visualiza o mês inteiro sem rolagem lateral no celular.
+- [x] `HOUSE-210` — Cadastro simplificado e calendário móvel compacto — Morador cadastra uma tarefa sem escolher comportamento e visualiza o mês inteiro sem rolagem lateral no celular.
 
