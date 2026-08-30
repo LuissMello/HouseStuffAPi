@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-30",
   "status": "onTrack",
-  "currentStageId": "M20",
+  "currentStageId": "M21",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -25,7 +25,8 @@
     { "id": "M17", "name": "Desenvolvimento", "outcome": "API e frontend iniciam juntos no Visual Studio contra PostgreSQL real" },
     { "id": "M18", "name": "Roteamento", "outcome": "A navegação por hash funciona no GitHub Pages e no desenvolvimento local" },
     { "id": "M19", "name": "Sessão móvel", "outcome": "O login publicado funciona mesmo quando o navegador bloqueia cookies entre sites" },
-    { "id": "M20", "name": "Interface móvel", "outcome": "Cadastros são mais simples e o calendário cabe integralmente na largura do celular" }
+    { "id": "M20", "name": "Interface móvel", "outcome": "Cadastros são mais simples e o calendário cabe integralmente na largura do celular" },
+    { "id": "M21", "name": "Página inicial", "outcome": "A página da casa mostra somente conteúdo útil para a rotina atual" }
   ],
   "tasks": [
     {
@@ -387,6 +388,20 @@
         { "id": "HOUSE-210-01", "title": "Remoção da escolha de comportamento da tarefa", "status": "completed" },
         { "id": "HOUSE-210-02", "title": "Calendário mensal compacto no celular", "status": "completed" },
         { "id": "HOUSE-210-03", "title": "Teste responsivo, publicação e fechamento", "status": "completed" }
+      ]
+    },
+    {
+      "id": "HOUSE-220",
+      "stageId": "M21",
+      "area": "Frontend",
+      "repository": "front",
+      "type": "feature",
+      "title": "Remoção dos atalhos da página da casa",
+      "status": "inProgress",
+      "result": "Morador acessa a página da casa sem o bloco redundante de atalhos administrativos.",
+      "subtasks": [
+        { "id": "HOUSE-220-01", "title": "Remoção do bloco e cobertura automatizada", "status": "inProgress" },
+        { "id": "HOUSE-220-02", "title": "Publicação e fechamento", "status": "pending" }
       ]
     }
   ]

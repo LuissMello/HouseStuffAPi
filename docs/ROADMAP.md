@@ -131,3 +131,9 @@ Cadastros são mais simples e o calendário cabe integralmente na largura do cel
 
 - [x] `HOUSE-210` — Cadastro simplificado e calendário móvel compacto — Morador cadastra uma tarefa sem escolher comportamento e visualiza o mês inteiro sem rolagem lateral no celular.
 
+## M21 — Página inicial
+
+A página da casa mostra somente conteúdo útil para a rotina atual
+
+- [>] `HOUSE-220` — Remoção dos atalhos da página da casa — Morador acessa a página da casa sem o bloco redundante de atalhos administrativos.
+
