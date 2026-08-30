@@ -412,11 +412,11 @@
       "repository": "front",
       "type": "feature",
       "title": "Calendário no menu móvel",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Morador encontra o calendário pelo mesmo nome nos menus desktop e mobile.",
       "subtasks": [
-        { "id": "HOUSE-230-01", "title": "Rótulo, teste e documentação", "status": "inProgress" },
-        { "id": "HOUSE-230-02", "title": "Publicação e fechamento", "status": "pending" }
+        { "id": "HOUSE-230-01", "title": "Rótulo, teste e documentação", "status": "completed" },
+        { "id": "HOUSE-230-02", "title": "Publicação e fechamento", "status": "completed" }
       ]
     }
   ]

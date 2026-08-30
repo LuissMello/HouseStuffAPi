@@ -141,5 +141,5 @@ A página da casa mostra somente conteúdo útil para a rotina atual
 
 Os menus usam nomes claros e consistentes em todas as telas
 
-- [>] `HOUSE-230` — Calendário no menu móvel — Morador encontra o calendário pelo mesmo nome nos menus desktop e mobile.
+- [x] `HOUSE-230` — Calendário no menu móvel — Morador encontra o calendário pelo mesmo nome nos menus desktop e mobile.
 
