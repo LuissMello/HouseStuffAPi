@@ -2,7 +2,7 @@
 
 > Arquivo gerado por `scripts/generate-project-docs.ps1`. Edite somente `docs/tracking/project.json`.
 
-Atualizado em: 2026-08-29.
+Atualizado em: 2026-08-30.
 
 ## M0 — Fundação
 
@@ -124,4 +124,10 @@ A navegação por hash funciona no GitHub Pages e no desenvolvimento local
 O login publicado funciona mesmo quando o navegador bloqueia cookies entre sites
 
 - [x] `HOUSE-200` — Login compatível com navegadores móveis — Morador entra pelo GitHub Pages no celular sem depender da aceitação de cookies de terceiros.
+
+## M20 — Interface móvel
+
+Cadastros são mais simples e o calendário cabe integralmente na largura do celular
+
+- [>] `HOUSE-210` — Cadastro simplificado e calendário móvel compacto — Morador cadastra uma tarefa sem escolher comportamento e visualiza o mês inteiro sem rolagem lateral no celular.
 

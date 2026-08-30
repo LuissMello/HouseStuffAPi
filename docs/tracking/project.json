@@ -1,9 +1,9 @@
 {
   "$schema": "./project.schema.json",
   "project": "HouseStuff",
-  "updatedAt": "2026-08-29",
+  "updatedAt": "2026-08-30",
   "status": "onTrack",
-  "currentStageId": "M19",
+  "currentStageId": "M20",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -24,7 +24,8 @@
     { "id": "M16", "name": "Acessibilidade", "outcome": "Senhas podem ser conferidas antes do envio sem perder a proteção padrão" },
     { "id": "M17", "name": "Desenvolvimento", "outcome": "API e frontend iniciam juntos no Visual Studio contra PostgreSQL real" },
     { "id": "M18", "name": "Roteamento", "outcome": "A navegação por hash funciona no GitHub Pages e no desenvolvimento local" },
-    { "id": "M19", "name": "Sessão móvel", "outcome": "O login publicado funciona mesmo quando o navegador bloqueia cookies entre sites" }
+    { "id": "M19", "name": "Sessão móvel", "outcome": "O login publicado funciona mesmo quando o navegador bloqueia cookies entre sites" },
+    { "id": "M20", "name": "Interface móvel", "outcome": "Cadastros são mais simples e o calendário cabe integralmente na largura do celular" }
   ],
   "tasks": [
     {
@@ -371,6 +372,21 @@
         { "id": "HOUSE-200-02", "title": "Tokens de acesso e renovação na API", "status": "completed" },
         { "id": "HOUSE-200-03", "title": "Sessão por token no frontend", "status": "completed" },
         { "id": "HOUSE-200-04", "title": "Testes, publicação e validação em produção", "status": "completed" }
+      ]
+    },
+    {
+      "id": "HOUSE-210",
+      "stageId": "M20",
+      "area": "Frontend",
+      "repository": "front",
+      "type": "feature",
+      "title": "Cadastro simplificado e calendário móvel compacto",
+      "status": "inProgress",
+      "result": "Morador cadastra uma tarefa sem escolher comportamento e visualiza o mês inteiro sem rolagem lateral no celular.",
+      "subtasks": [
+        { "id": "HOUSE-210-01", "title": "Remoção da escolha de comportamento da tarefa", "status": "inProgress" },
+        { "id": "HOUSE-210-02", "title": "Calendário mensal compacto no celular", "status": "pending" },
+        { "id": "HOUSE-210-03", "title": "Teste responsivo, publicação e fechamento", "status": "pending" }
       ]
     }
   ]
