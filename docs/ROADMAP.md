@@ -189,5 +189,5 @@ Cada morador usa qualquer cor hexadecimal para representar sua identidade na cas
 
 A casa acompanha pendências por categoria e conserva um histórico das compras finalizadas
 
-- [>] `HOUSE-310` — Caderno de compras com histórico — Morador marca itens no caderno, confirma a compra e consulta os itens finalizados no histórico da casa.
+- [x] `HOUSE-310` — Caderno de compras com histórico — Morador marca itens no caderno, confirma a compra e consulta os itens finalizados no histórico da casa.
 
