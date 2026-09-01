@@ -432,9 +432,9 @@
       "subtasks": [
         { "id": "HOUSE-240-01", "title": "Regra, contrato e migration da cor pessoal", "status": "completed" },
         { "id": "HOUSE-240-02", "title": "Endpoint de preferência do usuário", "status": "completed" },
-        { "id": "HOUSE-240-03", "title": "Seletor responsivo no perfil", "status": "inProgress" },
-        { "id": "HOUSE-240-04", "title": "Cores em referências de moradores", "status": "pending" },
-        { "id": "HOUSE-240-05", "title": "Integração, testes, publicação e fechamento", "status": "pending" }
+        { "id": "HOUSE-240-03", "title": "Seletor responsivo no perfil", "status": "completed" },
+        { "id": "HOUSE-240-04", "title": "Cores em referências de moradores", "status": "completed" },
+        { "id": "HOUSE-240-05", "title": "Integração, testes, publicação e fechamento", "status": "inProgress" }
       ]
     }
   ]
