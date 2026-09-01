@@ -191,3 +191,9 @@ A casa acompanha pendências por categoria e conserva um histórico das compras 
 
 - [x] `HOUSE-310` — Caderno de compras com histórico — Morador marca itens no caderno, confirma a compra e consulta os itens finalizados no histórico da casa.
 
+## M31 — Identificação no calendário
+
+Eventos individuais mostram de forma imediata a cor do morador envolvido
+
+- [>] `HOUSE-320` — Cards do calendário na cor do morador — Evento individual usa toda a área do card para identificar a cor do morador com texto legível.
+
