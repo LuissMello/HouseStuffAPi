@@ -165,5 +165,5 @@ A API publicada oferece documentação OpenAPI interativa com suporte a autentic
 
 Moradores acumulam post-its reservados, acompanham todos os seus itens e concluem cada um separadamente
 
-- [>] `HOUSE-270` — Reserva e acompanhamento de múltiplos post-its — Morador aceita vários post-its, cada item fica indisponível para toda a casa e todos os itens em andamento aparecem juntos.
+- [x] `HOUSE-270` — Reserva e acompanhamento de múltiplos post-its — Morador aceita vários post-its, cada item fica indisponível para toda a casa e todos os itens em andamento aparecem juntos.
 
