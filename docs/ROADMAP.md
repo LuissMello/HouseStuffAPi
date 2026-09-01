@@ -195,5 +195,5 @@ A casa acompanha pendências por categoria e conserva um histórico das compras 
 
 Eventos individuais mostram de forma imediata a cor do morador envolvido
 
-- [>] `HOUSE-320` — Cards do calendário na cor do morador — Evento individual usa toda a área do card para identificar a cor do morador com texto legível.
+- [x] `HOUSE-320` — Cards do calendário na cor do morador — Evento individual usa toda a área do card para identificar a cor do morador com texto legível.
 
