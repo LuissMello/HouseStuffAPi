@@ -34,6 +34,8 @@ Aplicação web responsiva única, sem apps de loja. A base usa React, TypeScrip
 
 Recomendação aprovada: solução mais simples possível. A base usa ASP.NET Core Identity no backend e PostgreSQL via EF Core. Em `HOUSE-200`, a aplicação publicada passou a usar tokens opacos protegidos pelo Data Protection, com acesso curto e renovação validada pelo security stamp; o cookie seguro permanece compatível para implantação same-origin, mas o GitHub Pages não depende de cookies de terceiros.
 
+A documentação OpenAPI interativa fica disponível em `/swagger` em todos os ambientes. O esquema Bearer aceita o `accessToken` opaco emitido pelo login para testar rotas protegidas, sem alterar as regras de autorização da API.
+
 Em `HOUSE-020`, `Residences` passou a ser o agregado de contexto residencial. O usuário do Identity possui uma única chave estrangeira opcional `ResidenceId`; toda leitura de residência parte do identificador da sessão, sem aceitar um ID de casa fornecido pelo cliente.
 
 Em `HOUSE-030`, `Pots` adotou o mesmo limite: o contexto residencial é resolvido pela sessão em `ICurrentResidenceContext`, e nenhum endpoint recebe `ResidenceId`. A unicidade do nome por residência e a chave estrangeira também são garantidas no PostgreSQL. O frontend é mobile-first, usa cartões e controles de ordem por botões, sem depender de arrastar em telas touch.

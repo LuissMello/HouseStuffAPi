@@ -1,4 +1,5 @@
 using HouseStuff.Api.Maintenance;
+using HouseStuff.Api.OpenApi;
 using HouseStuff.Api.ProjectTracking;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(maintenance ? [] : args);
 
 builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
+builder.Services.AddHouseStuffApiDocumentation();
 builder.Services.AddSingleton<IProjectTrackingReader, ProjectTrackingReader>();
 builder.Services.AddHealthChecks().AddCheck<PostgresReadinessCheck>("postgres", tags: ["ready"]);
 builder.Services.AddHouseStuffIdentity(builder.Configuration, builder.Environment);
@@ -21,6 +23,7 @@ builder.Services.AddCors(options => options.AddPolicy("frontend", policy => poli
 var app = builder.Build();
 
 app.UseExceptionHandler();
+app.UseHouseStuffApiDocumentation();
 app.UseCors("frontend");
 app.UseAuthentication();
 app.UseAuthorization();
