@@ -2,7 +2,7 @@
 
 > Arquivo gerado por `scripts/generate-project-docs.ps1`. Edite somente `docs/tracking/project.json`.
 
-Atualizado em: 2026-08-30.
+Atualizado em: 2026-09-01.
 
 ## M0 — Fundação
 
@@ -142,4 +142,10 @@ A página da casa mostra somente conteúdo útil para a rotina atual
 Os menus usam nomes claros e consistentes em todas as telas
 
 - [x] `HOUSE-230` — Calendário no menu móvel — Morador encontra o calendário pelo mesmo nome nos menus desktop e mobile.
+
+## M23 — Identidade visual
+
+Cada morador escolhe uma cor que o identifica em toda a casa
+
+- [>] `HOUSE-240` — Cor pessoal dos moradores — Cada morador escolhe uma cor persistida e é reconhecido por ela em avatares, tarefas e calendário.
 
