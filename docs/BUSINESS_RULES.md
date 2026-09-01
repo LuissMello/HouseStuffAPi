@@ -75,12 +75,13 @@
 - nomes de itens são únicos dentro da categoria, ignorando maiúsculas e espaços externos;
 - nenhuma operação recebe `ResidenceId` do cliente; a residência é derivada da sessão;
 - categoria com itens não pode ser excluída antes de ser esvaziada;
-- a lista é gerada temporariamente a partir do catálogo, sem histórico ou múltiplas listas salvas;
-- selecionar uma categoria seleciona todos os seus itens, e a seleção individual atualiza o estado total, parcial ou vazio da categoria;
-- selecionar significa incluir na lista atual, não registrar a compra do item.
-- a lista gerada mantém separadas a escolha do que levar e a baixa durante a compra;
-- marcar um item selecionado como comprado o remove da lista de pendências sem excluí-lo do catálogo;
-- os itens comprados pertencem somente à lista temporária atual e são reiniciados quando uma nova lista é gerada.
+- cada item cadastrado representa uma pendência atual do caderno de compras;
+- as pendências são exibidas agrupadas por categoria e podem ser ordenadas pela ordem da casa ou alfabeticamente;
+- marcar ou desmarcar um item apenas altera o estado visual da compra atual e mantém o item visível com o nome riscado;
+- finalizar uma compra exige ao menos um item marcado e registra uma única compra com o instante, o morador e uma cópia dos nomes dos itens e categorias;
+- somente após a finalização os itens marcados são removidos das pendências; itens não marcados permanecem no caderno;
+- o histórico de compras é compartilhado pela residência, ordenado do mais recente para o mais antigo e não depende da existência futura do item ou da categoria;
+- não existem múltiplas listas em andamento nem sincronização das marcações ainda não finalizadas entre dispositivos.
 
 ## BR-007 — Desejos de compra da casa
 

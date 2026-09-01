@@ -50,6 +50,8 @@ Em `HOUSE-070`, a consulta de rotina combina duas projeções somente leitura: p
 
 Em `HOUSE-100`, `ShoppingCategories` possui ordem e unicidade por residência, enquanto `ShoppingItems` usa chave estrangeira composta `{CategoryId, ResidenceId}`. Essa composição impede no PostgreSQL que um item de uma casa seja ligado à categoria de outra; os nomes normalizados garantem unicidade por categoria.
 
+Em `HOUSE-310`, `ShoppingPurchases` registra o fechamento atômico de uma compra e `ShoppingPurchaseItems` conserva cópias dos nomes do item e da categoria. O serviço valida todos os identificadores contra a residência da sessão, grava o histórico e remove as pendências confirmadas na mesma transação do PostgreSQL.
+
 Em `HOUSE-110`, `PurchaseWishes` pertence diretamente à residência e mantém uma prioridade inteira estável dentro dela. A chave estrangeira com exclusão em cascata impede desejos órfãos, enquanto todo acesso funcional deriva a casa da sessão e nunca aceita `ResidenceId` do cliente.
 
 Em `HOUSE-120`, `CalendarEvents` separa datas civis (`date`) de compromissos em UTC (`timestamp with time zone`). `CalendarEventParticipants` usa chave composta pelo evento e usuário e repete `ResidenceId` em uma FK composta com o evento, impedindo participantes ligados a um evento de outra casa; a aplicação também valida que cada usuário selecionado pertence à residência da sessão.
