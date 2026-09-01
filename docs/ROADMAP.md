@@ -153,5 +153,5 @@ Cada morador escolhe uma cor que o identifica em toda a casa
 
 Eventos abrem primeiro para leitura e só entram em edição por uma ação explícita
 
-- [>] `HOUSE-250` — Visualização de eventos antes da edição — Morador consulta os detalhes de um evento em modo somente leitura e escolhe explicitamente quando quer alterá-lo.
+- [x] `HOUSE-250` — Visualização de eventos antes da edição — Morador consulta os detalhes de um evento em modo somente leitura e escolhe explicitamente quando quer alterá-lo.
 
