@@ -461,11 +461,11 @@
       "repository": "api",
       "type": "technical",
       "title": "Swagger público da API",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Desenvolvedor acessa a documentação interativa da API publicada e autentica chamadas protegidas com token Bearer.",
       "subtasks": [
         { "id": "HOUSE-260-01", "title": "Configuração OpenAPI e autenticação Bearer", "status": "completed" },
-        { "id": "HOUSE-260-02", "title": "Teste, publicação e verificação pública", "status": "inProgress" }
+        { "id": "HOUSE-260-02", "title": "Teste, publicação e verificação pública", "status": "completed" }
       ]
     }
   ]

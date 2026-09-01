@@ -159,5 +159,5 @@ Eventos abrem primeiro para leitura e só entram em edição por uma ação expl
 
 A API publicada oferece documentação OpenAPI interativa com suporte a autenticação
 
-- [>] `HOUSE-260` — Swagger público da API — Desenvolvedor acessa a documentação interativa da API publicada e autentica chamadas protegidas com token Bearer.
+- [x] `HOUSE-260` — Swagger público da API — Desenvolvedor acessa a documentação interativa da API publicada e autentica chamadas protegidas com token Bearer.
 
