@@ -43,8 +43,20 @@ public sealed class AuthController(IUserAccessService users) : ControllerBase
         var user = await users.GetCurrentAsync(cancellationToken);
         return user is null ? Unauthorized() : Ok(user);
     }
+
+    [Authorize]
+    [HttpPatch("me/color")]
+    public async Task<IActionResult> UpdateColor(UpdateProfileColorRequest request, CancellationToken cancellationToken)
+    {
+        var result = await users.UpdateProfileColorAsync(request.ProfileColor, cancellationToken);
+        return result.Succeeded
+            ? Ok(result.Value)
+            : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
+    }
 }
 
 public sealed record LoginRequest(string Email, string Password, bool RememberMe);
 
 public sealed record RefreshTokenRequest(string RefreshToken);
+
+public sealed record UpdateProfileColorRequest(string ProfileColor);

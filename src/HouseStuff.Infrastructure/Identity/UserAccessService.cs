@@ -75,6 +75,28 @@ internal sealed class UserAccessService(
         return user is null ? null : await ToCurrentUserAsync(user);
     }
 
+    public async Task<AccessResult<CurrentUser>> UpdateProfileColorAsync(string profileColor, CancellationToken cancellationToken)
+    {
+        var normalizedColor = ProfileColors.Normalize(profileColor);
+        if (normalizedColor is null)
+        {
+            return AccessResult.Failure<CurrentUser>("profile_color_invalid", "Escolha uma das cores disponíveis.");
+        }
+
+        var currentId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var user = currentId is null
+            ? null
+            : await database.Users.SingleOrDefaultAsync(item => item.Id == currentId, cancellationToken);
+        if (user is null)
+        {
+            return AccessResult.Failure<CurrentUser>("current_user_not_found", "Não foi possível identificar o usuário atual.");
+        }
+
+        user.ProfileColor = normalizedColor;
+        await database.SaveChangesAsync(cancellationToken);
+        return AccessResult.Success(await ToCurrentUserAsync(user));
+    }
+
     public async Task<IReadOnlyList<UserSummary>> ListAsync(CancellationToken cancellationToken)
     {
         var currentId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -196,7 +218,7 @@ internal sealed class UserAccessService(
         var residenceName = user.ResidenceId is null
             ? null
             : await database.Residences.Where(item => item.Id == user.ResidenceId).Select(item => item.Name).SingleAsync();
-        return new(user.Id, user.Email!, user.Name, await userManager.IsInRoleAsync(user, HouseStuffRoles.Administrator), user.ResidenceId, residenceName);
+        return new(user.Id, user.Email!, user.Name, await userManager.IsInRoleAsync(user, HouseStuffRoles.Administrator), user.ResidenceId, residenceName, user.ProfileColor);
     }
 
     private async Task<UserSummary> ToSummaryAsync(HouseStuffUser user)
@@ -204,6 +226,6 @@ internal sealed class UserAccessService(
         var residenceName = user.ResidenceId is null
             ? null
             : await database.Residences.Where(item => item.Id == user.ResidenceId).Select(item => item.Name).SingleAsync();
-        return new(user.Id, user.Email!, user.Name, await userManager.IsInRoleAsync(user, HouseStuffRoles.Administrator), user.ResidenceId, residenceName);
+        return new(user.Id, user.Email!, user.Name, await userManager.IsInRoleAsync(user, HouseStuffRoles.Administrator), user.ResidenceId, residenceName, user.ProfileColor);
     }
 }

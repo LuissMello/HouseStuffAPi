@@ -1,6 +1,8 @@
+using HouseStuff.Application.Identity;
+
 namespace HouseStuff.Application.Residences;
 
-public sealed record ResidenceMember(string Id, string Name, string Email, bool IsAdministrator);
+public sealed record ResidenceMember(string Id, string Name, string Email, bool IsAdministrator, string ProfileColor = ProfileColors.Default);
 
 public sealed record ResidenceView(Guid Id, string Name, IReadOnlyList<ResidenceMember> Members);
 

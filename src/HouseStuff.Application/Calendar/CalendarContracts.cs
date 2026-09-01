@@ -1,6 +1,8 @@
+using HouseStuff.Application.Identity;
+
 namespace HouseStuff.Application.Calendar;
 
-public sealed record CalendarParticipantView(string UserId, string Name);
+public sealed record CalendarParticipantView(string UserId, string Name, string ProfileColor = ProfileColors.Default);
 public sealed record CalendarEventView(
     Guid Id,
     string Title,

@@ -48,6 +48,19 @@ public sealed class AccessControllerTests
     }
 
     [Fact]
+    public async Task UpdateColorReturnsUpdatedCurrentUser()
+    {
+        var expected = new CurrentUser("1", "admin@house.local", "Admin", true, ProfileColor: "#51469B");
+        var service = new StubUserAccessService { ColorResult = AccessResult.Success(expected) };
+        var controller = new AuthController(service);
+
+        var result = await controller.UpdateColor(new UpdateProfileColorRequest("#51469B"), CancellationToken.None);
+
+        var ok = Assert.IsType<OkObjectResult>(result);
+        Assert.Same(expected, ok.Value);
+    }
+
+    [Fact]
     public async Task CreateReturnsCreatedUser()
     {
         var expected = new UserSummary("2", "luis@house.local", "Luis", false);
@@ -79,6 +92,7 @@ public sealed class AccessControllerTests
     {
         public AccessResult<bool> SignInResult { get; init; } = AccessResult.Failure<bool>("missing", "missing");
         public AccessResult<bool> RefreshResult { get; init; } = AccessResult.Failure<bool>("missing", "missing");
+        public AccessResult<CurrentUser> ColorResult { get; init; } = AccessResult.Failure<CurrentUser>("missing", "missing");
         public AccessResult<UserSummary> CreateResult { get; init; } = AccessResult.Failure<UserSummary>("missing", "missing");
         public AccessResult<UserSummary> ChangeRoleResult { get; init; } = AccessResult.Failure<UserSummary>("missing", "missing");
 
@@ -87,6 +101,9 @@ public sealed class AccessControllerTests
 
         public Task<AccessResult<bool>> RefreshTokenAsync(string refreshToken, CancellationToken cancellationToken) =>
             Task.FromResult(RefreshResult);
+
+        public Task<AccessResult<CurrentUser>> UpdateProfileColorAsync(string profileColor, CancellationToken cancellationToken) =>
+            Task.FromResult(ColorResult);
 
         public Task SignOutAsync() => Task.CompletedTask;
 

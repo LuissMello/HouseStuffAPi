@@ -102,13 +102,15 @@ internal sealed class CalendarService(HouseStuffDbContext database, ICurrentResi
                   ((calendarEvent.EndsAt != null && calendarEvent.EndsAt > normalizedFromUtc) ||
                    (calendarEvent.EndsAt == null && calendarEvent.StartsAt >= normalizedFromUtc)))))
             .ToListAsync(cancellationToken);
-        var memberNames = await database.Users.Where(user => user.ResidenceId == residenceId)
-            .ToDictionaryAsync(user => user.Id, user => user.Name, cancellationToken);
+        var memberRows = await database.Users.Where(user => user.ResidenceId == residenceId)
+            .Select(user => new { user.Id, user.Name, user.ProfileColor })
+            .ToListAsync(cancellationToken);
+        var members = memberRows.ToDictionary(user => user.Id, user => new MemberIdentity(user.Name, user.ProfileColor));
         var entries = new List<CalendarEntryView>();
 
         foreach (var calendarEvent in events)
         {
-            var participants = ToParticipants(calendarEvent, memberNames);
+            var participants = ToParticipants(calendarEvent, members);
             if (calendarEvent.Kind == CalendarEventKind.Birthday)
             {
                 AddBirthdayOccurrences(entries, calendarEvent, participants, fromDate, toDate);
@@ -177,15 +179,17 @@ internal sealed class CalendarService(HouseStuffDbContext database, ICurrentResi
 
     private async Task<CalendarEventView> ToEventViewAsync(CalendarEvent calendarEvent, CancellationToken cancellationToken)
     {
-        var names = await database.Users.Where(user => user.ResidenceId == calendarEvent.ResidenceId)
-            .ToDictionaryAsync(user => user.Id, user => user.Name, cancellationToken);
+        var memberRows = await database.Users.Where(user => user.ResidenceId == calendarEvent.ResidenceId)
+            .Select(user => new { user.Id, user.Name, user.ProfileColor })
+            .ToListAsync(cancellationToken);
+        var members = memberRows.ToDictionary(user => user.Id, user => new MemberIdentity(user.Name, user.ProfileColor));
         return new CalendarEventView(calendarEvent.Id, calendarEvent.Title, calendarEvent.Description, ToKind(calendarEvent.Kind), calendarEvent.AppliesToAll,
-            calendarEvent.AllDayDate, calendarEvent.StartsAt, calendarEvent.EndsAt, ToParticipants(calendarEvent, names));
+            calendarEvent.AllDayDate, calendarEvent.StartsAt, calendarEvent.EndsAt, ToParticipants(calendarEvent, members));
     }
 
-    private static List<CalendarParticipantView> ToParticipants(CalendarEvent calendarEvent, Dictionary<string, string> names) =>
-        calendarEvent.Participants.Where(participant => names.ContainsKey(participant.UserId))
-            .Select(participant => new CalendarParticipantView(participant.UserId, names[participant.UserId]))
+    private static List<CalendarParticipantView> ToParticipants(CalendarEvent calendarEvent, Dictionary<string, MemberIdentity> members) =>
+        calendarEvent.Participants.Where(participant => members.ContainsKey(participant.UserId))
+            .Select(participant => new CalendarParticipantView(participant.UserId, members[participant.UserId].Name, members[participant.UserId].ProfileColor))
             .OrderBy(participant => participant.Name).ToList();
 
     private static CalendarEntryView ToEntry(CalendarEvent calendarEvent, IReadOnlyList<CalendarParticipantView> participants, DateOnly? date) =>
@@ -220,6 +224,8 @@ internal sealed class CalendarService(HouseStuffDbContext database, ICurrentResi
     }
 
     private static string ToKind(CalendarEventKind kind) => char.ToLowerInvariant(kind.ToString()[0]) + kind.ToString()[1..];
+
+    private sealed record MemberIdentity(string Name, string ProfileColor);
 
     private sealed record CommandValidation(bool Succeeded, CalendarEventKind? Kind, string? Code, string? Message)
     {

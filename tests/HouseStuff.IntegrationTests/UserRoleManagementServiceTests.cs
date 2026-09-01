@@ -88,6 +88,12 @@ public sealed class UserRoleManagementServiceTests
         Assert.Equal("user_role_change_not_allowed", pendingRole.Code);
         Assert.Equal("user_role_change_not_allowed", outsiderRole.Code);
 
+        var colored = await service.UpdateProfileColorAsync("#51469b", CancellationToken.None);
+        var invalidColor = await service.UpdateProfileColorAsync("#ffffff", CancellationToken.None);
+        Assert.Equal("#51469B", colored.Value!.ProfileColor);
+        Assert.Equal("#51469B", admin.ProfileColor);
+        Assert.Equal("profile_color_invalid", invalidColor.Code);
+
         await database.Database.EnsureDeletedAsync();
     }
 

@@ -30,8 +30,8 @@ public sealed class CalendarServiceTests
         var secondResidence = Residence.Create("Casa Dois", "admin-2", now).Residence!;
         database.Residences.AddRange(firstResidence, secondResidence);
         database.Users.AddRange(
-            new HouseStuffUser { Id = "user-1", Name = "Ana", UserName = "ana@house.local", ResidenceId = firstResidence.Id },
-            new HouseStuffUser { Id = "user-2", Name = "Luis", UserName = "luis@house.local", ResidenceId = firstResidence.Id },
+            new HouseStuffUser { Id = "user-1", Name = "Ana", UserName = "ana@house.local", ResidenceId = firstResidence.Id, ProfileColor = "#9B356A" },
+            new HouseStuffUser { Id = "user-2", Name = "Luis", UserName = "luis@house.local", ResidenceId = firstResidence.Id, ProfileColor = "#256B78" },
             new HouseStuffUser { Id = "foreign", Name = "Outra", UserName = "outra@house.local", ResidenceId = secondResidence.Id });
         var pot = Pot.Create(firstResidence.Id, "Mensal", null, 0, now).Pot!;
         var task = HouseholdTask.Create(firstResidence.Id, pot.Id, "Limpar geladeira", null, HouseholdTaskKind.Recurring, 3, now).Task!;
@@ -57,9 +57,11 @@ public sealed class CalendarServiceTests
         Assert.Equal("calendar_participant_not_found", invalidParticipant.Code);
         Assert.Equal("calendar_event_not_found", crossed.Code);
         Assert.Contains(range.Value!.Entries, entry => entry.EventId == birthday.Id && entry.Date == birthdayOccurrence);
+        Assert.Contains(range.Value.Entries, entry => entry.EventId == birthday.Id && entry.Participants.Single().ProfileColor == "#9B356A");
         Assert.Contains(range.Value.Entries, entry => entry.EventId == appointment.Id && entry.StartsAt == appointment.StartsAt);
         Assert.Contains(range.Value.Entries, entry => entry.Source == "task" && entry.Title == "Limpar geladeira");
         Assert.Equal(2, updated.Value!.Participants.Count);
+        Assert.Equal(["#9B356A", "#256B78"], updated.Value.Participants.Select(participant => participant.ProfileColor));
         Assert.True((await firstService.DeleteAsync(dateEvent.Id, CancellationToken.None)).Succeeded);
         Assert.False(await database.CalendarEvents.AnyAsync(calendarEvent => calendarEvent.Id == dateEvent.Id));
         await database.Database.EnsureDeletedAsync();
