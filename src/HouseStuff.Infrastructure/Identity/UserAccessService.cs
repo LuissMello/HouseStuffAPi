@@ -80,7 +80,7 @@ internal sealed class UserAccessService(
         var normalizedColor = ProfileColors.Normalize(profileColor);
         if (normalizedColor is null)
         {
-            return AccessResult.Failure<CurrentUser>("profile_color_invalid", "Escolha uma das cores disponíveis.");
+            return AccessResult.Failure<CurrentUser>("profile_color_invalid", "Informe uma cor hexadecimal válida no formato #RRGGBB.");
         }
 
         var currentId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);

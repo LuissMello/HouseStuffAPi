@@ -9,10 +9,16 @@ public static class HouseStuffRoles
 public static class ProfileColors
 {
     public const string Default = "#2F6B50";
-    public static readonly IReadOnlyList<string> Supported = [Default, "#A33F2B", "#80510D", "#256B78", "#51469B", "#9B356A"];
 
-    public static string? Normalize(string? value) =>
-        Supported.FirstOrDefault(color => string.Equals(color, value?.Trim(), StringComparison.OrdinalIgnoreCase));
+    public static string? Normalize(string? value)
+    {
+        var trimmed = value?.Trim();
+        return trimmed is { Length: 7 }
+            && trimmed[0] == '#'
+            && trimmed.AsSpan(1).ToArray().All(Uri.IsHexDigit)
+                ? trimmed.ToUpperInvariant()
+                : null;
+    }
 }
 
 public sealed record CurrentUser(string Id, string Email, string Name, bool IsAdministrator, Guid? ResidenceId = null, string? ResidenceName = null, string ProfileColor = ProfileColors.Default);

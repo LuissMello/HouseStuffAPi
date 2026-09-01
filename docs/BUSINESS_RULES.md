@@ -13,7 +13,7 @@
 - administradores listam membros da própria casa e acessos ainda sem residência, nunca membros de outra casa;
 - administradores podem promover outro morador da própria casa para administrador ou rebaixar outro administrador para morador;
 - ninguém altera o próprio perfil administrativo por essa operação, e acessos pendentes ou de outra casa nunca podem ter o perfil alterado;
-- cada usuário escolhe somente a própria cor entre as opções suportadas; a preferência é visual e não altera perfil, permissões ou residência;
+- cada usuário escolhe somente a própria cor usando qualquer hexadecimal no formato `#RRGGBB`; a preferência é visual e não altera perfil, permissões ou residência;
 - usuários sem escolha explícita usam a cor verde padrão, e referências a moradores expõem a cor persistida para manter sua identidade visual;
 - mudança ou remoção de residência não está disponível no escopo inicial.
 

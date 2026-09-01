@@ -179,3 +179,9 @@ As telas principais permanecem utilizáveis no Safari do iPhone 12 sem estouros,
 
 - [x] `HOUSE-290` — Compatibilidade responsiva com iPhone 12 — Andressa utiliza as telas principais no Safari do iPhone 12 com navegação, formulários e conteúdo ajustados ao viewport de 390 por 844 pixels.
 
+## M29 — Personalização
+
+Cada morador usa qualquer cor hexadecimal para representar sua identidade na casa
+
+- [>] `HOUSE-300` — Cor pessoal hexadecimal livre — Morador escolhe qualquer cor hexadecimal válida e continua identificado com contraste legível nas telas da casa.
+
