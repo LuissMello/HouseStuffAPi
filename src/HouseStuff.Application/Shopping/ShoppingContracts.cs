@@ -2,8 +2,11 @@ namespace HouseStuff.Application.Shopping;
 
 public sealed record ShoppingItemView(Guid Id, Guid CategoryId, string Name);
 public sealed record ShoppingCategoryView(Guid Id, string Name, int DisplayOrder, IReadOnlyList<ShoppingItemView> Items);
+public sealed record ShoppingPurchaseItemView(string CategoryName, string ItemName);
+public sealed record ShoppingPurchaseView(Guid Id, DateTimeOffset CompletedAt, string CompletedByName, IReadOnlyList<ShoppingPurchaseItemView> Items);
 public sealed record SaveShoppingCategoryCommand(string Name);
 public sealed record SaveShoppingItemCommand(Guid CategoryId, string Name);
+public sealed record CompleteShoppingPurchaseCommand(IReadOnlyCollection<Guid> ItemIds);
 public sealed record ShoppingResult<T>(bool Succeeded, T? Value, string? Code, string? Message);
 
 public static class ShoppingResult
@@ -22,4 +25,6 @@ public interface IShoppingCatalogService
     Task<ShoppingResult<ShoppingItemView>> CreateItemAsync(SaveShoppingItemCommand command, CancellationToken cancellationToken);
     Task<ShoppingResult<ShoppingItemView>> UpdateItemAsync(Guid id, SaveShoppingItemCommand command, CancellationToken cancellationToken);
     Task<ShoppingResult<bool>> DeleteItemAsync(Guid id, CancellationToken cancellationToken);
+    Task<ShoppingResult<ShoppingPurchaseView>> CompletePurchaseAsync(CompleteShoppingPurchaseCommand command, CancellationToken cancellationToken);
+    Task<ShoppingResult<IReadOnlyList<ShoppingPurchaseView>>> GetPurchaseHistoryAsync(CancellationToken cancellationToken);
 }

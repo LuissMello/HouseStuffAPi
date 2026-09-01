@@ -1,4 +1,5 @@
 using HouseStuff.Application.Pots;
+using HouseStuff.Application.Assignments;
 using HouseStuff.Application.Shopping;
 using HouseStuff.Domain.Shopping;
 using HouseStuff.Infrastructure.Identity;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HouseStuff.Infrastructure.Shopping;
 
-internal sealed class ShoppingCatalogService(HouseStuffDbContext database, ICurrentResidenceContext residenceContext) : IShoppingCatalogService
+internal sealed class ShoppingCatalogService(HouseStuffDbContext database, ICurrentResidenceContext residenceContext, ICurrentUserContext currentUserContext, TimeProvider timeProvider) : IShoppingCatalogService
 {
     public async Task<ShoppingResult<IReadOnlyList<ShoppingCategoryView>>> GetCatalogAsync(CancellationToken cancellationToken)
     {
@@ -187,6 +188,75 @@ internal sealed class ShoppingCatalogService(HouseStuffDbContext database, ICurr
         return ShoppingResult.Success(true);
     }
 
+    public async Task<ShoppingResult<ShoppingPurchaseView>> CompletePurchaseAsync(CompleteShoppingPurchaseCommand command, CancellationToken cancellationToken)
+    {
+        var currentUser = await currentUserContext.GetAsync(cancellationToken);
+        if (currentUser is null)
+        {
+            return ShoppingResult.Failure<ShoppingPurchaseView>("residence_required", "Você precisa estar vinculado a uma casa.");
+        }
+
+        var itemIds = command.ItemIds.Distinct().ToArray();
+        if (itemIds.Length == 0)
+        {
+            return ShoppingResult.Failure<ShoppingPurchaseView>("shopping_purchase_empty", "Marque ao menos um item antes de finalizar a compra.");
+        }
+
+        var selected = await (
+            from item in database.ShoppingItems
+            join category in database.ShoppingCategories
+                on new { item.CategoryId, item.ResidenceId } equals new { CategoryId = category.Id, category.ResidenceId }
+            where item.ResidenceId == currentUser.ResidenceId && itemIds.Contains(item.Id)
+            select new { Item = item, CategoryName = category.Name })
+            .ToListAsync(cancellationToken);
+
+        if (selected.Count != itemIds.Length)
+        {
+            return ShoppingResult.Failure<ShoppingPurchaseView>("shopping_item_not_found", "Um ou mais itens não estão pendentes na sua casa.");
+        }
+
+        var completedAt = timeProvider.GetUtcNow();
+        var creation = ShoppingPurchase.Create(
+            currentUser.ResidenceId,
+            currentUser.UserId,
+            selected.Select(entry => new ShoppingPurchaseLine(entry.CategoryName, entry.Item.Name)).ToArray(),
+            completedAt);
+        if (!creation.Succeeded)
+        {
+            return ShoppingResult.Failure<ShoppingPurchaseView>(creation.Code!, creation.Message!);
+        }
+
+        var completedByName = await database.Users.Where(user => user.Id == currentUser.UserId)
+            .Select(user => user.Name).SingleAsync(cancellationToken);
+        database.ShoppingPurchases.Add(creation.Value!);
+        database.ShoppingItems.RemoveRange(selected.Select(entry => entry.Item));
+        await database.SaveChangesAsync(cancellationToken);
+
+        return ShoppingResult.Success(ToPurchaseView(creation.Value!, completedByName));
+    }
+
+    public async Task<ShoppingResult<IReadOnlyList<ShoppingPurchaseView>>> GetPurchaseHistoryAsync(CancellationToken cancellationToken)
+    {
+        var residenceId = await residenceContext.GetResidenceIdAsync(cancellationToken);
+        if (residenceId is null)
+        {
+            return ShoppingResult.Failure<IReadOnlyList<ShoppingPurchaseView>>("residence_required", "Você precisa estar vinculado a uma casa.");
+        }
+
+        var purchases = await database.ShoppingPurchases.Where(purchase => purchase.ResidenceId == residenceId)
+            .Include(purchase => purchase.Items)
+            .OrderByDescending(purchase => purchase.CompletedAt)
+            .Take(50)
+            .ToListAsync(cancellationToken);
+        var userIds = purchases.Select(purchase => purchase.CompletedByUserId).Distinct().ToArray();
+        var names = await database.Users.Where(user => userIds.Contains(user.Id))
+            .ToDictionaryAsync(user => user.Id, user => user.Name, cancellationToken);
+
+        return ShoppingResult.Success<IReadOnlyList<ShoppingPurchaseView>>(purchases
+            .Select(purchase => ToPurchaseView(purchase, names.GetValueOrDefault(purchase.CompletedByUserId, "Morador")))
+            .ToList());
+    }
+
     private async Task<ShoppingResult<ShoppingCategory>> GetCategoryAsync(Guid id, CancellationToken cancellationToken)
     {
         var residenceId = await residenceContext.GetResidenceIdAsync(cancellationToken);
@@ -228,4 +298,9 @@ internal sealed class ShoppingCatalogService(HouseStuffDbContext database, ICurr
         new(category.Id, category.Name, category.DisplayOrder, items);
 
     private static ShoppingItemView ToItemView(ShoppingItem item) => new(item.Id, item.CategoryId, item.Name);
+
+    private static ShoppingPurchaseView ToPurchaseView(ShoppingPurchase purchase, string completedByName) =>
+        new(purchase.Id, purchase.CompletedAt, completedByName, purchase.Items
+            .OrderBy(item => item.CategoryName).ThenBy(item => item.ItemName)
+            .Select(item => new ShoppingPurchaseItemView(item.CategoryName, item.ItemName)).ToList());
 }

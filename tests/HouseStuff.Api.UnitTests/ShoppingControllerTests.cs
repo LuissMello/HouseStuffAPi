@@ -49,12 +49,37 @@ public sealed class ShoppingControllerTests
         Assert.Equal(409, result.StatusCode);
     }
 
+    [Fact]
+    public async Task ResidentCanFinalizePurchaseAndReadHistory()
+    {
+        var purchase = new ShoppingPurchaseView(
+            Guid.NewGuid(),
+            DateTimeOffset.UtcNow,
+            "Luis",
+            [new ShoppingPurchaseItemView("Higiene", "Xampu")]);
+        var service = new StubShoppingCatalogService
+        {
+            PurchaseResult = ShoppingResult.Success(purchase),
+            HistoryResult = ShoppingResult.Success<IReadOnlyList<ShoppingPurchaseView>>([purchase]),
+        };
+        var controller = new ShoppingController(service);
+
+        var completed = await controller.CompletePurchase(new CompleteShoppingPurchaseRequest([Guid.NewGuid()]), CancellationToken.None);
+        var history = await controller.GetPurchaseHistory(CancellationToken.None);
+
+        Assert.Equal(201, completed.StatusCode);
+        Assert.Equal(200, history.StatusCode);
+        Assert.Same(purchase, completed.Value);
+    }
+
     private sealed class StubShoppingCatalogService : IShoppingCatalogService
     {
         public ShoppingResult<IReadOnlyList<ShoppingCategoryView>> CatalogResult { get; init; } = ShoppingResult.Success<IReadOnlyList<ShoppingCategoryView>>([]);
         public ShoppingResult<ShoppingCategoryView> CategoryResult { get; init; } = ShoppingResult.Failure<ShoppingCategoryView>("missing", "missing");
         public ShoppingResult<ShoppingItemView> ItemResult { get; init; } = ShoppingResult.Failure<ShoppingItemView>("missing", "missing");
         public ShoppingResult<bool> BooleanResult { get; init; } = ShoppingResult.Success(true);
+        public ShoppingResult<ShoppingPurchaseView> PurchaseResult { get; init; } = ShoppingResult.Failure<ShoppingPurchaseView>("missing", "missing");
+        public ShoppingResult<IReadOnlyList<ShoppingPurchaseView>> HistoryResult { get; init; } = ShoppingResult.Success<IReadOnlyList<ShoppingPurchaseView>>([]);
 
         public Task<ShoppingResult<IReadOnlyList<ShoppingCategoryView>>> GetCatalogAsync(CancellationToken cancellationToken) => Task.FromResult(CatalogResult);
         public Task<ShoppingResult<ShoppingCategoryView>> CreateCategoryAsync(SaveShoppingCategoryCommand command, CancellationToken cancellationToken) => Task.FromResult(CategoryResult);
@@ -64,5 +89,7 @@ public sealed class ShoppingControllerTests
         public Task<ShoppingResult<ShoppingItemView>> CreateItemAsync(SaveShoppingItemCommand command, CancellationToken cancellationToken) => Task.FromResult(ItemResult);
         public Task<ShoppingResult<ShoppingItemView>> UpdateItemAsync(Guid id, SaveShoppingItemCommand command, CancellationToken cancellationToken) => Task.FromResult(ItemResult);
         public Task<ShoppingResult<bool>> DeleteItemAsync(Guid id, CancellationToken cancellationToken) => Task.FromResult(BooleanResult);
+        public Task<ShoppingResult<ShoppingPurchaseView>> CompletePurchaseAsync(CompleteShoppingPurchaseCommand command, CancellationToken cancellationToken) => Task.FromResult(PurchaseResult);
+        public Task<ShoppingResult<IReadOnlyList<ShoppingPurchaseView>>> GetPurchaseHistoryAsync(CancellationToken cancellationToken) => Task.FromResult(HistoryResult);
     }
 }

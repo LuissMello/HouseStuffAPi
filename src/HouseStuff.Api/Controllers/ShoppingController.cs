@@ -41,6 +41,14 @@ public sealed class ShoppingController(IShoppingCatalogService shopping) : Contr
     public async Task<ObjectResult> DeleteItem(Guid id, CancellationToken cancellationToken) =>
         ToActionResult(await shopping.DeleteItemAsync(id, cancellationToken), StatusCodes.Status200OK);
 
+    [HttpPost("purchases")]
+    public async Task<ObjectResult> CompletePurchase(CompleteShoppingPurchaseRequest request, CancellationToken cancellationToken) =>
+        ToActionResult(await shopping.CompletePurchaseAsync(new CompleteShoppingPurchaseCommand(request.ItemIds), cancellationToken), StatusCodes.Status201Created);
+
+    [HttpGet("purchases/history")]
+    public async Task<ObjectResult> GetPurchaseHistory(CancellationToken cancellationToken) =>
+        ToActionResult(await shopping.GetPurchaseHistoryAsync(cancellationToken), StatusCodes.Status200OK);
+
     private ObjectResult ToActionResult<T>(ShoppingResult<T> result, int successStatus)
     {
         if (result.Succeeded)
@@ -61,3 +69,4 @@ public sealed class ShoppingController(IShoppingCatalogService shopping) : Contr
 public sealed record SaveShoppingCategoryRequest(string Name);
 public sealed record MoveShoppingCategoryRequest(int Offset);
 public sealed record SaveShoppingItemRequest(Guid CategoryId, string Name);
+public sealed record CompleteShoppingPurchaseRequest(IReadOnlyCollection<Guid> ItemIds);

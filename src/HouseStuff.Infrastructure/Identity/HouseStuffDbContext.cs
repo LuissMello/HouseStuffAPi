@@ -25,6 +25,8 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
     public DbSet<TaskAssignment> TaskAssignments => Set<TaskAssignment>();
     public DbSet<ShoppingCategory> ShoppingCategories => Set<ShoppingCategory>();
     public DbSet<ShoppingItem> ShoppingItems => Set<ShoppingItem>();
+    public DbSet<ShoppingPurchase> ShoppingPurchases => Set<ShoppingPurchase>();
+    public DbSet<ShoppingPurchaseItem> ShoppingPurchaseItems => Set<ShoppingPurchaseItem>();
     public DbSet<PurchaseWish> PurchaseWishes => Set<PurchaseWish>();
     public DbSet<CalendarEvent> CalendarEvents => Set<CalendarEvent>();
     public DbSet<CalendarEventParticipant> CalendarEventParticipants => Set<CalendarEventParticipant>();
@@ -133,6 +135,30 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
                 .HasForeignKey(item => new { item.CategoryId, item.ResidenceId })
                 .HasPrincipalKey(category => new { category.Id, category.ResidenceId })
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<ShoppingPurchase>(entity =>
+        {
+            entity.ToTable("ShoppingPurchases");
+            entity.HasKey(purchase => purchase.Id);
+            entity.Property(purchase => purchase.CompletedByUserId).HasMaxLength(450).IsRequired();
+            entity.HasIndex(purchase => new { purchase.ResidenceId, purchase.CompletedAt });
+            entity.HasAlternateKey(purchase => new { purchase.Id, purchase.ResidenceId });
+            entity.HasOne<Residence>().WithMany().HasForeignKey(purchase => purchase.ResidenceId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne<HouseStuffUser>().WithMany().HasForeignKey(purchase => purchase.CompletedByUserId).OnDelete(DeleteBehavior.Restrict);
+            entity.HasMany(purchase => purchase.Items).WithOne()
+                .HasForeignKey(item => new { item.PurchaseId, item.ResidenceId })
+                .HasPrincipalKey(purchase => new { purchase.Id, purchase.ResidenceId })
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<ShoppingPurchaseItem>(entity =>
+        {
+            entity.ToTable("ShoppingPurchaseItems");
+            entity.HasKey(item => item.Id);
+            entity.Property(item => item.CategoryName).HasMaxLength(60).IsRequired();
+            entity.Property(item => item.ItemName).HasMaxLength(100).IsRequired();
+            entity.HasIndex(item => new { item.PurchaseId, item.ResidenceId });
         });
 
         builder.Entity<PurchaseWish>(entity =>

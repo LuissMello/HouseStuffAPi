@@ -544,9 +544,9 @@
       "status": "inProgress",
       "result": "Morador marca itens no caderno, confirma a compra e consulta os itens finalizados no histórico da casa.",
       "subtasks": [
-        { "id": "HOUSE-310-01", "title": "Regra, contrato e persistência do histórico", "status": "inProgress" },
-        { "id": "HOUSE-310-02", "title": "Fechamento da compra e consulta do histórico na API", "status": "pending" },
-        { "id": "HOUSE-310-03", "title": "Caderno responsivo e integração no frontend", "status": "pending" },
+        { "id": "HOUSE-310-01", "title": "Regra, contrato e persistência do histórico", "status": "completed" },
+        { "id": "HOUSE-310-02", "title": "Fechamento da compra e consulta do histórico na API", "status": "completed" },
+        { "id": "HOUSE-310-03", "title": "Caderno responsivo e integração no frontend", "status": "inProgress" },
         { "id": "HOUSE-310-04", "title": "Testes, publicação, migration e fechamento", "status": "pending" }
       ]
     }
