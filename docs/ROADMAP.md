@@ -147,5 +147,5 @@ Os menus usam nomes claros e consistentes em todas as telas
 
 Cada morador escolhe uma cor que o identifica em toda a casa
 
-- [>] `HOUSE-240` — Cor pessoal dos moradores — Cada morador escolhe uma cor persistida e é reconhecido por ela em avatares, tarefas e calendário.
+- [x] `HOUSE-240` — Cor pessoal dos moradores — Cada morador escolhe uma cor persistida e é reconhecido por ela em avatares, tarefas e calendário.
 
