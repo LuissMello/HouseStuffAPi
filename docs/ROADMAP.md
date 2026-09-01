@@ -173,3 +173,9 @@ A lista da ida ao mercado mostra somente o que ainda falta comprar
 
 - [x] `HOUSE-280` — Baixa de itens comprados na lista — Morador marca itens comprados e a lista mantém visíveis somente os itens que ainda faltam.
 
+## M28 — Compatibilidade iPhone
+
+As telas principais permanecem utilizáveis no Safari do iPhone 12 sem estouros, zoom ou sobreposição
+
+- [>] `HOUSE-290` — Compatibilidade responsiva com iPhone 12 — Andressa utiliza as telas principais no Safari do iPhone 12 com navegação, formulários e conteúdo ajustados ao viewport de 390 por 844 pixels.
+
