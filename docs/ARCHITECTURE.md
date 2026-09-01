@@ -42,7 +42,7 @@ Em `HOUSE-030`, `Pots` adotou o mesmo limite: o contexto residencial é resolvid
 
 Em `HOUSE-040`, `HouseholdTasks` pertence ao pote por uma chave estrangeira composta `{PotId, ResidenceId}`. Além de o serviço derivar a casa da sessão, essa composição impede no banco que uma tarefa declare uma residência e aponte para o pote de outra. O tipo é persistido como texto e a recorrência em dias só existe para tarefas recorrentes.
 
-Em `HOUSE-050`, `TaskAssignments` registra a tarefa e o usuário que a aceitou. Índices únicos parciais garantem no PostgreSQL no máximo uma atribuição ativa por usuário e por tarefa. Sorteio, consulta atual e aceite derivam usuário e residência da sessão; o aceite repete a validação de elegibilidade porque a proposta não cria reserva.
+Em `HOUSE-050`, `TaskAssignments` registra a tarefa e o usuário que a aceitou. Em `HOUSE-270`, o limite por usuário foi removido para permitir vários post-its em andamento, enquanto o índice único parcial por tarefa continua garantindo que cada post-it tenha no máximo uma atribuição ativa em toda a casa. Sorteio, consulta e aceite derivam usuário e residência da sessão; o aceite repete a validação de elegibilidade porque a proposta não cria reserva.
 
 Em `HOUSE-060`, a própria atribuição recebe `CompletedAt` e permanece como registro histórico. A tarefa guarda `NextAvailableAt`: nulo para reutilizáveis, data calculada para recorrentes e arquivamento para únicas. Não há processo agendado; sorteio e aceite avaliam a disponibilidade contra o relógio do backend.
 

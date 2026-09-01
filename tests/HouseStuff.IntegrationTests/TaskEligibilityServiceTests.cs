@@ -68,6 +68,22 @@ public sealed class TaskEligibilityServiceTests
         var easyDraw = await luisAssignments.DrawAsync(new DrawTaskCommand(pot.Id, [], "easy"), CancellationToken.None);
         Assert.Equal(specific.Value.Id, easyDraw.Value!.TaskId);
 
+        var firstAcceptance = await luisAssignments.AcceptAsync(specific.Value.Id, CancellationToken.None);
+        var secondAcceptance = await luisAssignments.AcceptAsync(forEveryone.Value.Id, CancellationToken.None);
+        var active = await luisAssignments.GetActiveAsync(CancellationToken.None);
+
+        Assert.True(firstAcceptance.Succeeded);
+        Assert.True(secondAcceptance.Succeeded);
+        Assert.Equal(2, active.Value!.Count);
+
+        var reservedForAndressa = await andressaAssignments.DrawAsync(new DrawTaskCommand(pot.Id, [], "hard"), CancellationToken.None);
+        Assert.Equal("no_tasks_available", reservedForAndressa.Code);
+
+        var completion = await luisAssignments.CompleteAsync(firstAcceptance.Value!.AssignmentId, CancellationToken.None);
+        var remaining = await luisAssignments.GetActiveAsync(CancellationToken.None);
+        Assert.True(completion.Succeeded);
+        Assert.Equal(secondAcceptance.Value!.AssignmentId, Assert.Single(remaining.Value!).AssignmentId);
+
         await database.Database.EnsureDeletedAsync();
     }
 

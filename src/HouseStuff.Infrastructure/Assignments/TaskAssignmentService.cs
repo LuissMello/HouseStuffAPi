@@ -9,17 +9,16 @@ namespace HouseStuff.Infrastructure.Assignments;
 
 internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurrentUserContext currentUser) : ITaskAssignmentService
 {
-    public async Task<AssignmentResult<ActiveAssignmentView?>> GetCurrentAsync(CancellationToken cancellationToken)
+    public async Task<AssignmentResult<IReadOnlyList<ActiveAssignmentView>>> GetActiveAsync(CancellationToken cancellationToken)
     {
         var session = await currentUser.GetAsync(cancellationToken);
         if (session is null)
         {
-            return AssignmentResult.Failure<ActiveAssignmentView?>("residence_required", "Você precisa estar vinculado a uma casa.");
+            return AssignmentResult.Failure<IReadOnlyList<ActiveAssignmentView>>("residence_required", "Você precisa estar vinculado a uma casa.");
         }
 
-        var assignment = await AssignmentQuery(session)
-            .SingleOrDefaultAsync(cancellationToken);
-        return AssignmentResult.Success(assignment);
+        var assignments = await AssignmentQuery(session).ToListAsync(cancellationToken);
+        return AssignmentResult.Success<IReadOnlyList<ActiveAssignmentView>>(assignments);
     }
 
     public async Task<AssignmentResult<DrawProposalView>> DrawAsync(DrawTaskCommand command, CancellationToken cancellationToken)
@@ -28,11 +27,6 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
         if (session is null)
         {
             return AssignmentResult.Failure<DrawProposalView>("residence_required", "Você precisa estar vinculado a uma casa.");
-        }
-
-        if (await database.TaskAssignments.AnyAsync(item => item.AssignedToUserId == session.UserId && item.CompletedAt == null, cancellationToken))
-        {
-            return AssignmentResult.Failure<DrawProposalView>("assignment_already_active", "Conclua sua tarefa atual antes de sortear outra.");
         }
 
         var potExists = await database.Pots.AnyAsync(pot => pot.Id == command.PotId && pot.ResidenceId == session.ResidenceId && pot.IsActive, cancellationToken);
@@ -92,11 +86,6 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
             return AssignmentResult.Failure<ActiveAssignmentView>("residence_required", "Você precisa estar vinculado a uma casa.");
         }
 
-        if (await database.TaskAssignments.AnyAsync(item => item.AssignedToUserId == session.UserId && item.CompletedAt == null, cancellationToken))
-        {
-            return AssignmentResult.Failure<ActiveAssignmentView>("assignment_already_active", "Você já possui uma tarefa ativa.");
-        }
-
         var now = DateTimeOffset.UtcNow;
         var candidate = await (from task in database.HouseholdTasks
                                join pot in database.Pots on task.PotId equals pot.Id
@@ -135,7 +124,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
         return AssignmentResult.Success(ToView(creation.Assignment!, candidate.Task, candidate.PotName));
     }
 
-    public async Task<AssignmentResult<CompletedAssignmentView>> CompleteCurrentAsync(CancellationToken cancellationToken)
+    public async Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, CancellationToken cancellationToken)
     {
         var session = await currentUser.GetAsync(cancellationToken);
         if (session is null)
@@ -145,7 +134,8 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
 
         var current = await (from assignment in database.TaskAssignments
                              join task in database.HouseholdTasks on assignment.HouseholdTaskId equals task.Id
-                             where assignment.AssignedToUserId == session.UserId
+                             where assignment.Id == assignmentId
+                                 && assignment.AssignedToUserId == session.UserId
                                  && assignment.CompletedAt == null
                                  && task.ResidenceId == session.ResidenceId
                              select new { Assignment = assignment, Task = task })
@@ -182,6 +172,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
         where assignment.AssignedToUserId == session.UserId
             && assignment.CompletedAt == null
             && task.ResidenceId == session.ResidenceId
+        orderby assignment.AcceptedAt descending
         select new ActiveAssignmentView(
             assignment.Id,
             task.Id,

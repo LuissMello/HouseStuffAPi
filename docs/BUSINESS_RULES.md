@@ -43,17 +43,17 @@
 ## BR-003 — Sorteio e aceite
 
 - o resultado sorteado é uma proposta, não uma atribuição aceita automaticamente;
-- o usuário pode aceitar a tarefa ou pedir outra;
+- ao receber uma proposta, o usuário pode aceitá-la, mas não trocar por outro resultado na mesma rodada;
 - somente o aceite cria a atribuição ativa;
-- pedir outra exclui no dispositivo as tarefas já vistas durante a rodada atual;
-- ao esgotar uma rodada, o usuário pode reiniciá-la;
 - propostas não são reservadas e podem ficar indisponíveis antes do aceite;
 - o aceite revalida a tarefa e o vínculo com a residência autenticada;
-- cada usuário e cada tarefa podem participar de no máximo uma atribuição ativa.
+- um usuário pode manter várias atribuições ativas ao mesmo tempo;
+- cada tarefa pode participar de no máximo uma atribuição ativa em toda a residência e deixa imediatamente de aparecer em sorteios após o aceite;
+- o usuário consulta em conjunto todas as próprias atribuições ativas.
 
 ## BR-004 — Conclusão e recorrência
 
-- concluir uma tarefa registra usuário e instante;
+- concluir uma tarefa ativa específica registra usuário e instante;
 - uma tarefa recorrente recebe `nextAvailableAt = completedAt + recurrenceInterval`;
 - não existe job para liberar recorrência;
 - consultas e sorteios consideram a tarefa elegível quando `nextAvailableAt` for menor ou igual ao instante atual;

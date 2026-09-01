@@ -194,7 +194,7 @@ public sealed class ResidencePersistenceTests
     }
 
     [Fact]
-    public async Task ActiveAssignmentIsUniqueForUserAndTask()
+    public async Task UserCanHaveMultipleActiveAssignmentsButTaskRemainsUnique()
     {
         await CreateTestDatabaseAsync();
         var options = new DbContextOptionsBuilder<HouseStuffDbContext>().UseNpgsql(TestConnection).Options;
@@ -216,8 +216,8 @@ public sealed class ResidencePersistenceTests
         await database.SaveChangesAsync();
 
         database.TaskAssignments.Add(TaskAssignment.Create(secondTask.Id, "user-1", DateTimeOffset.UtcNow).Assignment!);
-        await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());
-        database.ChangeTracker.Clear();
+        await database.SaveChangesAsync();
+        Assert.Equal(2, await database.TaskAssignments.CountAsync(item => item.AssignedToUserId == "user-1" && item.CompletedAt == null));
 
         database.TaskAssignments.Add(TaskAssignment.Create(firstTask.Id, "user-2", DateTimeOffset.UtcNow).Assignment!);
         await Assert.ThrowsAsync<DbUpdateException>(() => database.SaveChangesAsync());

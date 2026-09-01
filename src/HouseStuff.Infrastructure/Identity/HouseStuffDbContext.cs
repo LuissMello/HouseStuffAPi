@@ -102,9 +102,7 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
             entity.ToTable("TaskAssignments");
             entity.HasKey(assignment => assignment.Id);
             entity.Property(assignment => assignment.AssignedToUserId).HasMaxLength(450).IsRequired();
-            entity.HasIndex(assignment => assignment.AssignedToUserId)
-                .IsUnique()
-                .HasFilter("\"CompletedAt\" IS NULL");
+            entity.HasIndex(assignment => new { assignment.AssignedToUserId, assignment.CompletedAt });
             entity.HasIndex(assignment => assignment.HouseholdTaskId)
                 .IsUnique()
                 .HasFilter("\"CompletedAt\" IS NULL");

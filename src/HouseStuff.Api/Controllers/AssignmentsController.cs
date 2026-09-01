@@ -23,17 +23,17 @@ public sealed class DrawsController(ITaskAssignmentService assignments) : Contro
 [Route("api/v1/assignments")]
 public sealed class AssignmentsController(ITaskAssignmentService assignments) : ControllerBase
 {
-    [HttpGet("current")]
-    public async Task<ObjectResult> Current(CancellationToken cancellationToken) =>
-        ToActionResult(await assignments.GetCurrentAsync(cancellationToken), StatusCodes.Status200OK);
+    [HttpGet]
+    public async Task<ObjectResult> Active(CancellationToken cancellationToken) =>
+        ToActionResult(await assignments.GetActiveAsync(cancellationToken), StatusCodes.Status200OK);
 
     [HttpPost("accept")]
     public async Task<ObjectResult> Accept(AcceptTaskRequest request, CancellationToken cancellationToken) =>
         ToActionResult(await assignments.AcceptAsync(request.TaskId, cancellationToken), StatusCodes.Status201Created);
 
-    [HttpPost("current/complete")]
-    public async Task<ObjectResult> CompleteCurrent(CancellationToken cancellationToken) =>
-        ToActionResult(await assignments.CompleteCurrentAsync(cancellationToken), StatusCodes.Status200OK);
+    [HttpPost("{assignmentId:guid}/complete")]
+    public async Task<ObjectResult> Complete(Guid assignmentId, CancellationToken cancellationToken) =>
+        ToActionResult(await assignments.CompleteAsync(assignmentId, cancellationToken), StatusCodes.Status200OK);
 
     private ObjectResult ToActionResult<T>(AssignmentResult<T> result, int successStatus) => result.Succeeded
         ? StatusCode(successStatus, result.Value)
