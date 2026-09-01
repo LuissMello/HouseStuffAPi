@@ -171,5 +171,5 @@ Moradores acumulam post-its reservados, acompanham todos os seus itens e conclue
 
 A lista da ida ao mercado mostra somente o que ainda falta comprar
 
-- [>] `HOUSE-280` — Baixa de itens comprados na lista — Morador marca itens comprados e a lista mantém visíveis somente os itens que ainda faltam.
+- [x] `HOUSE-280` — Baixa de itens comprados na lista — Morador marca itens comprados e a lista mantém visíveis somente os itens que ainda faltam.
 

@@ -493,12 +493,12 @@
       "repository": "front",
       "type": "feature",
       "title": "Baixa de itens comprados na lista",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Morador marca itens comprados e a lista mantém visíveis somente os itens que ainda faltam.",
       "subtasks": [
-        { "id": "HOUSE-280-01", "title": "Regra e interação de baixa durante a compra", "status": "inProgress" },
-        { "id": "HOUSE-280-02", "title": "Lista responsiva com itens restantes e conclusão", "status": "pending" },
-        { "id": "HOUSE-280-03", "title": "Testes, publicação e fechamento", "status": "pending" }
+        { "id": "HOUSE-280-01", "title": "Regra e interação de baixa durante a compra", "status": "completed" },
+        { "id": "HOUSE-280-02", "title": "Lista responsiva com itens restantes e conclusão", "status": "completed" },
+        { "id": "HOUSE-280-03", "title": "Testes, publicação e fechamento", "status": "completed" }
       ]
     }
   ]
