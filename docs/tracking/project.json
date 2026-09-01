@@ -448,9 +448,9 @@
       "status": "inProgress",
       "result": "Morador consulta os detalhes de um evento em modo somente leitura e escolhe explicitamente quando quer alterá-lo.",
       "subtasks": [
-        { "id": "HOUSE-250-01", "title": "Cartão de detalhes e abertura pelo calendário", "status": "inProgress" },
-        { "id": "HOUSE-250-02", "title": "Transição explícita para alteração", "status": "pending" },
-        { "id": "HOUSE-250-03", "title": "Responsividade, testes, publicação e fechamento", "status": "pending" }
+        { "id": "HOUSE-250-01", "title": "Cartão de detalhes e abertura pelo calendário", "status": "completed" },
+        { "id": "HOUSE-250-02", "title": "Transição explícita para alteração", "status": "completed" },
+        { "id": "HOUSE-250-03", "title": "Responsividade, testes, publicação e fechamento", "status": "inProgress" }
       ]
     }
   ]
