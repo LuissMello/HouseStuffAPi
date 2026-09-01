@@ -5,9 +5,9 @@
 Atualizado em: 2026-09-01.
 
 - Situação: **onTrack**.
-- Progresso: **30 de 31 tarefas concluídas**.
+- Progresso: **31 de 31 tarefas concluídas**.
 - Etapa atual: **M29**.
-- Tarefa ativa: **HOUSE-300**.
+- Tarefa ativa: **nenhuma**.
 - Próxima tarefa proposta: **nenhuma**.
 
 ## Regra de conclusão

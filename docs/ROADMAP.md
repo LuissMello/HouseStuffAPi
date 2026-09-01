@@ -183,5 +183,5 @@ As telas principais permanecem utilizáveis no Safari do iPhone 12 sem estouros,
 
 Cada morador usa qualquer cor hexadecimal para representar sua identidade na casa
 
-- [>] `HOUSE-300` — Cor pessoal hexadecimal livre — Morador escolhe qualquer cor hexadecimal válida e continua identificado com contraste legível nas telas da casa.
+- [x] `HOUSE-300` — Cor pessoal hexadecimal livre — Morador escolhe qualquer cor hexadecimal válida e continua identificado com contraste legível nas telas da casa.
 
