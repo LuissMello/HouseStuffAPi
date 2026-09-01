@@ -167,3 +167,9 @@ Moradores acumulam post-its reservados, acompanham todos os seus itens e conclue
 
 - [x] `HOUSE-270` — Reserva e acompanhamento de múltiplos post-its — Morador aceita vários post-its, cada item fica indisponível para toda a casa e todos os itens em andamento aparecem juntos.
 
+## M27 — Compras em andamento
+
+A lista da ida ao mercado mostra somente o que ainda falta comprar
+
+- [>] `HOUSE-280` — Baixa de itens comprados na lista — Morador marca itens comprados e a lista mantém visíveis somente os itens que ainda faltam.
+

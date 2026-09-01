@@ -78,6 +78,9 @@
 - a lista é gerada temporariamente a partir do catálogo, sem histórico ou múltiplas listas salvas;
 - selecionar uma categoria seleciona todos os seus itens, e a seleção individual atualiza o estado total, parcial ou vazio da categoria;
 - selecionar significa incluir na lista atual, não registrar a compra do item.
+- a lista gerada mantém separadas a escolha do que levar e a baixa durante a compra;
+- marcar um item selecionado como comprado o remove da lista de pendências sem excluí-lo do catálogo;
+- os itens comprados pertencem somente à lista temporária atual e são reiniciados quando uma nova lista é gerada.
 
 ## BR-007 — Desejos de compra da casa
 
