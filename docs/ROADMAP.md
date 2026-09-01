@@ -149,3 +149,9 @@ Cada morador escolhe uma cor que o identifica em toda a casa
 
 - [x] `HOUSE-240` — Cor pessoal dos moradores — Cada morador escolhe uma cor persistida e é reconhecido por ela em avatares, tarefas e calendário.
 
+## M24 — Consulta do calendário
+
+Eventos abrem primeiro para leitura e só entram em edição por uma ação explícita
+
+- [>] `HOUSE-250` — Visualização de eventos antes da edição — Morador consulta os detalhes de um evento em modo somente leitura e escolhe explicitamente quando quer alterá-lo.
+
