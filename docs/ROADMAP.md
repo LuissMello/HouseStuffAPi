@@ -177,5 +177,5 @@ A lista da ida ao mercado mostra somente o que ainda falta comprar
 
 As telas principais permanecem utilizáveis no Safari do iPhone 12 sem estouros, zoom ou sobreposição
 
-- [>] `HOUSE-290` — Compatibilidade responsiva com iPhone 12 — Andressa utiliza as telas principais no Safari do iPhone 12 com navegação, formulários e conteúdo ajustados ao viewport de 390 por 844 pixels.
+- [x] `HOUSE-290` — Compatibilidade responsiva com iPhone 12 — Andressa utiliza as telas principais no Safari do iPhone 12 com navegação, formulários e conteúdo ajustados ao viewport de 390 por 844 pixels.
 
