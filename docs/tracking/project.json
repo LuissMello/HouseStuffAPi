@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-09-01",
   "status": "onTrack",
-  "currentStageId": "M24",
+  "currentStageId": "M25",
   "stages": [
     { "id": "M0", "name": "Fundação", "outcome": "Projetos executáveis, governança e acompanhamento em fonte única" },
     { "id": "M1", "name": "Acesso", "outcome": "Administrador cria usuários e cada pessoa consegue entrar" },
@@ -29,7 +29,8 @@
     { "id": "M21", "name": "Página inicial", "outcome": "A página da casa mostra somente conteúdo útil para a rotina atual" },
     { "id": "M22", "name": "Navegação móvel", "outcome": "Os menus usam nomes claros e consistentes em todas as telas" },
     { "id": "M23", "name": "Identidade visual", "outcome": "Cada morador escolhe uma cor que o identifica em toda a casa" },
-    { "id": "M24", "name": "Consulta do calendário", "outcome": "Eventos abrem primeiro para leitura e só entram em edição por uma ação explícita" }
+    { "id": "M24", "name": "Consulta do calendário", "outcome": "Eventos abrem primeiro para leitura e só entram em edição por uma ação explícita" },
+    { "id": "M25", "name": "Documentação da API", "outcome": "A API publicada oferece documentação OpenAPI interativa com suporte a autenticação" }
   ],
   "tasks": [
     {
@@ -451,6 +452,20 @@
         { "id": "HOUSE-250-01", "title": "Cartão de detalhes e abertura pelo calendário", "status": "completed" },
         { "id": "HOUSE-250-02", "title": "Transição explícita para alteração", "status": "completed" },
         { "id": "HOUSE-250-03", "title": "Responsividade, testes, publicação e fechamento", "status": "completed" }
+      ]
+    },
+    {
+      "id": "HOUSE-260",
+      "stageId": "M25",
+      "area": "API",
+      "repository": "api",
+      "type": "technical",
+      "title": "Swagger público da API",
+      "status": "inProgress",
+      "result": "Desenvolvedor acessa a documentação interativa da API publicada e autentica chamadas protegidas com token Bearer.",
+      "subtasks": [
+        { "id": "HOUSE-260-01", "title": "Configuração OpenAPI e autenticação Bearer", "status": "inProgress" },
+        { "id": "HOUSE-260-02", "title": "Teste, publicação e verificação pública", "status": "pending" }
       ]
     }
   ]

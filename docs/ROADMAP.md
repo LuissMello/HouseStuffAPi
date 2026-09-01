@@ -155,3 +155,9 @@ Eventos abrem primeiro para leitura e só entram em edição por uma ação expl
 
 - [x] `HOUSE-250` — Visualização de eventos antes da edição — Morador consulta os detalhes de um evento em modo somente leitura e escolhe explicitamente quando quer alterá-lo.
 
+## M25 — Documentação da API
+
+A API publicada oferece documentação OpenAPI interativa com suporte a autenticação
+
+- [>] `HOUSE-260` — Swagger público da API — Desenvolvedor acessa a documentação interativa da API publicada e autentica chamadas protegidas com token Bearer.
+
