@@ -87,7 +87,7 @@ internal sealed class ResidenceService(
         var members = new List<ResidenceMember>(users.Count);
         foreach (var user in users)
         {
-            members.Add(new ResidenceMember(user.Id, user.Name, user.Email!, await userManager.IsInRoleAsync(user, HouseStuffRoles.Administrator), user.ProfileColor));
+            members.Add(new ResidenceMember(user.Id, user.Name, user.HasLogin ? user.Email : null, await userManager.IsInRoleAsync(user, HouseStuffRoles.Administrator), user.ProfileColor, user.HasLogin));
         }
 
         return new ResidenceView(residence.Id, residence.Name, members);

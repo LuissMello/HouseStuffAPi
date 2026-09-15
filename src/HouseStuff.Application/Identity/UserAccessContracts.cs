@@ -23,9 +23,9 @@ public static class ProfileColors
 
 public sealed record CurrentUser(string Id, string Email, string Name, bool IsAdministrator, Guid? ResidenceId = null, string? ResidenceName = null, string ProfileColor = ProfileColors.Default);
 
-public sealed record UserSummary(string Id, string Email, string Name, bool IsAdministrator, Guid? ResidenceId = null, string? ResidenceName = null, string ProfileColor = ProfileColors.Default);
+public sealed record UserSummary(string Id, string? Email, string Name, bool IsAdministrator, Guid? ResidenceId = null, string? ResidenceName = null, string ProfileColor = ProfileColors.Default, bool HasLogin = true);
 
-public sealed record CreateUserCommand(string Email, string Name, string TemporaryPassword, bool IsAdministrator);
+public sealed record CreateUserCommand(string? Email, string Name, string? TemporaryPassword, bool IsAdministrator, bool HasLogin = true);
 
 public sealed record ChangeUserRoleCommand(string UserId, bool IsAdministrator);
 
@@ -48,4 +48,6 @@ public interface IUserAccessService
     Task<IReadOnlyList<UserSummary>> ListAsync(CancellationToken cancellationToken);
     Task<AccessResult<UserSummary>> CreateAsync(CreateUserCommand command, CancellationToken cancellationToken);
     Task<AccessResult<UserSummary>> ChangeRoleAsync(ChangeUserRoleCommand command, CancellationToken cancellationToken);
+    Task<AccessResult<UserSummary>> LinkLoginAsync(string userId, string email, string password, CancellationToken cancellationToken);
+    Task<AccessResult<UserSummary>> UpdateMemberProfileColorAsync(string userId, string profileColor, CancellationToken cancellationToken);
 }

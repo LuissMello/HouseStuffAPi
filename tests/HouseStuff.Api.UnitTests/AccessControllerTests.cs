@@ -95,6 +95,8 @@ public sealed class AccessControllerTests
         public AccessResult<CurrentUser> ColorResult { get; init; } = AccessResult.Failure<CurrentUser>("missing", "missing");
         public AccessResult<UserSummary> CreateResult { get; init; } = AccessResult.Failure<UserSummary>("missing", "missing");
         public AccessResult<UserSummary> ChangeRoleResult { get; init; } = AccessResult.Failure<UserSummary>("missing", "missing");
+        public AccessResult<UserSummary> LinkLoginResult { get; init; } = AccessResult.Failure<UserSummary>("missing", "missing");
+        public AccessResult<UserSummary> UpdateMemberProfileColorResult { get; init; } = AccessResult.Failure<UserSummary>("missing", "missing");
 
         public Task<AccessResult<bool>> SignInWithTokenAsync(string email, string password, CancellationToken cancellationToken) =>
             Task.FromResult(SignInResult);
@@ -117,5 +119,11 @@ public sealed class AccessControllerTests
 
         public Task<AccessResult<UserSummary>> ChangeRoleAsync(ChangeUserRoleCommand command, CancellationToken cancellationToken) =>
             Task.FromResult(ChangeRoleResult);
+
+        public Task<AccessResult<UserSummary>> LinkLoginAsync(string userId, string email, string password, CancellationToken cancellationToken) =>
+            Task.FromResult(LinkLoginResult);
+
+        public Task<AccessResult<UserSummary>> UpdateMemberProfileColorAsync(string userId, string profileColor, CancellationToken cancellationToken) =>
+            Task.FromResult(UpdateMemberProfileColorResult);
     }
 }

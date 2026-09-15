@@ -47,6 +47,7 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
         {
             entity.HasIndex(user => user.ResidenceId);
             entity.Property(user => user.ProfileColor).HasMaxLength(7).HasDefaultValue(HouseStuff.Application.Identity.ProfileColors.Default).IsRequired();
+            entity.Property(user => user.HasLogin).HasDefaultValue(true).IsRequired();
             entity.HasOne<Residence>()
                 .WithMany()
                 .HasForeignKey(user => user.ResidenceId)

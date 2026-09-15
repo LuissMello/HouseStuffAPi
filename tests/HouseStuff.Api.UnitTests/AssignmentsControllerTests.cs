@@ -53,7 +53,7 @@ public sealed class AssignmentsControllerTests
         var expected = new CompletedAssignmentView(Guid.NewGuid(), Guid.NewGuid(), "Lavar louça", "reusable", DateTimeOffset.UtcNow, null, true);
         var service = new StubAssignmentService { CompleteResult = AssignmentResult.Success(expected) };
 
-        var result = await new AssignmentsController(service).Complete(expected.AssignmentId, CancellationToken.None);
+        var result = await new AssignmentsController(service).Complete(expected.AssignmentId, null, CancellationToken.None);
 
         Assert.Equal(200, result.StatusCode);
         Assert.Same(expected, result.Value);
@@ -73,13 +73,13 @@ public sealed class AssignmentsControllerTests
 
         public Task<AssignmentResult<IReadOnlyList<ActiveAssignmentView>>> GetActiveAsync(CancellationToken cancellationToken) => Task.FromResult(ActiveResult);
         public Task<AssignmentResult<DrawProposalView>> DrawAsync(DrawTaskCommand command, CancellationToken cancellationToken) => Task.FromResult(DrawResult);
-        public Task<AssignmentResult<ActiveAssignmentView>> AcceptAsync(Guid taskId, CancellationToken cancellationToken)
+        public Task<AssignmentResult<ActiveAssignmentView>> AcceptAsync(Guid taskId, string? onBehalfOfUserId, CancellationToken cancellationToken)
         {
             AcceptCalled = true;
             return Task.FromResult(AcceptResult);
         }
 
-        public Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, CancellationToken cancellationToken)
+        public Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, string? onBehalfOfUserId, CancellationToken cancellationToken)
         {
             CompleteCalled = true;
             CompletedAssignmentId = assignmentId;

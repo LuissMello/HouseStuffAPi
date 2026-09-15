@@ -1,6 +1,6 @@
 namespace HouseStuff.Application.Assignments;
 
-public sealed record CurrentUserSession(string UserId, Guid ResidenceId);
+public sealed record CurrentUserSession(string UserId, Guid ResidenceId, bool IsAdministrator);
 
 public sealed record DrawProposalView(
     Guid TaskId,
@@ -33,7 +33,7 @@ public sealed record CompletedAssignmentView(
     DateTimeOffset? NextAvailableAt,
     bool ReturnsToPot);
 
-public sealed record DrawTaskCommand(Guid PotId, IReadOnlyCollection<Guid> ExcludedTaskIds, string? Difficulty = null);
+public sealed record DrawTaskCommand(Guid PotId, IReadOnlyCollection<Guid> ExcludedTaskIds, string? Difficulty = null, string? OnBehalfOfUserId = null);
 
 public sealed record AssignmentResult<T>(bool Succeeded, T? Value, string? Code, string? Message);
 
@@ -52,6 +52,6 @@ public interface ITaskAssignmentService
 {
     Task<AssignmentResult<IReadOnlyList<ActiveAssignmentView>>> GetActiveAsync(CancellationToken cancellationToken);
     Task<AssignmentResult<DrawProposalView>> DrawAsync(DrawTaskCommand command, CancellationToken cancellationToken);
-    Task<AssignmentResult<ActiveAssignmentView>> AcceptAsync(Guid taskId, CancellationToken cancellationToken);
-    Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, CancellationToken cancellationToken);
+    Task<AssignmentResult<ActiveAssignmentView>> AcceptAsync(Guid taskId, string? onBehalfOfUserId, CancellationToken cancellationToken);
+    Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, string? onBehalfOfUserId, CancellationToken cancellationToken);
 }

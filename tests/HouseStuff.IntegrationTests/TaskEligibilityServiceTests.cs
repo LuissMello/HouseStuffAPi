@@ -53,9 +53,9 @@ public sealed class TaskEligibilityServiceTests
         Assert.True(forEveryone.Succeeded);
         Assert.Equal("task_eligible_user_invalid", foreign.Code);
 
-        var andressaAssignments = new TaskAssignmentService(database, new StubUserContext(new CurrentUserSession("user-2", residence.Id)));
+        var andressaAssignments = new TaskAssignmentService(database, new StubUserContext(new CurrentUserSession("user-2", residence.Id, false)));
         var unavailableDraw = await andressaAssignments.DrawAsync(new DrawTaskCommand(pot.Id, [], "easy"), CancellationToken.None);
-        var unavailableAccept = await andressaAssignments.AcceptAsync(specific.Value.Id, CancellationToken.None);
+        var unavailableAccept = await andressaAssignments.AcceptAsync(specific.Value.Id, null, CancellationToken.None);
         var hardDraw = await andressaAssignments.DrawAsync(new DrawTaskCommand(pot.Id, [], "hard"), CancellationToken.None);
 
         Assert.Equal("no_tasks_available", unavailableDraw.Code);
@@ -64,12 +64,12 @@ public sealed class TaskEligibilityServiceTests
         Assert.Equal(forEveryone.Value!.Id, hardDraw.Value!.TaskId);
         Assert.Equal("hard", hardDraw.Value.Difficulty);
 
-        var luisAssignments = new TaskAssignmentService(database, new StubUserContext(new CurrentUserSession("user-1", residence.Id)));
+        var luisAssignments = new TaskAssignmentService(database, new StubUserContext(new CurrentUserSession("user-1", residence.Id, false)));
         var easyDraw = await luisAssignments.DrawAsync(new DrawTaskCommand(pot.Id, [], "easy"), CancellationToken.None);
         Assert.Equal(specific.Value.Id, easyDraw.Value!.TaskId);
 
-        var firstAcceptance = await luisAssignments.AcceptAsync(specific.Value.Id, CancellationToken.None);
-        var secondAcceptance = await luisAssignments.AcceptAsync(forEveryone.Value.Id, CancellationToken.None);
+        var firstAcceptance = await luisAssignments.AcceptAsync(specific.Value.Id, null, CancellationToken.None);
+        var secondAcceptance = await luisAssignments.AcceptAsync(forEveryone.Value.Id, null, CancellationToken.None);
         var active = await luisAssignments.GetActiveAsync(CancellationToken.None);
 
         Assert.True(firstAcceptance.Succeeded);
@@ -79,7 +79,7 @@ public sealed class TaskEligibilityServiceTests
         var reservedForAndressa = await andressaAssignments.DrawAsync(new DrawTaskCommand(pot.Id, [], "hard"), CancellationToken.None);
         Assert.Equal("no_tasks_available", reservedForAndressa.Code);
 
-        var completion = await luisAssignments.CompleteAsync(firstAcceptance.Value!.AssignmentId, CancellationToken.None);
+        var completion = await luisAssignments.CompleteAsync(firstAcceptance.Value!.AssignmentId, null, CancellationToken.None);
         var remaining = await luisAssignments.GetActiveAsync(CancellationToken.None);
         Assert.True(completion.Succeeded);
         Assert.Equal(secondAcceptance.Value!.AssignmentId, Assert.Single(remaining.Value!).AssignmentId);

@@ -115,6 +115,6 @@ public sealed class ShoppingCatalogServiceTests
     private sealed class StubCurrentUserContext(string userId, Guid residenceId) : ICurrentUserContext
     {
         public Task<CurrentUserSession?> GetAsync(CancellationToken cancellationToken) =>
-            Task.FromResult<CurrentUserSession?>(new CurrentUserSession(userId, residenceId));
+            Task.FromResult<CurrentUserSession?>(new CurrentUserSession(userId, residenceId, false));
     }
 }

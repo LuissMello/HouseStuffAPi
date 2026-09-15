@@ -8,4 +8,5 @@ public sealed class HouseStuffUser : IdentityUser
     public required string Name { get; set; }
     public Guid? ResidenceId { get; set; }
     public string ProfileColor { get; set; } = ProfileColors.Default;
+    public bool HasLogin { get; set; } = true;
 }

@@ -125,17 +125,39 @@ internal sealed class UserAccessService(
         CreateUserCommand command,
         CancellationToken cancellationToken)
     {
-        var email = command.Email.Trim();
         var name = command.Name.Trim();
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(name))
+        if (string.IsNullOrWhiteSpace(name))
         {
-            return AccessResult.Failure<UserSummary>("invalid_user", "Nome e e-mail são obrigatórios.");
+            return AccessResult.Failure<UserSummary>("invalid_user", "Nome é obrigatório.");
         }
 
         var currentId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
         var current = currentId is null
             ? null
             : await database.Users.SingleOrDefaultAsync(item => item.Id == currentId, cancellationToken);
+
+        if (!command.HasLogin)
+        {
+            // Perfil sem login: precisa de um e-mail interno só para satisfazer a
+            // exigência de unicidade do Identity — nunca é exposto na API/UI.
+            var syntheticEmail = $"managed+{Guid.NewGuid():N}@housestuff.internal";
+            var managedUser = new HouseStuffUser { UserName = syntheticEmail, Email = syntheticEmail, Name = name, ResidenceId = current?.ResidenceId, HasLogin = false };
+            var managedResult = await userManager.CreateAsync(managedUser);
+            if (!managedResult.Succeeded)
+            {
+                var message = string.Join(" ", managedResult.Errors.Select(error => error.Description));
+                return AccessResult.Failure<UserSummary>("user_not_created", message);
+            }
+
+            return AccessResult.Success(await ToSummaryAsync(managedUser));
+        }
+
+        var email = command.Email?.Trim();
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(command.TemporaryPassword))
+        {
+            return AccessResult.Failure<UserSummary>("invalid_user", "E-mail e senha são obrigatórios.");
+        }
+
         var user = new HouseStuffUser { UserName = email, Email = email, Name = name, ResidenceId = current?.ResidenceId };
         var result = await userManager.CreateAsync(user, command.TemporaryPassword);
         if (!result.Succeeded)
@@ -153,6 +175,92 @@ internal sealed class UserAccessService(
         }
 
         return AccessResult.Success(await ToSummaryAsync(user));
+    }
+
+    public async Task<AccessResult<UserSummary>> LinkLoginAsync(string userId, string email, string password, CancellationToken cancellationToken)
+    {
+        var currentId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var current = currentId is null
+            ? null
+            : await database.Users.SingleOrDefaultAsync(item => item.Id == currentId, cancellationToken);
+        if (current?.ResidenceId is null)
+        {
+            return AccessResult.Failure<UserSummary>("current_user_not_found", "Não foi possível identificar o administrador atual.");
+        }
+
+        var target = await userManager.Users.SingleOrDefaultAsync(user => user.Id == userId, cancellationToken);
+        if (target is null || target.ResidenceId != current.ResidenceId)
+        {
+            return AccessResult.Failure<UserSummary>("user_not_found", "Usuário não encontrado nesta casa.");
+        }
+
+        if (target.HasLogin)
+        {
+            return AccessResult.Failure<UserSummary>("login_already_linked", "Este usuário já possui um login próprio.");
+        }
+
+        var normalizedEmail = email.Trim();
+        if (string.IsNullOrWhiteSpace(normalizedEmail))
+        {
+            return AccessResult.Failure<UserSummary>("invalid_user", "Informe um e-mail válido.");
+        }
+
+        var existing = await userManager.FindByEmailAsync(normalizedEmail);
+        if (existing is not null)
+        {
+            return AccessResult.Failure<UserSummary>("email_already_used", "Este e-mail já está em uso.");
+        }
+
+        var emailResult = await userManager.SetEmailAsync(target, normalizedEmail);
+        if (!emailResult.Succeeded)
+        {
+            return AccessResult.Failure<UserSummary>("user_not_updated", string.Join(" ", emailResult.Errors.Select(error => error.Description)));
+        }
+
+        var userNameResult = await userManager.SetUserNameAsync(target, normalizedEmail);
+        if (!userNameResult.Succeeded)
+        {
+            return AccessResult.Failure<UserSummary>("user_not_updated", string.Join(" ", userNameResult.Errors.Select(error => error.Description)));
+        }
+
+        var passwordResult = await userManager.AddPasswordAsync(target, password);
+        if (!passwordResult.Succeeded)
+        {
+            return AccessResult.Failure<UserSummary>("user_not_updated", string.Join(" ", passwordResult.Errors.Select(error => error.Description)));
+        }
+
+        target.HasLogin = true;
+        await database.SaveChangesAsync(cancellationToken);
+
+        return AccessResult.Success(await ToSummaryAsync(target));
+    }
+
+    public async Task<AccessResult<UserSummary>> UpdateMemberProfileColorAsync(string userId, string profileColor, CancellationToken cancellationToken)
+    {
+        var normalizedColor = ProfileColors.Normalize(profileColor);
+        if (normalizedColor is null)
+        {
+            return AccessResult.Failure<UserSummary>("profile_color_invalid", "Informe uma cor hexadecimal válida no formato #RRGGBB.");
+        }
+
+        var currentId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var current = currentId is null
+            ? null
+            : await database.Users.SingleOrDefaultAsync(item => item.Id == currentId, cancellationToken);
+        if (current?.ResidenceId is null)
+        {
+            return AccessResult.Failure<UserSummary>("current_user_not_found", "Não foi possível identificar o administrador atual.");
+        }
+
+        var target = await database.Users.SingleOrDefaultAsync(user => user.Id == userId, cancellationToken);
+        if (target is null || target.ResidenceId != current.ResidenceId || target.HasLogin)
+        {
+            return AccessResult.Failure<UserSummary>("member_not_found", "Perfil sem login não encontrado nesta casa.");
+        }
+
+        target.ProfileColor = normalizedColor;
+        await database.SaveChangesAsync(cancellationToken);
+        return AccessResult.Success(await ToSummaryAsync(target));
     }
 
     public async Task<AccessResult<UserSummary>> ChangeRoleAsync(
@@ -226,6 +334,6 @@ internal sealed class UserAccessService(
         var residenceName = user.ResidenceId is null
             ? null
             : await database.Residences.Where(item => item.Id == user.ResidenceId).Select(item => item.Name).SingleAsync();
-        return new(user.Id, user.Email!, user.Name, await userManager.IsInRoleAsync(user, HouseStuffRoles.Administrator), user.ResidenceId, residenceName, user.ProfileColor);
+        return new(user.Id, user.HasLogin ? user.Email : null, user.Name, await userManager.IsInRoleAsync(user, HouseStuffRoles.Administrator), user.ResidenceId, residenceName, user.ProfileColor, user.HasLogin);
     }
 }

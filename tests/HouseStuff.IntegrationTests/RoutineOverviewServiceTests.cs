@@ -49,7 +49,7 @@ public sealed class RoutineOverviewServiceTests
         database.TaskAssignments.AddRange(myAssignment, anotherAssignment);
         await database.SaveChangesAsync();
 
-        var service = new RoutineOverviewService(database, new StubCurrentUserContext(new CurrentUserSession("user-1", firstResidence.Id)));
+        var service = new RoutineOverviewService(database, new StubCurrentUserContext(new CurrentUserSession("user-1", firstResidence.Id, false)));
         var result = await service.GetAsync(CancellationToken.None);
 
         Assert.True(result.Succeeded);

@@ -29,6 +29,12 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
             return AssignmentResult.Failure<DrawProposalView>("residence_required", "Você precisa estar vinculado a uma casa.");
         }
 
+        var (targetUserId, errorCode, errorMessage) = await ResolveTargetUserAsync(session, command.OnBehalfOfUserId, cancellationToken);
+        if (targetUserId is null)
+        {
+            return AssignmentResult.Failure<DrawProposalView>(errorCode!, errorMessage!);
+        }
+
         var potExists = await database.Pots.AnyAsync(pot => pot.Id == command.PotId && pot.ResidenceId == session.ResidenceId && pot.IsActive, cancellationToken);
         if (!potExists)
         {
@@ -54,7 +60,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
                                     && task.PotId == command.PotId
                                     && task.IsActive
                                     && (difficulty == null || task.Difficulty == difficulty)
-                                    && (task.IsAvailableToAllResidents || task.EligibleUsers.Any(user => user.UserId == session.UserId))
+                                    && (task.IsAvailableToAllResidents || task.EligibleUsers.Any(user => user.UserId == targetUserId))
                                     && (task.NextAvailableAt == null || task.NextAvailableAt <= now)
                                     && pot.IsActive
                                     && !excluded.Contains(task.Id)
@@ -78,12 +84,18 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
         return AssignmentResult.Success(candidates[RandomNumberGenerator.GetInt32(candidates.Count)]);
     }
 
-    public async Task<AssignmentResult<ActiveAssignmentView>> AcceptAsync(Guid taskId, CancellationToken cancellationToken)
+    public async Task<AssignmentResult<ActiveAssignmentView>> AcceptAsync(Guid taskId, string? onBehalfOfUserId, CancellationToken cancellationToken)
     {
         var session = await currentUser.GetAsync(cancellationToken);
         if (session is null)
         {
             return AssignmentResult.Failure<ActiveAssignmentView>("residence_required", "Você precisa estar vinculado a uma casa.");
+        }
+
+        var (targetUserId, errorCode, errorMessage) = await ResolveTargetUserAsync(session, onBehalfOfUserId, cancellationToken);
+        if (targetUserId is null)
+        {
+            return AssignmentResult.Failure<ActiveAssignmentView>(errorCode!, errorMessage!);
         }
 
         var now = DateTimeOffset.UtcNow;
@@ -92,7 +104,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
                                where task.Id == taskId
                                    && task.ResidenceId == session.ResidenceId
                                    && task.IsActive
-                                   && (task.IsAvailableToAllResidents || task.EligibleUsers.Any(user => user.UserId == session.UserId))
+                                   && (task.IsAvailableToAllResidents || task.EligibleUsers.Any(user => user.UserId == targetUserId))
                                    && (task.NextAvailableAt == null || task.NextAvailableAt <= now)
                                    && pot.IsActive
                                    && !database.TaskAssignments.Any(assignment => assignment.HouseholdTaskId == task.Id && assignment.CompletedAt == null)
@@ -104,7 +116,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
         }
 
         var acceptedAt = DateTimeOffset.UtcNow;
-        var creation = TaskAssignment.Create(taskId, session.UserId, acceptedAt);
+        var creation = TaskAssignment.Create(taskId, targetUserId, acceptedAt);
         if (!creation.Succeeded)
         {
             return AssignmentResult.Failure<ActiveAssignmentView>(creation.Code!, creation.Message!);
@@ -124,7 +136,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
         return AssignmentResult.Success(ToView(creation.Assignment!, candidate.Task, candidate.PotName));
     }
 
-    public async Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, CancellationToken cancellationToken)
+    public async Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, string? onBehalfOfUserId, CancellationToken cancellationToken)
     {
         var session = await currentUser.GetAsync(cancellationToken);
         if (session is null)
@@ -132,10 +144,16 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
             return AssignmentResult.Failure<CompletedAssignmentView>("residence_required", "Você precisa estar vinculado a uma casa.");
         }
 
+        var (targetUserId, errorCode, errorMessage) = await ResolveTargetUserAsync(session, onBehalfOfUserId, cancellationToken);
+        if (targetUserId is null)
+        {
+            return AssignmentResult.Failure<CompletedAssignmentView>(errorCode!, errorMessage!);
+        }
+
         var current = await (from assignment in database.TaskAssignments
                              join task in database.HouseholdTasks on assignment.HouseholdTaskId equals task.Id
                              where assignment.Id == assignmentId
-                                 && assignment.AssignedToUserId == session.UserId
+                                 && assignment.AssignedToUserId == targetUserId
                                  && assignment.CompletedAt == null
                                  && task.ResidenceId == session.ResidenceId
                              select new { Assignment = assignment, Task = task })
@@ -163,6 +181,25 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
             completedAt,
             current.Task.NextAvailableAt,
             current.Task.Kind != HouseholdTaskKind.OneTime));
+    }
+
+    private async Task<(string? TargetUserId, string? ErrorCode, string? ErrorMessage)> ResolveTargetUserAsync(
+        CurrentUserSession session, string? onBehalfOfUserId, CancellationToken cancellationToken)
+    {
+        if (onBehalfOfUserId is null || onBehalfOfUserId == session.UserId)
+        {
+            return (session.UserId, null, null);
+        }
+
+        if (!session.IsAdministrator)
+        {
+            return (null, "on_behalf_not_allowed", "Você não pode agir por este usuário.");
+        }
+
+        var validTarget = await database.Users.AnyAsync(
+            user => user.Id == onBehalfOfUserId && user.ResidenceId == session.ResidenceId && !user.HasLogin,
+            cancellationToken);
+        return validTarget ? (onBehalfOfUserId, null, null) : (null, "on_behalf_not_allowed", "Você não pode agir por este usuário.");
     }
 
     private IQueryable<ActiveAssignmentView> AssignmentQuery(CurrentUserSession session) =>

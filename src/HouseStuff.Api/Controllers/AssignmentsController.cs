@@ -11,7 +11,7 @@ public sealed class DrawsController(ITaskAssignmentService assignments) : Contro
 {
     [HttpPost]
     public async Task<ObjectResult> Draw(DrawTaskRequest request, CancellationToken cancellationToken) =>
-        ToActionResult(await assignments.DrawAsync(new DrawTaskCommand(request.PotId, request.ExcludedTaskIds ?? [], request.Difficulty), cancellationToken));
+        ToActionResult(await assignments.DrawAsync(new DrawTaskCommand(request.PotId, request.ExcludedTaskIds ?? [], request.Difficulty, request.OnBehalfOfUserId), cancellationToken));
 
     private ObjectResult ToActionResult<T>(AssignmentResult<T> result) => result.Succeeded
         ? StatusCode(StatusCodes.Status200OK, result.Value)
@@ -29,16 +29,17 @@ public sealed class AssignmentsController(ITaskAssignmentService assignments) : 
 
     [HttpPost("accept")]
     public async Task<ObjectResult> Accept(AcceptTaskRequest request, CancellationToken cancellationToken) =>
-        ToActionResult(await assignments.AcceptAsync(request.TaskId, cancellationToken), StatusCodes.Status201Created);
+        ToActionResult(await assignments.AcceptAsync(request.TaskId, request.OnBehalfOfUserId, cancellationToken), StatusCodes.Status201Created);
 
     [HttpPost("{assignmentId:guid}/complete")]
-    public async Task<ObjectResult> Complete(Guid assignmentId, CancellationToken cancellationToken) =>
-        ToActionResult(await assignments.CompleteAsync(assignmentId, cancellationToken), StatusCodes.Status200OK);
+    public async Task<ObjectResult> Complete(Guid assignmentId, CompleteTaskRequest? request, CancellationToken cancellationToken) =>
+        ToActionResult(await assignments.CompleteAsync(assignmentId, request?.OnBehalfOfUserId, cancellationToken), StatusCodes.Status200OK);
 
     private ObjectResult ToActionResult<T>(AssignmentResult<T> result, int successStatus) => result.Succeeded
         ? StatusCode(successStatus, result.Value)
         : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
 }
 
-public sealed record DrawTaskRequest(Guid PotId, IReadOnlyCollection<Guid>? ExcludedTaskIds, string? Difficulty = null);
-public sealed record AcceptTaskRequest(Guid TaskId);
+public sealed record DrawTaskRequest(Guid PotId, IReadOnlyCollection<Guid>? ExcludedTaskIds, string? Difficulty = null, string? OnBehalfOfUserId = null);
+public sealed record AcceptTaskRequest(Guid TaskId, string? OnBehalfOfUserId = null);
+public sealed record CompleteTaskRequest(string? OnBehalfOfUserId = null);

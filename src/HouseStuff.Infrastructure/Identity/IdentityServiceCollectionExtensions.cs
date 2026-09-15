@@ -110,6 +110,7 @@ public static class IdentityServiceCollectionExtensions
         services.AddScoped<ICurrentUserContext, CurrentUserContext>();
         services.AddScoped<ITaskAssignmentService, TaskAssignmentService>();
         services.AddScoped<IRoutineOverviewService, RoutineOverviewService>();
+        services.AddScoped<IHouseholdDashboardService, HouseholdDashboardService>();
         services.AddScoped<IShoppingCatalogService, ShoppingCatalogService>();
         services.AddScoped<IPurchaseWishService, PurchaseWishService>();
         services.AddScoped<ICalendarService, CalendarService>();

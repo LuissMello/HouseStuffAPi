@@ -17,7 +17,7 @@ public sealed class UsersController(IUserAccessService users) : ControllerBase
     public async Task<IActionResult> Create(CreateUserRequest request, CancellationToken cancellationToken)
     {
         var result = await users.CreateAsync(
-            new CreateUserCommand(request.Email, request.Name, request.TemporaryPassword, request.IsAdministrator),
+            new CreateUserCommand(request.Email, request.Name, request.TemporaryPassword, request.IsAdministrator, request.HasLogin),
             cancellationToken);
         return result.Succeeded
             ? Created($"/api/v1/admin/users/{result.Value!.Id}", result.Value)
@@ -32,8 +32,30 @@ public sealed class UsersController(IUserAccessService users) : ControllerBase
             ? Ok(result.Value)
             : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
     }
+
+    [HttpPatch("{userId}/login")]
+    public async Task<IActionResult> LinkLogin(string userId, LinkLoginRequest request, CancellationToken cancellationToken)
+    {
+        var result = await users.LinkLoginAsync(userId, request.Email, request.TemporaryPassword, cancellationToken);
+        return result.Succeeded
+            ? Ok(result.Value)
+            : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
+    }
+
+    [HttpPatch("{userId}/color")]
+    public async Task<IActionResult> UpdateColor(string userId, UpdateMemberProfileColorRequest request, CancellationToken cancellationToken)
+    {
+        var result = await users.UpdateMemberProfileColorAsync(userId, request.ProfileColor, cancellationToken);
+        return result.Succeeded
+            ? Ok(result.Value)
+            : this.ProblemWithCode(StatusCodes.Status400BadRequest, result.Message, result.Code);
+    }
 }
 
-public sealed record CreateUserRequest(string Email, string Name, string TemporaryPassword, bool IsAdministrator);
+public sealed record CreateUserRequest(string? Email, string Name, string? TemporaryPassword, bool IsAdministrator, bool HasLogin = true);
 
 public sealed record ChangeUserRoleRequest(bool IsAdministrator);
+
+public sealed record LinkLoginRequest(string Email, string TemporaryPassword);
+
+public sealed record UpdateMemberProfileColorRequest(string ProfileColor);
