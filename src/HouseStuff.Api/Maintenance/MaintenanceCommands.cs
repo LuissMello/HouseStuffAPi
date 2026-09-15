@@ -1,4 +1,5 @@
 using HouseStuff.Application.Identity;
+using HouseStuff.Domain.Tasks;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +28,100 @@ internal static class MaintenanceCommands
         {
             "list-users" => await ListUsersAsync(users, database, cancellationToken),
             "reset-password" => await ResetPasswordAsync(users, args),
+            "list-tasks" => await ListTasksAsync(users, database, args, cancellationToken),
+            "restrict-all-tasks" => await RestrictAllTasksAsync(users, database, args, cancellationToken),
             _ => Usage(),
         };
+    }
+
+    private static async Task<int> ListTasksAsync(UserManager<HouseStuffUser> users, HouseStuffDbContext database, string[] args, CancellationToken cancellationToken)
+    {
+        if (args.Length < 3 || await ResolveResidenceIdAsync(users, args[2]) is not { } residenceId)
+        {
+            Console.Error.WriteLine("Uso: maintenance list-tasks <email-de-referencia-da-casa>");
+            return 1;
+        }
+
+        var tasks = await database.HouseholdTasks
+            .Include(task => task.EligibleUsers)
+            .Where(task => task.ResidenceId == residenceId)
+            .OrderBy(task => task.Name)
+            .ToListAsync(cancellationToken);
+        if (tasks.Count == 0)
+        {
+            Console.WriteLine("Nenhuma tarefa cadastrada nesta casa.");
+            return 0;
+        }
+
+        var names = await database.Users.Where(user => user.ResidenceId == residenceId).ToDictionaryAsync(user => user.Id, user => user.Name, cancellationToken);
+        foreach (var task in tasks)
+        {
+            var eligibility = task.IsAvailableToAllResidents
+                ? "todos"
+                : string.Join(", ", task.EligibleUsers.Select(user => names.GetValueOrDefault(user.UserId, user.UserId)));
+            Console.WriteLine($"{task.Name} | ativa={task.IsActive} | elegível={eligibility}");
+        }
+
+        return 0;
+    }
+
+    private static async Task<int> RestrictAllTasksAsync(UserManager<HouseStuffUser> users, HouseStuffDbContext database, string[] args, CancellationToken cancellationToken)
+    {
+        if (args.Length < 4 || await ResolveResidenceIdAsync(users, args[2]) is not { } residenceId)
+        {
+            Console.Error.WriteLine("Uso: maintenance restrict-all-tasks <email-de-referencia-da-casa> <email1,email2,...>");
+            return 1;
+        }
+
+        var memberEmails = args[3].Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        if (memberEmails.Length == 0)
+        {
+            Console.Error.WriteLine("Informe ao menos um e-mail.");
+            return 1;
+        }
+
+        var memberIds = new List<string>();
+        foreach (var email in memberEmails)
+        {
+            var member = await users.FindByEmailAsync(email);
+            if (member is null || member.ResidenceId != residenceId)
+            {
+                Console.Error.WriteLine($"Usuário '{email}' não encontrado nesta casa.");
+                return 1;
+            }
+
+            memberIds.Add(member.Id);
+        }
+
+        var tasks = await database.HouseholdTasks
+            .Include(task => task.EligibleUsers)
+            .Where(task => task.ResidenceId == residenceId && task.IsAvailableToAllResidents)
+            .ToListAsync(cancellationToken);
+        if (tasks.Count == 0)
+        {
+            Console.WriteLine("Nenhuma tarefa \"Todos da casa\" encontrada.");
+            return 0;
+        }
+
+        foreach (var task in tasks)
+        {
+            var result = task.Update(task.PotId, task.Name, task.Description, task.Kind, task.RecurrenceDays, DateTimeOffset.UtcNow, task.Difficulty, isAvailableToAllResidents: false, eligibleUserIds: memberIds);
+            if (!result.Succeeded)
+            {
+                Console.Error.WriteLine($"Falha ao atualizar '{task.Name}': {result.Message}");
+                return 1;
+            }
+        }
+
+        await database.SaveChangesAsync(cancellationToken);
+        Console.WriteLine($"{tasks.Count} tarefa(s) restrita(s) a {string.Join(", ", memberEmails)}: {string.Join(", ", tasks.Select(task => task.Name))}");
+        return 0;
+    }
+
+    private static async Task<Guid?> ResolveResidenceIdAsync(UserManager<HouseStuffUser> users, string email)
+    {
+        var user = await users.FindByEmailAsync(email.Trim());
+        return user?.ResidenceId;
     }
 
     private static async Task<int> ListUsersAsync(
@@ -88,7 +181,7 @@ internal static class MaintenanceCommands
 
     private static int Usage()
     {
-        Console.Error.WriteLine($"Uso: {Verb} <list-users|reset-password>");
+        Console.Error.WriteLine($"Uso: {Verb} <list-users|reset-password|list-tasks|restrict-all-tasks>");
         return 1;
     }
 }
