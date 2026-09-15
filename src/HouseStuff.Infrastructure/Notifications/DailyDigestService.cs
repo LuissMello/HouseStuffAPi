@@ -65,8 +65,9 @@ internal sealed class DailyDigestService(HouseStuffDbContext database, IOptions<
             lines.Add($"🎂 Aniversário hoje: {string.Join(", ", birthdaysToday)}");
         }
 
-        var weekStartUtc = new DateTimeOffset(today.ToDateTime(TimeOnly.MinValue), BrazilOffset);
-        var weekEndUtc = new DateTimeOffset(weekEnd.ToDateTime(TimeOnly.MaxValue), BrazilOffset);
+        // Npgsql só aceita DateTimeOffset com offset zero para colunas timestamptz.
+        var weekStartUtc = new DateTimeOffset(today.ToDateTime(TimeOnly.MinValue), BrazilOffset).ToUniversalTime();
+        var weekEndUtc = new DateTimeOffset(weekEnd.ToDateTime(TimeOnly.MaxValue), BrazilOffset).ToUniversalTime();
         var dateEventsThisWeek = await database.CalendarEvents.CountAsync(
             item => item.ResidenceId == residenceId && item.Kind == CalendarEventKind.Date && item.AllDayDate != null && item.AllDayDate >= today && item.AllDayDate <= weekEnd,
             cancellationToken);
