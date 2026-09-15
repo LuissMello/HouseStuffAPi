@@ -1,4 +1,5 @@
 using HouseStuff.Application.Assignments;
+using HouseStuff.Application.Notifications;
 using HouseStuff.Application.Pots;
 using HouseStuff.Application.Tasks;
 using HouseStuff.Domain.Pots;
@@ -53,7 +54,7 @@ public sealed class TaskEligibilityServiceTests
         Assert.True(forEveryone.Succeeded);
         Assert.Equal("task_eligible_user_invalid", foreign.Code);
 
-        var andressaAssignments = new TaskAssignmentService(database, new StubUserContext(new CurrentUserSession("user-2", residence.Id, false)));
+        var andressaAssignments = new TaskAssignmentService(database, new StubUserContext(new CurrentUserSession("user-2", residence.Id, false)), new StubUserNotifier());
         var unavailableDraw = await andressaAssignments.DrawAsync(new DrawTaskCommand(pot.Id, [], "easy"), CancellationToken.None);
         var unavailableAccept = await andressaAssignments.AcceptAsync(specific.Value.Id, null, CancellationToken.None);
         var hardDraw = await andressaAssignments.DrawAsync(new DrawTaskCommand(pot.Id, [], "hard"), CancellationToken.None);
@@ -64,7 +65,7 @@ public sealed class TaskEligibilityServiceTests
         Assert.Equal(forEveryone.Value!.Id, hardDraw.Value!.TaskId);
         Assert.Equal("hard", hardDraw.Value.Difficulty);
 
-        var luisAssignments = new TaskAssignmentService(database, new StubUserContext(new CurrentUserSession("user-1", residence.Id, false)));
+        var luisAssignments = new TaskAssignmentService(database, new StubUserContext(new CurrentUserSession("user-1", residence.Id, false)), new StubUserNotifier());
         var easyDraw = await luisAssignments.DrawAsync(new DrawTaskCommand(pot.Id, [], "easy"), CancellationToken.None);
         Assert.Equal(specific.Value.Id, easyDraw.Value!.TaskId);
 
@@ -116,5 +117,10 @@ public sealed class TaskEligibilityServiceTests
     private sealed class StubUserContext(CurrentUserSession session) : ICurrentUserContext
     {
         public Task<CurrentUserSession?> GetAsync(CancellationToken cancellationToken) => Task.FromResult<CurrentUserSession?>(session);
+    }
+
+    private sealed class StubUserNotifier : IUserNotifier
+    {
+        public Task NotifyAsync(IReadOnlyCollection<string> userIds, string title, string body, CancellationToken cancellationToken) => Task.CompletedTask;
     }
 }

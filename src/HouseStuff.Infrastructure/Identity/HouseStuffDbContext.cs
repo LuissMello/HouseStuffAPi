@@ -33,6 +33,7 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
     public DbSet<CalendarEventParticipant> CalendarEventParticipants => Set<CalendarEventParticipant>();
     public DbSet<PushSubscription> PushSubscriptions => Set<PushSubscription>();
     public DbSet<DigestRun> DigestRuns => Set<DigestRun>();
+    public DbSet<AppNotification> AppNotifications => Set<AppNotification>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -64,6 +65,7 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
             entity.Property(pot => pot.Name).HasMaxLength(60).IsRequired();
             entity.Property(pot => pot.NormalizedName).HasMaxLength(60).IsRequired();
             entity.Property(pot => pot.Description).HasMaxLength(200);
+            entity.Property(pot => pot.Color).HasMaxLength(7);
             entity.HasIndex(pot => new { pot.ResidenceId, pot.NormalizedName }).IsUnique();
             entity.HasIndex(pot => new { pot.ResidenceId, pot.DisplayOrder });
             entity.HasOne<Residence>().WithMany().HasForeignKey(pot => pot.ResidenceId).OnDelete(DeleteBehavior.Cascade);
@@ -220,6 +222,17 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
             entity.ToTable("DigestRuns");
             entity.HasKey(run => new { run.ResidenceId, run.Date });
             entity.HasOne<Residence>().WithMany().HasForeignKey(run => run.ResidenceId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<AppNotification>(entity =>
+        {
+            entity.ToTable("AppNotifications");
+            entity.HasKey(notification => notification.Id);
+            entity.Property(notification => notification.UserId).HasMaxLength(450).IsRequired();
+            entity.Property(notification => notification.Title).HasMaxLength(120).IsRequired();
+            entity.Property(notification => notification.Body).HasMaxLength(1000).IsRequired();
+            entity.HasIndex(notification => new { notification.UserId, notification.CreatedAt });
+            entity.HasOne<HouseStuffUser>().WithMany().HasForeignKey(notification => notification.UserId).OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

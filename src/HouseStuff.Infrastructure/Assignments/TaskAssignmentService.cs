@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using HouseStuff.Application.Assignments;
+using HouseStuff.Application.Notifications;
 using HouseStuff.Domain.Assignments;
 using HouseStuff.Domain.Tasks;
 using HouseStuff.Infrastructure.Identity;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HouseStuff.Infrastructure.Assignments;
 
-internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurrentUserContext currentUser) : ITaskAssignmentService
+internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurrentUserContext currentUser, IUserNotifier notifier) : ITaskAssignmentService
 {
     public async Task<AssignmentResult<IReadOnlyList<ActiveAssignmentView>>> GetActiveAsync(CancellationToken cancellationToken)
     {
@@ -133,6 +134,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
             return AssignmentResult.Failure<ActiveAssignmentView>("assignment_conflict", "A tarefa acabou de ser aceita. Sorteie outra.");
         }
 
+        await notifier.NotifyAsync([targetUserId], "Nova tarefa", $"Você pegou: {candidate.Task.Name}", cancellationToken);
         return AssignmentResult.Success(ToView(creation.Assignment!, candidate.Task, candidate.PotName));
     }
 

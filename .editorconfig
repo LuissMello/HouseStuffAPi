@@ -1,0 +1,6 @@
+root = true
+
+# Migrations são geradas pelo EF Core (dotnet ef migrations add) — não editamos à mão, então
+# regras de qualidade como CA1861 (evitar array literal repetido) não se aplicam aqui.
+[**/Migrations/*.cs]
+dotnet_diagnostic.CA1861.severity = none

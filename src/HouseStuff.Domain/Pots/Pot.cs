@@ -15,6 +15,8 @@ public sealed class Pot
         UpdatedAt = createdAt;
     }
 
+    public string? Color { get; private set; }
+
     private Pot()
     {
         Name = string.Empty;
@@ -74,6 +76,19 @@ public sealed class Pot
     {
         DisplayOrder = displayOrder;
         UpdatedAt = now;
+    }
+
+    public PotChangeResult SetColor(string? color, DateTimeOffset now)
+    {
+        var trimmed = string.IsNullOrWhiteSpace(color) ? null : color.Trim().ToUpperInvariant();
+        if (trimmed is not null && !System.Text.RegularExpressions.Regex.IsMatch(trimmed, "^#[0-9A-F]{6}$"))
+        {
+            return PotChangeResult.Failure("pot_color_invalid", "Use uma cor no formato #RRGGBB.");
+        }
+
+        Color = trimmed;
+        UpdatedAt = now;
+        return PotChangeResult.Success(this);
     }
 
     public static string NormalizeName(string name) => name.Trim().ToUpperInvariant();

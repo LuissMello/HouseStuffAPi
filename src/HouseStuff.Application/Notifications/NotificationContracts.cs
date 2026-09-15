@@ -22,3 +22,18 @@ public interface IDailyDigestService
     /// <summary>Monta e envia o resumo diário para cada residência ainda não processada hoje. Retorna quantas receberam notificação.</summary>
     Task<int> RunAsync(CancellationToken cancellationToken);
 }
+
+public sealed record AppNotificationView(Guid Id, string Title, string Body, DateTimeOffset CreatedAt, DateTimeOffset? ReadAt);
+
+public interface IAppNotificationService
+{
+    Task<NotificationResult<IReadOnlyList<AppNotificationView>>> ListAsync(CancellationToken cancellationToken);
+    Task<NotificationResult<bool>> MarkReadAsync(Guid notificationId, CancellationToken cancellationToken);
+    Task<NotificationResult<bool>> MarkAllReadAsync(CancellationToken cancellationToken);
+}
+
+/// <summary>Envia push e registra a notificação in-app para um ou mais usuários — usado pelo resumo diário e pela atribuição de tarefas.</summary>
+public interface IUserNotifier
+{
+    Task NotifyAsync(IReadOnlyCollection<string> userIds, string title, string body, CancellationToken cancellationToken);
+}

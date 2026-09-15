@@ -89,6 +89,24 @@ internal sealed class PotService(HouseStuffDbContext database, ICurrentResidence
         return PotResult.Success(ToView(scoped.Value));
     }
 
+    public async Task<PotResult<PotView>> SetColorAsync(Guid id, string? color, CancellationToken cancellationToken)
+    {
+        var scoped = await GetScopedAsync(id, cancellationToken);
+        if (!scoped.Succeeded)
+        {
+            return PotResult.Failure<PotView>(scoped.Code!, scoped.Message!);
+        }
+
+        var update = scoped.Value!.SetColor(color, DateTimeOffset.UtcNow);
+        if (!update.Succeeded)
+        {
+            return PotResult.Failure<PotView>(update.Code!, update.Message!);
+        }
+
+        await database.SaveChangesAsync(cancellationToken);
+        return PotResult.Success(ToView(scoped.Value));
+    }
+
     public async Task<PotResult<IReadOnlyList<PotView>>> MoveAsync(Guid id, int offset, CancellationToken cancellationToken)
     {
         if (offset is not (-1 or 1))
@@ -132,5 +150,5 @@ internal sealed class PotService(HouseStuffDbContext database, ICurrentResidence
             : PotResult.Success(pot);
     }
 
-    private static PotView ToView(Pot pot) => new(pot.Id, pot.Name, pot.Description, pot.DisplayOrder, pot.IsActive);
+    private static PotView ToView(Pot pot) => new(pot.Id, pot.Name, pot.Description, pot.DisplayOrder, pot.IsActive, pot.Color);
 }

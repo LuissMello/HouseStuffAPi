@@ -1,16 +1,12 @@
-using System.Net;
-using System.Text.Json;
 using HouseStuff.Application.Notifications;
 using HouseStuff.Domain.Calendar;
 using HouseStuff.Domain.Notifications;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using WebPush;
 
 namespace HouseStuff.Infrastructure.Notifications;
 
-internal sealed class DailyDigestService(HouseStuffDbContext database, IOptions<VapidOptions> vapidOptions, TimeProvider timeProvider) : IDailyDigestService
+internal sealed class DailyDigestService(HouseStuffDbContext database, IUserNotifier notifier, TimeProvider timeProvider) : IDailyDigestService
 {
     // O Brasil não observa horário de verão desde 2019; o gatilho roda uma vez por dia num
     // horário fixo, então um offset constante é suficiente (sem precisar de um provedor de fuso).
@@ -103,46 +99,7 @@ internal sealed class DailyDigestService(HouseStuffDbContext database, IOptions<
 
     private async Task SendToResidenceAsync(Guid residenceId, string body, CancellationToken cancellationToken)
     {
-        var subscriptions = await (from subscription in database.PushSubscriptions
-                                   join user in database.Users on subscription.UserId equals user.Id
-                                   where user.ResidenceId == residenceId
-                                   select subscription)
-            .ToListAsync(cancellationToken);
-        if (subscriptions.Count == 0)
-        {
-            return;
-        }
-
-        var vapidDetails = new VapidDetails(vapidOptions.Value.Subject, vapidOptions.Value.PublicKey, vapidOptions.Value.PrivateKey);
-        var client = new WebPushClient();
-        var payload = JsonSerializer.Serialize(new { title = "HouseStuff", body });
-
-        var expired = new List<Domain.Notifications.PushSubscription>();
-        foreach (var subscription in subscriptions)
-        {
-            try
-            {
-                await client.SendNotificationAsync(
-                    new WebPush.PushSubscription(subscription.Endpoint, subscription.P256dh, subscription.Auth),
-                    payload,
-                    vapidDetails,
-                    cancellationToken);
-            }
-            catch (WebPushException exception) when (exception.StatusCode is HttpStatusCode.NotFound or HttpStatusCode.Gone)
-            {
-                expired.Add(subscription);
-            }
-            catch (WebPushException)
-            {
-                // Outras falhas (limite de taxa, payload grande etc.) — tenta de novo no próximo dia.
-            }
-        }
-
-        if (expired.Count > 0)
-        {
-            database.PushSubscriptions.RemoveRange(expired);
-        }
-
-        await database.SaveChangesAsync(cancellationToken);
+        var userIds = await database.Users.Where(user => user.ResidenceId == residenceId).Select(user => user.Id).ToListAsync(cancellationToken);
+        await notifier.NotifyAsync(userIds, "Resumo do dia", body, cancellationToken);
     }
 }

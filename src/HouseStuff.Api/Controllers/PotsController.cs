@@ -39,6 +39,10 @@ public sealed class AdminPotsController(IPotService pots) : ControllerBase
     public async Task<ObjectResult> SetStatus(Guid id, SetPotStatusRequest request, CancellationToken cancellationToken) =>
         ToActionResult(await pots.SetActiveAsync(id, request.IsActive, cancellationToken), StatusCodes.Status200OK);
 
+    [HttpPatch("{id:guid}/color")]
+    public async Task<ObjectResult> SetColor(Guid id, SetPotColorRequest request, CancellationToken cancellationToken) =>
+        ToActionResult(await pots.SetColorAsync(id, request.Color, cancellationToken), StatusCodes.Status200OK);
+
     [HttpPost("{id:guid}/move")]
     public async Task<ObjectResult> Move(Guid id, MovePotRequest request, CancellationToken cancellationToken) =>
         ToActionResult(await pots.MoveAsync(id, request.Offset, cancellationToken), StatusCodes.Status200OK);
@@ -57,4 +61,5 @@ public sealed class AdminPotsController(IPotService pots) : ControllerBase
 
 public sealed record SavePotRequest(string Name, string? Description);
 public sealed record SetPotStatusRequest(bool IsActive);
+public sealed record SetPotColorRequest(string? Color);
 public sealed record MovePotRequest(int Offset);

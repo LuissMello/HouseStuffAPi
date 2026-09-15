@@ -10,7 +10,7 @@ public sealed class PotsControllerTests
     [Fact]
     public async Task MemberListRequestsOnlyActivePots()
     {
-        var expected = new[] { new PotView(Guid.NewGuid(), "Mensal", null, 0, true) };
+        var expected = new[] { new PotView(Guid.NewGuid(), "Mensal", null, 0, true, null) };
         var service = new StubPotService { ListResult = PotResult.Success<IReadOnlyList<PotView>>(expected) };
 
         var result = await new PotsController(service).List(CancellationToken.None);
@@ -23,7 +23,7 @@ public sealed class PotsControllerTests
     [Fact]
     public async Task ResidentCanCreatePot()
     {
-        var expected = new PotView(Guid.NewGuid(), "Semanal", "Toda semana", 1, true);
+        var expected = new PotView(Guid.NewGuid(), "Semanal", "Toda semana", 1, true, null);
         var service = new StubPotService { CreateResult = PotResult.Success(expected) };
 
         var result = await new AdminPotsController(service).Create(new SavePotRequest("Semanal", "Toda semana"), CancellationToken.None);
@@ -67,5 +67,6 @@ public sealed class PotsControllerTests
         public Task<PotResult<PotView>> UpdateAsync(Guid id, SavePotCommand command, CancellationToken cancellationToken) => Task.FromResult(UpdateResult);
         public Task<PotResult<PotView>> SetActiveAsync(Guid id, bool isActive, CancellationToken cancellationToken) => Task.FromResult(UpdateResult);
         public Task<PotResult<IReadOnlyList<PotView>>> MoveAsync(Guid id, int offset, CancellationToken cancellationToken) => Task.FromResult(ListResult);
+        public Task<PotResult<PotView>> SetColorAsync(Guid id, string? color, CancellationToken cancellationToken) => Task.FromResult(UpdateResult);
     }
 }

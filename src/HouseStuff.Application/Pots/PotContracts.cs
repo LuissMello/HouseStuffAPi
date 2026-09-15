@@ -1,6 +1,6 @@
 namespace HouseStuff.Application.Pots;
 
-public sealed record PotView(Guid Id, string Name, string? Description, int DisplayOrder, bool IsActive);
+public sealed record PotView(Guid Id, string Name, string? Description, int DisplayOrder, bool IsActive, string? Color);
 
 public sealed record SavePotCommand(string Name, string? Description);
 
@@ -24,4 +24,5 @@ public interface IPotService
     Task<PotResult<PotView>> UpdateAsync(Guid id, SavePotCommand command, CancellationToken cancellationToken);
     Task<PotResult<PotView>> SetActiveAsync(Guid id, bool isActive, CancellationToken cancellationToken);
     Task<PotResult<IReadOnlyList<PotView>>> MoveAsync(Guid id, int offset, CancellationToken cancellationToken);
+    Task<PotResult<PotView>> SetColorAsync(Guid id, string? color, CancellationToken cancellationToken);
 }

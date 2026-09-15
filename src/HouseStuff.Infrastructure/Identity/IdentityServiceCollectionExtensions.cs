@@ -119,6 +119,8 @@ public static class IdentityServiceCollectionExtensions
         services.Configure<VapidOptions>(configuration.GetSection("Vapid"));
         services.Configure<DigestTriggerOptions>(configuration.GetSection("DigestTrigger"));
         services.AddScoped<IPushSubscriptionService, PushSubscriptionService>();
+        services.AddScoped<IUserNotifier, UserNotifier>();
+        services.AddScoped<IAppNotificationService, AppNotificationService>();
         services.AddScoped<IDailyDigestService, DailyDigestService>();
         services.AddSingleton<StartupState>();
         return services;
