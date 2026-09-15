@@ -1,0 +1,17 @@
+name: Disparar resumo diário
+
+on:
+  schedule:
+    # 6:30 em São Paulo = 9:30 UTC (Brasil não observa horário de verão desde 2019).
+    - cron: "30 9 * * *"
+  workflow_dispatch:
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chamar o gatilho do resumo diário
+        run: |
+          curl --fail --show-error --silent \
+            -X POST "${{ vars.API_URL || 'https://housestuffapi.fly.dev' }}/api/v1/maintenance/run-daily-digest" \
+            -H "X-Digest-Key: ${{ secrets.DIGEST_KEY }}"

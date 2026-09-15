@@ -15,6 +15,8 @@ using HouseStuff.Application.Purchases;
 using HouseStuff.Infrastructure.Purchases;
 using HouseStuff.Application.Calendar;
 using HouseStuff.Infrastructure.Calendar;
+using HouseStuff.Application.Notifications;
+using HouseStuff.Infrastructure.Notifications;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.BearerToken;
@@ -114,6 +116,10 @@ public static class IdentityServiceCollectionExtensions
         services.AddScoped<IShoppingCatalogService, ShoppingCatalogService>();
         services.AddScoped<IPurchaseWishService, PurchaseWishService>();
         services.AddScoped<ICalendarService, CalendarService>();
+        services.Configure<VapidOptions>(configuration.GetSection("Vapid"));
+        services.Configure<DigestTriggerOptions>(configuration.GetSection("DigestTrigger"));
+        services.AddScoped<IPushSubscriptionService, PushSubscriptionService>();
+        services.AddScoped<IDailyDigestService, DailyDigestService>();
         services.AddSingleton<StartupState>();
         return services;
     }

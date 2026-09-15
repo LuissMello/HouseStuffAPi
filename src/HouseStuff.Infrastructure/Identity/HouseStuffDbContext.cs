@@ -8,6 +8,7 @@ using HouseStuff.Domain.Assignments;
 using HouseStuff.Domain.Shopping;
 using HouseStuff.Domain.Purchases;
 using HouseStuff.Domain.Calendar;
+using HouseStuff.Domain.Notifications;
 
 namespace HouseStuff.Infrastructure.Identity;
 
@@ -30,6 +31,8 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
     public DbSet<PurchaseWish> PurchaseWishes => Set<PurchaseWish>();
     public DbSet<CalendarEvent> CalendarEvents => Set<CalendarEvent>();
     public DbSet<CalendarEventParticipant> CalendarEventParticipants => Set<CalendarEventParticipant>();
+    public DbSet<PushSubscription> PushSubscriptions => Set<PushSubscription>();
+    public DbSet<DigestRun> DigestRuns => Set<DigestRun>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -197,6 +200,26 @@ public sealed class HouseStuffDbContext(DbContextOptions<HouseStuffDbContext> op
             entity.Property(participant => participant.UserId).HasMaxLength(450).IsRequired();
             entity.HasIndex(participant => new { participant.ResidenceId, participant.UserId });
             entity.HasOne<HouseStuffUser>().WithMany().HasForeignKey(participant => participant.UserId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<PushSubscription>(entity =>
+        {
+            entity.ToTable("PushSubscriptions");
+            entity.HasKey(subscription => subscription.Id);
+            entity.Property(subscription => subscription.UserId).HasMaxLength(450).IsRequired();
+            entity.Property(subscription => subscription.Endpoint).HasMaxLength(500).IsRequired();
+            entity.Property(subscription => subscription.P256dh).HasMaxLength(200).IsRequired();
+            entity.Property(subscription => subscription.Auth).HasMaxLength(100).IsRequired();
+            entity.HasIndex(subscription => subscription.Endpoint).IsUnique();
+            entity.HasIndex(subscription => subscription.UserId);
+            entity.HasOne<HouseStuffUser>().WithMany().HasForeignKey(subscription => subscription.UserId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<DigestRun>(entity =>
+        {
+            entity.ToTable("DigestRuns");
+            entity.HasKey(run => new { run.ResidenceId, run.Date });
+            entity.HasOne<Residence>().WithMany().HasForeignKey(run => run.ResidenceId).OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

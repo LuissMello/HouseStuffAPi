@@ -3,6 +3,7 @@ using HouseStuff.Domain.Tasks;
 using HouseStuff.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebPush;
 
 namespace HouseStuff.Api.Maintenance;
 
@@ -30,8 +31,17 @@ internal static class MaintenanceCommands
             "reset-password" => await ResetPasswordAsync(users, args),
             "list-tasks" => await ListTasksAsync(users, database, args, cancellationToken),
             "restrict-all-tasks" => await RestrictAllTasksAsync(users, database, args, cancellationToken),
+            "generate-vapid-keys" => GenerateVapidKeys(),
             _ => Usage(),
         };
+    }
+
+    private static int GenerateVapidKeys()
+    {
+        var keys = VapidHelper.GenerateVapidKeys();
+        Console.WriteLine($"Vapid__PublicKey={keys.PublicKey}");
+        Console.WriteLine($"Vapid__PrivateKey={keys.PrivateKey}");
+        return 0;
     }
 
     private static async Task<int> ListTasksAsync(UserManager<HouseStuffUser> users, HouseStuffDbContext database, string[] args, CancellationToken cancellationToken)
@@ -181,7 +191,7 @@ internal static class MaintenanceCommands
 
     private static int Usage()
     {
-        Console.Error.WriteLine($"Uso: {Verb} <list-users|reset-password|list-tasks|restrict-all-tasks>");
+        Console.Error.WriteLine($"Uso: {Verb} <list-users|reset-password|list-tasks|restrict-all-tasks|generate-vapid-keys>");
         return 1;
     }
 }
