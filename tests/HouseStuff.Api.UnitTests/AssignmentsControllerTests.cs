@@ -79,7 +79,7 @@ public sealed class AssignmentsControllerTests
             return Task.FromResult(AcceptResult);
         }
 
-        public Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, string? onBehalfOfUserId, CancellationToken cancellationToken)
+        public Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, string? onBehalfOfUserId, bool? archive, CancellationToken cancellationToken)
         {
             CompleteCalled = true;
             CompletedAssignmentId = assignmentId;

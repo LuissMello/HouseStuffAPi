@@ -33,7 +33,7 @@ public sealed class AssignmentsController(ITaskAssignmentService assignments) : 
 
     [HttpPost("{assignmentId:guid}/complete")]
     public async Task<ObjectResult> Complete(Guid assignmentId, CompleteTaskRequest? request, CancellationToken cancellationToken) =>
-        ToActionResult(await assignments.CompleteAsync(assignmentId, request?.OnBehalfOfUserId, cancellationToken), StatusCodes.Status200OK);
+        ToActionResult(await assignments.CompleteAsync(assignmentId, request?.OnBehalfOfUserId, request?.Archive, cancellationToken), StatusCodes.Status200OK);
 
     private ObjectResult ToActionResult<T>(AssignmentResult<T> result, int successStatus) => result.Succeeded
         ? StatusCode(successStatus, result.Value)
@@ -42,4 +42,4 @@ public sealed class AssignmentsController(ITaskAssignmentService assignments) : 
 
 public sealed record DrawTaskRequest(Guid PotId, IReadOnlyCollection<Guid>? ExcludedTaskIds, string? Difficulty = null, string? OnBehalfOfUserId = null);
 public sealed record AcceptTaskRequest(Guid TaskId, string? OnBehalfOfUserId = null);
-public sealed record CompleteTaskRequest(string? OnBehalfOfUserId = null);
+public sealed record CompleteTaskRequest(string? OnBehalfOfUserId = null, bool? Archive = null);

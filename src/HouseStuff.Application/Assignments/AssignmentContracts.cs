@@ -53,5 +53,5 @@ public interface ITaskAssignmentService
     Task<AssignmentResult<IReadOnlyList<ActiveAssignmentView>>> GetActiveAsync(CancellationToken cancellationToken);
     Task<AssignmentResult<DrawProposalView>> DrawAsync(DrawTaskCommand command, CancellationToken cancellationToken);
     Task<AssignmentResult<ActiveAssignmentView>> AcceptAsync(Guid taskId, string? onBehalfOfUserId, CancellationToken cancellationToken);
-    Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, string? onBehalfOfUserId, CancellationToken cancellationToken);
+    Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, string? onBehalfOfUserId, bool? archive, CancellationToken cancellationToken);
 }

@@ -11,7 +11,9 @@ public sealed record HouseholdTaskView(
     bool IsActive,
     string Difficulty = "medium",
     bool IsAvailableToAllResidents = true,
-    IReadOnlyList<string>? EligibleUserIds = null);
+    IReadOnlyList<string>? EligibleUserIds = null,
+    string? CurrentHolderUserId = null,
+    string? CurrentHolderName = null);
 
 public sealed record SaveHouseholdTaskCommand(
     Guid PotId,

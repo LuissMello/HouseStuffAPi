@@ -80,7 +80,7 @@ public sealed class TaskEligibilityServiceTests
         var reservedForAndressa = await andressaAssignments.DrawAsync(new DrawTaskCommand(pot.Id, [], "hard"), CancellationToken.None);
         Assert.Equal("no_tasks_available", reservedForAndressa.Code);
 
-        var completion = await luisAssignments.CompleteAsync(firstAcceptance.Value!.AssignmentId, null, CancellationToken.None);
+        var completion = await luisAssignments.CompleteAsync(firstAcceptance.Value!.AssignmentId, null, null, CancellationToken.None);
         var remaining = await luisAssignments.GetActiveAsync(CancellationToken.None);
         Assert.True(completion.Succeeded);
         Assert.Equal(secondAcceptance.Value!.AssignmentId, Assert.Single(remaining.Value!).AssignmentId);

@@ -138,7 +138,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
         return AssignmentResult.Success(ToView(creation.Assignment!, candidate.Task, candidate.PotName));
     }
 
-    public async Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, string? onBehalfOfUserId, CancellationToken cancellationToken)
+    public async Task<AssignmentResult<CompletedAssignmentView>> CompleteAsync(Guid assignmentId, string? onBehalfOfUserId, bool? archive, CancellationToken cancellationToken)
     {
         var session = await currentUser.GetAsync(cancellationToken);
         if (session is null)
@@ -172,7 +172,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
             return AssignmentResult.Failure<CompletedAssignmentView>(completion.Code!, completion.Message!);
         }
 
-        current.Task.RegisterCompletion(completedAt);
+        current.Task.RegisterCompletion(completedAt, current.Task.Kind == HouseholdTaskKind.Recurring ? null : archive);
         await database.SaveChangesAsync(cancellationToken);
 
         return AssignmentResult.Success(new CompletedAssignmentView(
@@ -182,7 +182,7 @@ internal sealed class TaskAssignmentService(HouseStuffDbContext database, ICurre
             ToKind(current.Task.Kind),
             completedAt,
             current.Task.NextAvailableAt,
-            current.Task.Kind != HouseholdTaskKind.OneTime));
+            current.Task.IsActive));
     }
 
     private async Task<(string? TargetUserId, string? ErrorCode, string? ErrorMessage)> ResolveTargetUserAsync(

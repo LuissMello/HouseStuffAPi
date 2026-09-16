@@ -19,7 +19,15 @@ internal sealed class HouseholdTaskService(HouseStuffDbContext database, ICurren
         var query = from task in database.HouseholdTasks.Include(task => task.EligibleUsers)
                     join pot in database.Pots on task.PotId equals pot.Id
                     where task.ResidenceId == residenceId
-                    select new { Task = task, PotName = pot.Name };
+                    select new
+                    {
+                        Task = task,
+                        PotName = pot.Name,
+                        Holder = (from assignment in database.TaskAssignments
+                                  join user in database.Users on assignment.AssignedToUserId equals user.Id
+                                  where assignment.HouseholdTaskId == task.Id && assignment.CompletedAt == null
+                                  select new { user.Id, user.Name }).FirstOrDefault(),
+                    };
         if (potId is not null)
         {
             query = query.Where(item => item.Task.PotId == potId);
@@ -31,7 +39,7 @@ internal sealed class HouseholdTaskService(HouseStuffDbContext database, ICurren
         }
 
         var items = await query.OrderBy(item => item.PotName).ThenBy(item => item.Task.Name).ToListAsync(cancellationToken);
-        var tasks = items.Select(item => ToView(item.Task, item.PotName)).ToList();
+        var tasks = items.Select(item => ToView(item.Task, item.PotName, item.Holder?.Id, item.Holder?.Name)).ToList();
         return HouseholdTaskResult.Success<IReadOnlyList<HouseholdTaskView>>(tasks);
     }
 
@@ -215,7 +223,7 @@ internal sealed class HouseholdTaskService(HouseStuffDbContext database, ICurren
         return HouseholdTaskResult.Success(new TaskEligibility(false, residentUserIds));
     }
 
-    private static HouseholdTaskView ToView(HouseholdTask task, string potName) => new(
+    private static HouseholdTaskView ToView(HouseholdTask task, string potName, string? currentHolderUserId = null, string? currentHolderName = null) => new(
         task.Id,
         task.PotId,
         potName,
@@ -226,7 +234,9 @@ internal sealed class HouseholdTaskService(HouseStuffDbContext database, ICurren
         task.IsActive,
         char.ToLowerInvariant(task.Difficulty.ToString()[0]) + task.Difficulty.ToString()[1..],
         task.IsAvailableToAllResidents,
-        task.EligibleUsers.Select(user => user.UserId).Order().ToList());
+        task.EligibleUsers.Select(user => user.UserId).Order().ToList(),
+        currentHolderUserId,
+        currentHolderName);
 
     private sealed record TaskEligibility(bool AvailableToAllResidents, IReadOnlyCollection<string> EligibleUserIds);
 }

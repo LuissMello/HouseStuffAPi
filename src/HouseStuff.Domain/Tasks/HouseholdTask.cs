@@ -87,15 +87,21 @@ public sealed class HouseholdTask
         UpdatedAt = now;
     }
 
-    public void RegisterCompletion(DateTimeOffset completedAt)
+    /// <summary>
+    /// Tarefas recorrentes sempre voltam sozinhas na data agendada. Para as demais, quem concluiu
+    /// escolhe na hora: arquivar (some do pote) ou voltar pro pote imediatamente. Sem escolha
+    /// explícita, mantém o comportamento antigo (única arquiva, reutilizável volta).
+    /// </summary>
+    public void RegisterCompletion(DateTimeOffset completedAt, bool? archive = null)
     {
-        NextAvailableAt = Kind == HouseholdTaskKind.Recurring
-            ? completedAt.AddDays(RecurrenceDays!.Value)
-            : null;
-
-        if (Kind == HouseholdTaskKind.OneTime)
+        if (Kind == HouseholdTaskKind.Recurring)
         {
-            IsActive = false;
+            NextAvailableAt = completedAt.AddDays(RecurrenceDays!.Value);
+        }
+        else
+        {
+            NextAvailableAt = null;
+            IsActive = !(archive ?? Kind == HouseholdTaskKind.OneTime);
         }
 
         UpdatedAt = completedAt;

@@ -80,6 +80,38 @@ public sealed class HouseholdTaskTests
     }
 
     [Fact]
+    public void ReusableTaskArchivesWhenExplicitlyRequested()
+    {
+        var task = HouseholdTask.Create(Guid.NewGuid(), Guid.NewGuid(), "Lavar louça", null, HouseholdTaskKind.Reusable, null, DateTimeOffset.UtcNow).Task!;
+
+        task.RegisterCompletion(DateTimeOffset.UtcNow, archive: true);
+
+        Assert.False(task.IsActive);
+    }
+
+    [Fact]
+    public void OneTimeTaskStaysActiveWhenExplicitlyReturnedToPot()
+    {
+        var task = HouseholdTask.Create(Guid.NewGuid(), Guid.NewGuid(), "Organizar despensa", null, HouseholdTaskKind.OneTime, null, DateTimeOffset.UtcNow).Task!;
+
+        task.RegisterCompletion(DateTimeOffset.UtcNow, archive: false);
+
+        Assert.True(task.IsActive);
+    }
+
+    [Fact]
+    public void RecurringTaskIgnoresArchiveChoiceAndKeepsSchedule()
+    {
+        var completedAt = DateTimeOffset.UtcNow;
+        var task = HouseholdTask.Create(Guid.NewGuid(), Guid.NewGuid(), "Limpar geladeira", null, HouseholdTaskKind.Recurring, 30, completedAt).Task!;
+
+        task.RegisterCompletion(completedAt, archive: true);
+
+        Assert.True(task.IsActive);
+        Assert.Equal(completedAt.AddDays(30), task.NextAvailableAt);
+    }
+
+    [Fact]
     public void CreatesTaskWithDifficultyAndSpecificEligibleUsers()
     {
         var result = HouseholdTask.Create(
